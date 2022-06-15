@@ -10,5 +10,4 @@ public class SecondHandApplication {
         SpringApplication.run(SecondHandApplication.class, args);
         System.out.println("Hello World!");
     }
-
 }
