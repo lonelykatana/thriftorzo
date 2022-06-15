@@ -1,5 +1,6 @@
 package com.binar.kelompok3.secondhand.model;
 
+import com.binar.kelompok3.secondhand.model.users.Users;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,5 +41,5 @@ public class Products implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private Users userID;
+    private Users userId;
 }
