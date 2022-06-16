@@ -1,10 +1,10 @@
 package com.binar.kelompok3.secondhand.controller;
 
-import com.binar.kelompok3.secondhand.config.JwtUtils;
+import com.binar.kelompok3.secondhand.configuration.JwtUtils;
+import com.binar.kelompok3.secondhand.enumeration.ERole;
 import com.binar.kelompok3.secondhand.model.auth.*;
 import com.binar.kelompok3.secondhand.model.users.Roles;
 import com.binar.kelompok3.secondhand.model.users.Users;
-import com.binar.kelompok3.secondhand.model.users.enumerated.ERole;
 import com.binar.kelompok3.secondhand.repository.RolesRepository;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,28 +28,29 @@ import java.util.Set;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    UsersRepository usersRepository;
-
+    // For user authentication
     @Autowired
     AuthenticationManager authenticationManager;
 
+    // Encoding incoming password
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    // Generate Token
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    UsersRepository usersRepository;
 
     @Autowired
     RolesRepository rolesRepository;
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtResponse> authenticateUser(@Valid
-                                                        @RequestBody SigninRequest request) {
+    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody SigninRequest request) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-        );
+        // check if user authenticated
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

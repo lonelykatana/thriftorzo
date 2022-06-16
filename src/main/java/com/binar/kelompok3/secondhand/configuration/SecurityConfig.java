@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.config;
+package com.binar.kelompok3.secondhand.configuration;
 
 import com.binar.kelompok3.secondhand.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

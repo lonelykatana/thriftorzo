@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.config;
+package com.binar.kelompok3.secondhand.configuration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
