@@ -19,7 +19,7 @@ public class Products implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(columnDefinition = "serial", name = "id", nullable = false)
     private Integer id;
 
     @Column(name = "name")
@@ -34,6 +34,12 @@ public class Products implements Serializable {
     @Column(name = "description", length = 500)
     private String description;
 
+    @Column(name = "is_diminati")
+    private boolean isDiminati;
+
+    @Column(name = "image")
+    private String image;
+
     //Entity Category belum dibuat
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @Column(name = "category_id")
@@ -42,4 +48,8 @@ public class Products implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private Users userId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "wishlist_id")
+    private Wishlist wishlistId;
 }

@@ -1,12 +1,11 @@
 package com.binar.kelompok3.secondhand.configuration;
 
 import com.binar.kelompok3.secondhand.model.users.Roles;
-import com.binar.kelompok3.secondhand.model.users.enumerated.ERole;
+import com.binar.kelompok3.secondhand.enumeration.ERole;
 import com.binar.kelompok3.secondhand.repository.RolesRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
