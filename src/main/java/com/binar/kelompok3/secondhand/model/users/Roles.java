@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand.model.users;
 
-import com.binar.kelompok3.secondhand.model.users.enumerated.ERole;
+import com.binar.kelompok3.secondhand.enumeration.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
