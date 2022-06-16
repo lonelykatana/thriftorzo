@@ -1,7 +1,7 @@
 package com.binar.kelompok3.secondhand.service;
 
-import com.binar.kelompok3.secondhand.model.Users;
 import com.binar.kelompok3.secondhand.model.auth.UserDetailsImpl;
+import com.binar.kelompok3.secondhand.model.users.Users;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
