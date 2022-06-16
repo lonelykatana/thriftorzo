@@ -19,14 +19,13 @@ public class UsersServiceImpl implements IUsersService {
 
     //digunakan untuk menu Lengkapi Info Akun
     @Override
-    public void updateUsers(Integer id, String name, String address, String phone, Integer cityId) {
+    public void updateUsers(Integer id, String name, String address, String phone, String cityName) {
         Users users = new Users();
         users.setId(id);
         users.setName(name);
         users.setAddress(address);
         users.setPhone(phone);
-        Cities cities = iCititesService.findCitiesById(cityId);
-        users.setCityId(cities);
+        users.setCityName(cityName);
         usersRepository.save(users);
     }
 
