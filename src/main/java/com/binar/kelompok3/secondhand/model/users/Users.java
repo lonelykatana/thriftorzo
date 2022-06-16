@@ -48,7 +48,7 @@ public class Users implements Serializable {
     private String image;
 
     @JoinColumn(name = "city_id")
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Cities cityId;
 
     @ManyToMany(fetch = FetchType.EAGER)
