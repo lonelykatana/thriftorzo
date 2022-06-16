@@ -47,9 +47,8 @@ public class Users implements Serializable {
     @Column(name = "image")
     private String image;
 
-    @JoinColumn(name = "city_id")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Cities cityId;
+    @Column(name = "cityName")
+    private String cityName;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
