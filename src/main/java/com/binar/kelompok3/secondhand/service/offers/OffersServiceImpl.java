@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class OffersServiceImpl implements IOffersService{
+public class OffersServiceImpl implements IOffersService {
 
     private OffersRepository offersRepository;
     private IUsersService iUsersService;
@@ -25,7 +25,7 @@ public class OffersServiceImpl implements IOffersService{
     }
 
     @Override
-    public String saveOffers(Integer userId, Integer productId, Double offerPrice, Integer status) {
+    public void saveOffers(Integer userId, Integer productId, Double offerPrice, Integer status) {
         Offers offers = new Offers();
         Users users = iUsersService.findUsersById(userId);
         Products products = iProductsService.findProductsById(productId);
@@ -33,7 +33,6 @@ public class OffersServiceImpl implements IOffersService{
         offers.setProductId(products);
         offers.setOfferPrice(offerPrice);
         offers.setStatus(status);
-        return "sukses menyimpan offer";
     }
 
     //service untuk riwayat tawaran buyer
@@ -43,21 +42,26 @@ public class OffersServiceImpl implements IOffersService{
     }
 
     //service untuk riwayat tawaran penjual
+
     @Override
-    public List<Offers> getAllByProductId(Integer productId) {
-        return offersRepository.getAllByProductId(productId);
+    public List<Offers> getHistorySeller(Integer productId, Integer userId) {
+        return offersRepository.getHistorySeller(productId, userId);
     }
+
 
     //update status pada tawaran
     @Override
-    public Integer updateOffers(Integer id, Integer status) {
+    public void updateOffers(Integer id, Integer status) {
         offersRepository.updateOffers(id, status);
-        return 1; //1 untuk sukses
     }
 
     @Override
-    public Integer deleteOffersById(Integer id) {
+    public void deleteOffersById(Integer id) {
         offersRepository.deleteOffersById(id);
-        return 1; //1 untuk sukses
+    }
+
+    @Override
+    public Offers getOffersById(Integer id) {
+        return offersRepository.getOffersById(id);
     }
 }

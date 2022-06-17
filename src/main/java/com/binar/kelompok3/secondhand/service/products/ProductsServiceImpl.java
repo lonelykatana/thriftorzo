@@ -17,7 +17,7 @@ public class ProductsServiceImpl implements IProductsService {
     private IUsersService iUsersService;
 
     @Override
-    public String saveProducts(String name, Double price, Integer status, String description, Integer userId) {
+    public void saveProducts(String name, Double price, Integer status, String description, Integer userId) {
         Products products = new Products();
         products.setName(name);
         products.setPrice(price);
@@ -26,13 +26,11 @@ public class ProductsServiceImpl implements IProductsService {
         Users users = iUsersService.findUsersById(userId);
         products.setUserId(users);
         productsRepository.save(products);
-        return "sukses save produk";
     }
 
     @Override
-    public Integer updateProducts(String name, Double price, Integer status, String description, Integer id) {
+    public void updateProducts(String name, Double price, Integer status, String description, Integer id) {
         productsRepository.updateProducts(name, price, status, description, id);
-        return 1; //1 untuk sukses
     }
 
 
@@ -42,9 +40,8 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    public String deleteProductsById(Integer id) {
+    public void deleteProductsById(Integer id) {
         productsRepository.deleteProductsById(id);
-        return "suskes delete produk";
     }
 
     @Override

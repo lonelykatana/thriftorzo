@@ -2,13 +2,17 @@ package com.binar.kelompok3.secondhand.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "products", uniqueConstraints = {
         @UniqueConstraint(columnNames = "id")
 })
@@ -39,13 +43,15 @@ public class Products implements Serializable {
     @Column(name = "image")
     private String image;
 
-    //Entity Category belum dibuat
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @Column(name = "category_id")
-//    private Category categoryId;
+    @Column(name = "category")
+    private String catergory;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private Users userId;
+
+    @CreatedDate
+    @Column(name = "created_date")
+    private Date createdDate;
 
 }
