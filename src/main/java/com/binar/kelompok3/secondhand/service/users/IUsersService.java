@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface IUsersService {
 
-    Integer updateUsers(Integer id, String name, String address, String phone, String cityName);
+    void updateUsers(Integer id, String name, String address, String phone, String cityName);
 
-    Integer updatePassword(Integer id, String password);
+    void updatePassword(Integer id, String password);
 
     List<Users> getAllUsers();
 
-    String deleteUsersById(Integer id);
+    void deleteUsersById(Integer id);
 
     Users findUsersById(Integer id);
 }
