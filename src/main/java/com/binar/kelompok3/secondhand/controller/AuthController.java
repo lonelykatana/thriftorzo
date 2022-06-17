@@ -23,7 +23,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthController {
 
     // For user authentication
@@ -43,6 +43,7 @@ public class AuthController {
 
     @Autowired
     RolesRepository rolesRepository;
+
 
     @PostMapping("/signin")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody SigninRequest request) {
@@ -73,8 +74,7 @@ public class AuthController {
         Users user = new Users(request.getName(), request.getEmail(), passwordEncoder.encode(request.getPassword()));
 
         // Add a 'SIGNED' role to user (HARDCODED)
-        Roles role = rolesRepository.findByName(ERole.valueOf(ERole.SIGNED.name()))
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+        Roles role = rolesRepository.findByName(ERole.valueOf(ERole.SIGNED.name())).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
         Set<Roles> roles = new HashSet<>();
         roles.add(role);
         user.setRoles(roles);

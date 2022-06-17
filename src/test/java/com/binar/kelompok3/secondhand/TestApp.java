@@ -37,22 +37,22 @@ class TestApp {
 //        Assertions.assertEquals("sukses save users",iUsersService.saveUsers("Erick","berdikari","0813",1));
 //    }
 
-    @Test
+    /*@Test
     @DisplayName("Test update password")
     void updatePassword(){
         Assertions.assertEquals(1, iUsersService.updatePassword(1,"gantipassword"));
-    }
-    @Test
+    }*/
+    /*@Test
     @DisplayName("Test update password")
     void updateUsers(){
         Assertions.assertEquals(1, iUsersService.updateUsers(1,"erickganti","berdikari","0813","medan"));
-    }
+    }*/
 
-    @Test
+    /*@Test
     @DisplayName("Test Delete Users")
     void deleteUser(){
         Assertions.assertEquals("sukses delete user",iUsersService.deleteUsersById(2));
-    }
+    }*/
 
 
 
