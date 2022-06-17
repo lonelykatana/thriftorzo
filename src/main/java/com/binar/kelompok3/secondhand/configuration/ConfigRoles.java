@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand.configuration;
 
-import com.binar.kelompok3.secondhand.model.users.Roles;
+import com.binar.kelompok3.secondhand.model.Roles;
 import com.binar.kelompok3.secondhand.enumeration.ERole;
 import com.binar.kelompok3.secondhand.repository.RolesRepository;
 import lombok.AllArgsConstructor;

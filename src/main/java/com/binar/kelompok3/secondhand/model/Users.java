@@ -1,6 +1,7 @@
-package com.binar.kelompok3.secondhand.model.users;
+package com.binar.kelompok3.secondhand.model;
 
 import com.binar.kelompok3.secondhand.model.Cities;
+import com.binar.kelompok3.secondhand.model.Roles;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,10 +1,11 @@
 package com.binar.kelompok3.secondhand.service.users;
 
 import com.binar.kelompok3.secondhand.model.Cities;
-import com.binar.kelompok3.secondhand.model.users.Users;
+import com.binar.kelompok3.secondhand.model.Users;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;
 import com.binar.kelompok3.secondhand.service.cities.ICititesService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,18 +16,21 @@ public class UsersServiceImpl implements IUsersService {
 
     private UsersRepository usersRepository;
     private ICititesService iCititesService;
+    private PasswordEncoder passwordEncoder;
 
 
     //digunakan untuk menu Lengkapi Info Akun
     @Override
-    public void updateUsers(Integer id, String name, String address, String phone, String cityName) {
-        Users users = new Users();
-        users.setId(id);
-        users.setName(name);
-        users.setAddress(address);
-        users.setPhone(phone);
-        users.setCityName(cityName);
-        usersRepository.save(users);
+    public Integer updateUsers(Integer id, String name, String address, String phone, String cityName) {
+        usersRepository.updateUsers(id,name,address,phone,cityName);
+        return 1; //1 sukses
+    }
+
+    //digunakan untuk mengubah password
+    @Override
+    public Integer updatePassword(Integer id, String password) {
+        usersRepository.updatePassword(id, passwordEncoder.encode(password));
+        return 1; //1 sukses
     }
 
     @Override
@@ -37,7 +41,7 @@ public class UsersServiceImpl implements IUsersService {
     @Override
     public String deleteUsersById(Integer id) {
         usersRepository.deleteUsersById(id);
-        return "sukses delete id";
+        return "sukses delete user";
     }
 
     @Override

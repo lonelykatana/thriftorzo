@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand.repository;
 
-import com.binar.kelompok3.secondhand.model.users.Roles;
+import com.binar.kelompok3.secondhand.model.Roles;
 import com.binar.kelompok3.secondhand.enumeration.ERole;
 import org.springframework.data.jpa.repository.JpaRepository;
 
