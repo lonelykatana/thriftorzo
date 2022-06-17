@@ -8,9 +8,11 @@ public interface IProductsService {
 
     String saveProducts(String name, Double price, Integer status, String description, Integer userId);
 
-    String updateProducts(Integer id, String name, Double price, Integer status, String description, Integer userId);
+    Integer updateProducts(String name, Double price, Integer status, String description, Integer id);
 
     List<Products> getAllProducts();
 
     String deleteProductsById(Integer id);
+
+    Products findProductsById(Integer id);
 }

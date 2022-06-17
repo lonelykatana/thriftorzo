@@ -1,6 +1,5 @@
 package com.binar.kelompok3.secondhand.model;
 
-import com.binar.kelompok3.secondhand.model.users.Users;
 import lombok.Getter;
 import lombok.Setter;
 

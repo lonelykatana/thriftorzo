@@ -1,6 +1,5 @@
 package com.binar.kelompok3.secondhand.model;
 
-import com.binar.kelompok3.secondhand.model.users.Users;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,7 +48,4 @@ public class Products implements Serializable {
     @JoinColumn(name = "user_id")
     private Users userId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "wishlist_id")
-    private Wishlist wishlistId;
 }

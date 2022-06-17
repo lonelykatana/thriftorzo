@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.model.users;
+package com.binar.kelompok3.secondhand.model;
 
 import com.binar.kelompok3.secondhand.enumeration.ERole;
 import lombok.AllArgsConstructor;
