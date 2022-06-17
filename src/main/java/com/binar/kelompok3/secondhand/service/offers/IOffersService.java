@@ -8,15 +8,17 @@ public interface IOffersService {
 
     List<Offers> getAllOffers();
 
-    String saveOffers(Integer userId, Integer productId, Double offerPrice, Integer status);
+    void saveOffers(Integer userId, Integer productId, Double offerPrice, Integer status);
 
     List<Offers> getAllByUserId(Integer userId);
 
-    List<Offers> getAllByProductId(Integer productId);
+    List<Offers> getHistorySeller(Integer productId,Integer userId);
 
-    Integer updateOffers(Integer id, Integer status);
+    void updateOffers(Integer id, Integer status);
 
-    Integer deleteOffersById(Integer id);
+    void deleteOffersById(Integer id);
+
+    Offers getOffersById(Integer id);
 
 
 

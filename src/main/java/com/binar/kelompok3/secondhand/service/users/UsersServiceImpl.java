@@ -15,22 +15,19 @@ import java.util.List;
 public class UsersServiceImpl implements IUsersService {
 
     private UsersRepository usersRepository;
-    private ICititesService iCititesService;
     private PasswordEncoder passwordEncoder;
 
 
     //digunakan untuk menu Lengkapi Info Akun
     @Override
-    public Integer updateUsers(Integer id, String name, String address, String phone, String cityName) {
-        usersRepository.updateUsers(id,name,address,phone,cityName);
-        return 1; //1 sukses
+    public void updateUsers(Integer id, String name, String address, String phone, String cityName) {
+        usersRepository.updateUsers(id, name, address, phone, cityName);
     }
 
     //digunakan untuk mengubah password
     @Override
-    public Integer updatePassword(Integer id, String password) {
+    public void updatePassword(Integer id, String password) {
         usersRepository.updatePassword(id, passwordEncoder.encode(password));
-        return 1; //1 sukses
     }
 
     @Override
@@ -39,9 +36,8 @@ public class UsersServiceImpl implements IUsersService {
     }
 
     @Override
-    public String deleteUsersById(Integer id) {
+    public void deleteUsersById(Integer id) {
         usersRepository.deleteUsersById(id);
-        return "sukses delete user";
     }
 
     @Override
