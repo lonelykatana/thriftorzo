@@ -2,8 +2,8 @@ package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.configuration.JwtUtils;
 import com.binar.kelompok3.secondhand.enumeration.ERole;
-import com.binar.kelompok3.secondhand.model.Roles;
-import com.binar.kelompok3.secondhand.model.Users;
+import com.binar.kelompok3.secondhand.model.entity.Roles;
+import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.auth.*;
 import com.binar.kelompok3.secondhand.repository.RolesRepository;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;

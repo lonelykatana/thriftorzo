@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand.service.offers;
 
-import com.binar.kelompok3.secondhand.model.Offers;
+import com.binar.kelompok3.secondhand.model.entity.Offers;
 
 import java.util.List;
 

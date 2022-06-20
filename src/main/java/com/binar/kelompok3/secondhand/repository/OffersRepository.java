@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand.repository;
 
-import com.binar.kelompok3.secondhand.model.Offers;
+import com.binar.kelompok3.secondhand.model.entity.Offers;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +18,7 @@ public interface OffersRepository extends JpaRepository<Offers, Integer> {
 
     List<Offers> getAllByUserId(Integer userId);
 
-    @Query(value = "select  * from offers where product_id=?1 and user_id=?2 ", nativeQuery = true)
+    @Query(value = "select * from offers where offers.product_id = (select id from products where prodcuts.user_id = users.id)", nativeQuery = true)
     List<Offers> getHistorySeller(Integer productId, Integer userId);
 
     Integer deleteOffersById(Integer id);

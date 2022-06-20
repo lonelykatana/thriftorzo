@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand.service.users;
 
-import com.binar.kelompok3.secondhand.model.Users;
+import com.binar.kelompok3.secondhand.model.entity.Users;
 
 import java.util.List;
 

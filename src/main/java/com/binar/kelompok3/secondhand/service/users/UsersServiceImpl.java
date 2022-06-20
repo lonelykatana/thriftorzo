@@ -1,9 +1,7 @@
 package com.binar.kelompok3.secondhand.service.users;
 
-import com.binar.kelompok3.secondhand.model.Cities;
-import com.binar.kelompok3.secondhand.model.Users;
+import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;
-import com.binar.kelompok3.secondhand.service.cities.ICititesService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand.controller;
 
-import com.binar.kelompok3.secondhand.model.Products;
+import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class ProductsController {
 
     public String updateProducts(String name, Double price, Integer status, String description, Integer id) {
         iProductsService.updateProducts(name, price, status, description, id);
-        return "sukses mengupdate produk : "+iProductsService.findProductsById(id);
+        return "sukses mengupdate produk : " + iProductsService.findProductsById(id);
     }
 
     public List<Products> getAllProducts() {
@@ -29,12 +29,12 @@ public class ProductsController {
 
     }
 
-    public String deleteProducts(Integer id){
+    public String deleteProducts(Integer id) {
         iProductsService.deleteProductsById(id);
         return "sukses menghapus produk : " + iProductsService.findProductsById(id);
     }
 
-    public Products findProducts(Integer id){
+    public Products findProducts(Integer id) {
         return iProductsService.findProductsById(id);
     }
 

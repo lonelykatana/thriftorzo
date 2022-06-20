@@ -1,19 +1,18 @@
-package com.binar.kelompok3.secondhand.model;
+package com.binar.kelompok3.secondhand.model.entity;
 
-import com.binar.kelompok3.secondhand.model.Cities;
-import com.binar.kelompok3.secondhand.model.Roles;
+import com.binar.kelompok3.secondhand.model.DateModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -25,7 +24,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = "id"),
         @UniqueConstraint(columnNames = "email")
 })
-public class Users implements Serializable {
+public class Users extends DateModel implements Serializable {
 
     private static final long serialVersionUID = 1865643891L;
 
@@ -55,19 +54,33 @@ public class Users implements Serializable {
     @Column(name = "cityName")
     private String cityName;
 
-    @CreatedDate
-    @Column(name = "created_date")
-    private Date createdDate;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();
 
+    @OneToMany(
+            mappedBy = "users",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private final List<Images> imagesList = new ArrayList<>();
+
     public Users(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public void addImage(Images images) {
+        imagesList.add(images);
+        images.setUsers(this);
+    }
+
+    public void deleteImage(Images images) {
+        imagesList.remove(images);
+        images.setUsers(null);
     }
 }

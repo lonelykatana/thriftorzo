@@ -1,8 +1,8 @@
 package com.binar.kelompok3.secondhand.controller;
 
-import com.binar.kelompok3.secondhand.model.Products;
-import com.binar.kelompok3.secondhand.model.Users;
-import com.binar.kelompok3.secondhand.model.Wishlist;
+import com.binar.kelompok3.secondhand.model.entity.Products;
+import com.binar.kelompok3.secondhand.model.entity.Users;
+import com.binar.kelompok3.secondhand.model.entity.Wishlist;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import com.binar.kelompok3.secondhand.service.wishlist.IWishlistService;
