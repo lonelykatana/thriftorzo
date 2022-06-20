@@ -4,10 +4,12 @@ import com.binar.kelompok3.secondhand.model.entity.Images;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.repository.ImagesRepository;
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import com.cloudinary.Singleton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,12 +30,12 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
             File uploadedFile = convertMultiPartToFile(image);
             Map uploadResult = cloudinary.uploader().upload(uploadedFile, ObjectUtils.emptyMap());
             boolean isDeleted = uploadedFile.delete();
-
             if (isDeleted) {
                 System.out.println("File is successfully deleted");
             } else
                 System.out.println("File doesn't exist");
             return uploadResult.get("url").toString();
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -106,5 +108,10 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
         images.setUsers(currentUser);
         currentUser.addImage(images);
         imagesRepository.save(images);
+    }
+
+    @Override
+    public Images findImagesByUsers(Integer users) {
+        return imagesRepository.findImagesByUsers(users);
     }
 }

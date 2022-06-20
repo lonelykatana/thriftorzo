@@ -31,7 +31,7 @@ public class SecondHandApplication {
 
     @Bean
     public Cloudinary cloudinaryConfig() {
-        Cloudinary cloudinary = null;
+        Cloudinary cloudinary;
         Map config = new HashMap();
         config.put("cloud_name", cloudName);
         config.put("api_key", apiKey);

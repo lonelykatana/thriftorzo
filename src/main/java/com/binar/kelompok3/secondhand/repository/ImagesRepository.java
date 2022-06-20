@@ -17,4 +17,6 @@ public interface ImagesRepository extends JpaRepository<Images, Integer> {
     Images findImagesById(Integer id);
 
     Images findImagesByCreatedOn(Date createdOn);
+
+    Images findImagesByUsers(Integer users);
 }
