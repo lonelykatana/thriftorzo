@@ -39,6 +39,9 @@ public class Offers implements Serializable {
     @Column(name = "status")
     private Integer status;
 
+    @Column(name = "isRead")
+    private Boolean isRead;
+
     @CreatedDate
     @Column(name = "created_date")
     private Date createdDate;

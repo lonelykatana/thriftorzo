@@ -74,7 +74,7 @@ public class AuthController {
         Users user = new Users(request.getName(), request.getEmail(), passwordEncoder.encode(request.getPassword()));
 
         // Add a 'SIGNED' role to user (HARDCODED)
-        Roles role = rolesRepository.findByName(ERole.valueOf(ERole.SIGNED.name())).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+        Roles role = rolesRepository.findByName(ERole.valueOf(ERole.UNCOMPLETED.name())).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
         Set<Roles> roles = new HashSet<>();
         roles.add(role);
         user.setRoles(roles);

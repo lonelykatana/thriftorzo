@@ -44,7 +44,7 @@ public class Products implements Serializable {
     private String image;
 
     @Column(name = "category")
-    private String catergory;
+    private String category;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
