@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand;
 
-import com.binar.kelompok3.secondhand.service.cities.ICititesService;
+
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -13,8 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class TestApp {
 
-    @Autowired
-    private ICititesService iCititesService;
 
     @Autowired
     private IUsersService iUsersService;

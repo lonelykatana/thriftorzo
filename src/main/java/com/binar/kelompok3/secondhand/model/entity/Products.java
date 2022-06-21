@@ -1,5 +1,6 @@
-package com.binar.kelompok3.secondhand.model;
+package com.binar.kelompok3.secondhand.model.entity;
 
+import com.binar.kelompok3.secondhand.model.DateModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,7 +17,7 @@ import java.util.Date;
 @Table(name = "products", uniqueConstraints = {
         @UniqueConstraint(columnNames = "id")
 })
-public class Products implements Serializable {
+public class Products extends DateModel implements Serializable {
 
     private static final long serialVersionUID = 1865643894L;
 
@@ -37,21 +38,15 @@ public class Products implements Serializable {
     @Column(name = "description", length = 500)
     private String description;
 
-    @Column(name = "is_diminati")
-    private boolean isDiminati;
-
-    @Column(name = "image")
-    private String image;
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @Column(name = "category")
-    private String catergory;
+    private String category;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private Users userId;
 
-    @CreatedDate
-    @Column(name = "created_date")
-    private Date createdDate;
 
 }
