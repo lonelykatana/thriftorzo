@@ -1,38 +1,57 @@
 package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.model.entity.Users;
+import com.binar.kelompok3.secondhand.model.request.UpdatePasswordRequest;
+import com.binar.kelompok3.secondhand.model.request.UpdateUserRequest;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
+import org.apache.catalina.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.util.List;
 
-@Controller
+@RestController
 @AllArgsConstructor
 public class UsersController {
 
     private IUsersService iUsersService;
 
-    public String updateUsers(Integer id, String name, String address, String phone, String cityName) {
-        iUsersService.updateUsers(id, name, address, phone, cityName);
-        return "sukses mengupdate user : " + iUsersService.findUsersById(id);
+    @GetMapping("/get-user/{id}")
+    public ResponseEntity<Users> getUser(@PathVariable("id") Integer id) {
+        Users user = iUsersService.findUsersById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    public String updatePassword(Integer id, String password) {
-        iUsersService.updatePassword(id, password);
-        return "sukses mengubah password : " + iUsersService.findUsersById(id);
+    @GetMapping("/get-all-users")
+    public ResponseEntity<List<Users>> getAllUsers() {
+        List<Users> users = iUsersService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    public List<Users> getAllUsers() {
-        return iUsersService.getAllUsers();
+    @PutMapping("/update-data/{id}")
+    public ResponseEntity<HttpStatus> updateUsers(@PathVariable("id") Integer id,
+                                                  @Valid @RequestBody UpdateUserRequest request) {
+        iUsersService.updateUsers(id, request.getName(), request.getAddress(), request.getPhone(), request.getCityName());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public String deleteUser(Integer id) {
+    @PutMapping("/change-password/{id}")
+    public ResponseEntity<HttpStatus> updatePassword(@PathVariable("id") Integer id,
+                                                     @RequestBody UpdatePasswordRequest request) {
+        iUsersService.updatePassword(id, request.getPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete-user/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Integer id) {
         iUsersService.deleteUsersById(id);
-        return "sukses menghapus user : " + iUsersService.findUsersById(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    public Users getUser(Integer id) {
-        return iUsersService.findUsersById(id);
-    }
+
 }

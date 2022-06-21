@@ -1,5 +1,4 @@
-package com.binar.kelompok3.secondhand.model.auth;
-
+package com.binar.kelompok3.secondhand.model.request;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,11 +9,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class SignupRequest {
-
-    @NotBlank
-    @Size(min = 4, max = 20)
-    private String name;
+public class SigninRequest {
 
     @NotBlank
     @Email
