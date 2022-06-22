@@ -69,12 +69,13 @@
             <version>2.0.0.Final</version>
         </dependency>
 
-        <!-- Testing -->
+        <!-- SWAGGER -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.7</version>
         </dependency>
+
         <!-- Cloudinary for image hosting -->
         <dependency>
             <groupId>com.cloudinary</groupId>
@@ -88,6 +89,13 @@
         </dependency>
         <!-- Thanks for using https://jar-download.com -->
 
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

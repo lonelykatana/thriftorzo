@@ -21,11 +21,11 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
     String deleteUsersById(Integer id);
 
     @Modifying
-    @Query(value ="update users set name=?2, alamat=?3, phone=?3, city_name=?4 where id=?1" ,nativeQuery = true)
+    @Query(value = "update users set name=?2, alamat=?3, phone=?4, city_name=?5 where id=?1", nativeQuery = true)
     Integer updateUsers(Integer id, String name, String address, String phone, String cityName);
 
     @Modifying
-    @Query(value = "update users set password=?2 where id=?1",nativeQuery = true)
+    @Query(value = "update users set password=?2 where id=?1", nativeQuery = true)
     Integer updatePassword(Integer id, String password);
 
     Boolean existsByEmail(String email);
