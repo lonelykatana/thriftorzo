@@ -5,18 +5,17 @@ import com.binar.kelompok3.secondhand.model.request.UpdatePasswordRequest;
 import com.binar.kelompok3.secondhand.model.request.UpdateUserRequest;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsersController {
 
     private IUsersService iUsersService;

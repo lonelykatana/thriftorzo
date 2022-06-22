@@ -8,12 +8,14 @@ import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import com.binar.kelompok3.secondhand.service.wishlist.IWishlistService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class WishlistController {
 
     private IWishlistService iWishlistService;
@@ -36,4 +38,6 @@ public class WishlistController {
         iWishlistService.createWishList(wishlist);
         return "sukses menambah wishlist";
     }
+
+    // Tambahin delete wishlist
 }
