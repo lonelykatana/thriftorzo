@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,14 +27,18 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
     public String uploadFile(MultipartFile image) {
         try {
             File uploadedFile = convertMultiPartToFile(image);
-            Map uploadResult = cloudinary.uploader().upload(uploadedFile, ObjectUtils.emptyMap());
+            Map params = ObjectUtils.asMap(
+                    "folder", "secondhand/"
+            );
+          //  Map uploadResult = cloudinary.uploader().upload(uploadedFile, ObjectUtils.emptyMap());
+            Map uploadResult = cloudinary.uploader().upload(uploadedFile, params);
             boolean isDeleted = uploadedFile.delete();
-
             if (isDeleted) {
                 System.out.println("File is successfully deleted");
             } else
                 System.out.println("File doesn't exist");
             return uploadResult.get("url").toString();
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -49,11 +54,11 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
     }
 
     @Override
-    public LinkedHashMap<String, Object> modifyJsonResponse(String requesType, String imageUrl) {
+    public LinkedHashMap<String, Object> modifyJsonResponse(String requestType, String imageUrl) {
         LinkedHashMap<String, Object> jsonResponse = new LinkedHashMap<>();
 
         Images images = imagesRepository.findImagesByImageUrl(imageUrl);
-        if (requesType.equals("create")) {
+        if (requestType.equals("create")) {
             jsonResponse.put("status", "success");
             LinkedHashMap<String, String> data = new LinkedHashMap<>();
             data.put("id", images.getId().toString());
@@ -64,13 +69,13 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
             jsonResponse.put("data", data);
         }
 
-        if (requesType.equals("delete")) {
+        if (requestType.equals("delete")) {
             jsonResponse.put("status", "success");
             LinkedHashMap<String, String> data = new LinkedHashMap<>();
             data.put("message", "Image post successfully deleted");
             jsonResponse.put("data", data);
         }
-        if (requesType.equals("get")) {
+        if (requestType.equals("get")) {
             jsonResponse.put("status", "success");
             LinkedHashMap<String, Object> data = new LinkedHashMap<>();
             data.put("id", images.getId().toString());
@@ -107,4 +112,16 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
         currentUser.addImage(images);
         imagesRepository.save(images);
     }
+
+    @Override
+    public Images findImagesByUsers(Integer users) {
+        return imagesRepository.findImagesByUsers(users);
+    }
+
+    @Override
+    public void updateImage(String imageUrl, String title, Integer id) {
+         imagesRepository.updateImage(imageUrl, title, id);
+    }
+
+
 }

@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-@Controller
+@RestController
+@RequestMapping("/image")
 @AllArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ImagesController {
@@ -24,37 +26,58 @@ public class ImagesController {
     private ICloudinaryService iCloudinaryService;
     private IUsersService iUsersService;
 
+    @PostMapping("/upload-image")
     public ResponseEntity<LinkedHashMap<String, Object>> uploadImage(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("title") String title, @RequestParam("userId") String userId) throws IOException {
         String url = iCloudinaryService.uploadFile(imageFile);
         Users currentUser = iUsersService.findUsersById(Integer.valueOf(userId));
         iCloudinaryService.saveGifToDb(url, title, currentUser);
 
-        LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("crete", url);
+        LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("create", url);
         return new ResponseEntity<>(jsonResponse, HttpStatus.CREATED);
 
     }
 
-    public ResponseEntity<LinkedHashMap<String, Object>> deleteImage(@PathVariable Integer id, @PathVariable Integer userId){
+    public ResponseEntity<LinkedHashMap<String, Object>> deleteImage(@PathVariable Integer id, @PathVariable Integer userId) {
         Users currentUser = iUsersService.findUsersById(userId);
         Images images = iCloudinaryService.findImagesByIdAndUser(id, currentUser);
 
-        if (images == null){
+        if (images == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        iCloudinaryService.deleteImage(images,currentUser);
-        LinkedHashMap<String , Object> jsonResponse = iCloudinaryService.modifyJsonResponse("delete",null);
-        return new ResponseEntity<>(jsonResponse,HttpStatus.ACCEPTED);
+        iCloudinaryService.deleteImage(images, currentUser);
+        LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("delete", null);
+        return new ResponseEntity<>(jsonResponse, HttpStatus.ACCEPTED);
     }
 
-    public ResponseEntity<LinkedHashMap<String, Object>> getImageById(@PathVariable Integer id){
+    public ResponseEntity<LinkedHashMap<String, Object>> getImageById(@PathVariable Integer id) {
         Images images = iCloudinaryService.findImageById(id);
 
-        if (images==null){
+        if (images == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        LinkedHashMap<String , Object> jsonResponse = iCloudinaryService.modifyJsonResponse("get", images.getImageUrl());
+        LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("get", images.getImageUrl());
 
-        return new ResponseEntity<>(jsonResponse,HttpStatus.OK);
+        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    }
+
+    public ResponseEntity<LinkedHashMap<String, Object>> getImageByUserId(@PathVariable Integer userId) {
+        Images images = iCloudinaryService.findImagesByUsers(userId);
+
+        if (images == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("get", images.getImageUrl());
+
+        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    }
+
+    public ResponseEntity<LinkedHashMap<String, Object>> updateImage(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("title") String title, @RequestParam("userId") String userId, @RequestParam("userId") String id) throws IOException {
+        String url = iCloudinaryService.uploadFile(imageFile);
+        iCloudinaryService.updateImage(url, title, Integer.valueOf(id));
+
+        LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("create", url);
+        return new ResponseEntity<>(jsonResponse, HttpStatus.CREATED);
+
     }
 }

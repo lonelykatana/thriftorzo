@@ -82,6 +82,13 @@
             <artifactId>cloudinary-http44</artifactId>
             <version>1.17.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-taglib</artifactId>
+            <version>1.4.4</version>
+        </dependency>
+        <!-- Thanks for using https://jar-download.com -->
+
 
         <!-- Testing -->
         <dependency>
