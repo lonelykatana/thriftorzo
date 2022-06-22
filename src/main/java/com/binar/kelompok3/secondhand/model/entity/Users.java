@@ -48,9 +48,6 @@ public class Users extends DateModel implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "image")
-    private String image;
-
     @Column(name = "cityName")
     private String cityName;
 
