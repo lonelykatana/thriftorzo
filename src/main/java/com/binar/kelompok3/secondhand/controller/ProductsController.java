@@ -13,8 +13,8 @@ import javax.validation.Valid;
 import javax.xml.ws.Response;
 import java.util.List;
 
-@Controller
 @AllArgsConstructor
+@RestController
 @RequestMapping("/product")
 public class ProductsController {
 
