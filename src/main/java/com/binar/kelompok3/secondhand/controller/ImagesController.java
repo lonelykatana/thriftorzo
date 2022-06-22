@@ -8,27 +8,28 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-@Controller
+@RestController
+@RequestMapping("/image")
 @AllArgsConstructor
 public class ImagesController {
 
     private ICloudinaryService iCloudinaryService;
     private IUsersService iUsersService;
 
+    @PostMapping("/upload-image")
     public ResponseEntity<LinkedHashMap<String, Object>> uploadImage(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("title") String title, @RequestParam("userId") String userId) throws IOException {
         String url = iCloudinaryService.uploadFile(imageFile);
         Users currentUser = iUsersService.findUsersById(Integer.valueOf(userId));
         iCloudinaryService.saveGifToDb(url, title, currentUser);
 
-        LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("crete", url);
+        LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("create", url);
         return new ResponseEntity<>(jsonResponse, HttpStatus.CREATED);
 
     }
@@ -66,5 +67,14 @@ public class ImagesController {
         LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("get", images.getImageUrl());
 
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    }
+
+    public ResponseEntity<LinkedHashMap<String, Object>> updateImage(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("title") String title, @RequestParam("userId") String userId, @RequestParam("userId") String id) throws IOException {
+        String url = iCloudinaryService.uploadFile(imageFile);
+        iCloudinaryService.updateImage(url, title, Integer.valueOf(id));
+
+        LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("create", url);
+        return new ResponseEntity<>(jsonResponse, HttpStatus.CREATED);
+
     }
 }

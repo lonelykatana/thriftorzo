@@ -4,18 +4,23 @@ import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
+@RequestMapping("/user")
 @AllArgsConstructor
 public class UsersController {
 
     private IUsersService iUsersService;
 
-    public String updateUsers(Integer id, String name, String address, String phone, String cityName) {
-        iUsersService.updateUsers(id, name, address, phone, cityName);
-        return "sukses mengupdate user : " + iUsersService.findUsersById(id);
+    @PutMapping("/update-users")
+    public String updateUsers(@RequestBody Map<String, Object> user) {
+        iUsersService.updateUsers((Integer) user.get("id"),user.get("name").toString() ,user.get("address").toString() ,user.get("phone").toString() ,user.get("cityName").toString() );
+        return "sukses mengupdate user";
+       // return "sukses mengupdate user : " + iUsersService.findUsersById(id);
     }
 
     public String updatePassword(Integer id, String password) {

@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public interface ICloudinaryService {
     String uploadFile(MultipartFile image);
@@ -24,4 +25,8 @@ public interface ICloudinaryService {
     void saveGifToDb(String imageUrl, String title, Users currentUser);
 
     Images findImagesByUsers(Integer users);
+
+    void updateImage(String imageUrl, String title, Integer id);
+
+
 }
