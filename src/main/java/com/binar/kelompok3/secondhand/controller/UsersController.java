@@ -7,6 +7,7 @@ import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,12 @@ public class UsersController {
     public ResponseEntity<List<Users>> getAllUsers() {
         List<Users> users = iUsersService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-user-by-token")
+    public ResponseEntity<Users> getUserByToken(Authentication authentication) {
+        Users user = iUsersService.findByEmail(authentication.getName());
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PutMapping("/update-data/{id}")

@@ -43,4 +43,9 @@ public class UsersServiceImpl implements IUsersService {
         return usersRepository.findUsersById(id);
     }
 
+    @Override
+    public Users findByEmail(String email) {
+        return usersRepository.findByEmail(email);
+    }
+
 }
