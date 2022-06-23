@@ -59,5 +59,7 @@ public class UsersController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-
+    public Users getUsersAndImgUrl(Integer id){
+        return iUsersService.getUsersAndImgUrl(id);
+    }
 }

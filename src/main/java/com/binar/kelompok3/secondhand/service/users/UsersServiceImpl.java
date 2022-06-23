@@ -48,4 +48,9 @@ public class UsersServiceImpl implements IUsersService {
         return usersRepository.findByEmail(email);
     }
 
+    @Override
+    public Users getUsersAndImgUrl(Integer id) {
+        return usersRepository.getUsersAndImgUrl(id);
+    }
+
 }
