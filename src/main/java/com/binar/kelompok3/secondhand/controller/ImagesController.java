@@ -25,7 +25,7 @@ public class ImagesController {
     public ResponseEntity<LinkedHashMap<String, Object>> uploadImage(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("title") String title, @RequestParam("userId") String userId) {
         String url = iCloudinaryService.uploadFile(imageFile);
         Users currentUser = iUsersService.findUsersById(Integer.valueOf(userId));
-        iCloudinaryService.saveGifToDb(url, title, currentUser);
+        iCloudinaryService.saveImageDb(url, title, currentUser);
 
         LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("create", url);
         return new ResponseEntity<>(jsonResponse, HttpStatus.CREATED);

@@ -15,4 +15,6 @@ public interface IUsersService {
     void deleteUsersById(Integer id);
 
     Users findUsersById(Integer id);
+
+    Users getUsersAndImgUrl(Integer id);
 }

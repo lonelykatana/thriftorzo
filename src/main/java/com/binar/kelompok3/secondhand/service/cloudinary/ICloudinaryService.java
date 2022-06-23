@@ -22,7 +22,7 @@ public interface ICloudinaryService {
 
     Images findImageById(Integer id);
 
-    void saveGifToDb(String imageUrl, String title, Users currentUser);
+    void saveImageDb(String imageUrl, String title, Users currentUser);
 
     Images findImagesByUsers(Integer users);
 
