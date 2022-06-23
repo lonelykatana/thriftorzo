@@ -7,14 +7,9 @@ import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 
 @RestController
@@ -27,7 +22,7 @@ public class ImagesController {
     private IUsersService iUsersService;
 
     @PostMapping("/upload-image")
-    public ResponseEntity<LinkedHashMap<String, Object>> uploadImage(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("title") String title, @RequestParam("userId") String userId) throws IOException {
+    public ResponseEntity<LinkedHashMap<String, Object>> uploadImage(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("title") String title, @RequestParam("userId") String userId) {
         String url = iCloudinaryService.uploadFile(imageFile);
         Users currentUser = iUsersService.findUsersById(Integer.valueOf(userId));
         iCloudinaryService.saveImageDb(url, title, currentUser);
@@ -72,7 +67,7 @@ public class ImagesController {
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
 
-    public ResponseEntity<LinkedHashMap<String, Object>> updateImage(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("title") String title, @RequestParam("userId") String userId, @RequestParam("userId") String id) throws IOException {
+    public ResponseEntity<LinkedHashMap<String, Object>> updateImage(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("title") String title, @RequestParam("userId") String userId, @RequestParam("userId") String id) {
         String url = iCloudinaryService.uploadFile(imageFile);
         iCloudinaryService.updateImage(url, title, Integer.valueOf(id));
 
