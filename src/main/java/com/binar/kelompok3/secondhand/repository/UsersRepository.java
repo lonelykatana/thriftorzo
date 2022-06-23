@@ -21,8 +21,8 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
     String deleteUsersById(Integer id);
 
     @Modifying
-    @Query(value = "update users set name=?2, alamat=?3, phone=?4, city_name=?5 where id=?1", nativeQuery = true)
-    Integer updateUsers(Integer id, String name, String address, String phone, String cityName);
+    @Query(value = "update users set name=?2, alamat=?3, phone=?4, city_name=?5, img_url=?6 where id=?1", nativeQuery = true)
+    Integer updateUsers(Integer id, String name, String address, String phone, String cityName, String imgUrl);
 
     @Modifying
     @Query(value = "update users set password=?2 where id=?1", nativeQuery = true)
@@ -32,7 +32,7 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
 
     Users findByEmail(String email);
 
-    @Query(value ="select * from(select users.*,image.image_url from users left join image on users.id = image.users_id where id=?1" ,nativeQuery = true)
+    @Query(value ="select * from(select users.*,image.image_url from users left join image on users.id = image.user_id)as foo where id=?1" ,nativeQuery = true)
     Users getUsersAndImgUrl(Integer id);
 
 }

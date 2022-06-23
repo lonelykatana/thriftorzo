@@ -3,12 +3,14 @@ package com.binar.kelompok3.secondhand.controller;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.request.UpdatePasswordRequest;
 import com.binar.kelompok3.secondhand.model.request.UpdateUserRequest;
+import com.binar.kelompok3.secondhand.service.cloudinary.ICloudinaryService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
 public class UsersController {
 
     private IUsersService iUsersService;
+    private ICloudinaryService iCloudinaryService;
 
     @GetMapping("/get-user/{id}")
     public ResponseEntity<Users> getUser(@PathVariable("id") Integer id) {
@@ -42,7 +45,7 @@ public class UsersController {
     @PutMapping("/update-data/{id}")
     public ResponseEntity<HttpStatus> updateUsers(@PathVariable("id") Integer id,
                                                   @Valid @RequestBody UpdateUserRequest request) {
-        iUsersService.updateUsers(id, request.getName(), request.getAddress(), request.getPhone(), request.getCityName());
+        iUsersService.updateUsers(id, request.getName(), request.getAddress(), request.getPhone(), request.getCityName(), request.getImgUrl());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -59,7 +62,15 @@ public class UsersController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    public Users getUsersAndImgUrl(Integer id){
+    @GetMapping("/get-user-and-url/{id}")
+    public Users getUsersAndImgUrl(@PathVariable("id") Integer id) {
         return iUsersService.getUsersAndImgUrl(id);
+    }
+
+    @PostMapping("/upload-image")
+    public ResponseEntity<String> uploadImage(@RequestParam("imageFile") MultipartFile imageFile) {
+        String url = iCloudinaryService.uploadFile(imageFile);
+        return new ResponseEntity<>(url, HttpStatus.CREATED);
+
     }
 }

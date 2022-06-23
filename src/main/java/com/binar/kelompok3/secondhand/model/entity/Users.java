@@ -51,19 +51,14 @@ public class Users extends DateModel implements Serializable {
     @Column(name = "cityName")
     private String cityName;
 
+    @Column(name = "img_url")
+    private String imgUrl;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();
-
-    @OneToMany(
-            mappedBy = "users",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JsonIgnore
-    private final List<Images> imagesList = new ArrayList<>();
 
     public Users(String name, String email, String password) {
         this.name = name;
@@ -71,13 +66,4 @@ public class Users extends DateModel implements Serializable {
         this.password = password;
     }
 
-    public void addImage(Images images) {
-        imagesList.add(images);
-        images.setUsers(this);
-    }
-
-    public void deleteImage(Images images) {
-        imagesList.remove(images);
-        images.setUsers(null);
-    }
 }

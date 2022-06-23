@@ -18,8 +18,8 @@ public class UsersServiceImpl implements IUsersService {
 
     //digunakan untuk menu Lengkapi Info Akun
     @Override
-    public void updateUsers(Integer id, String name, String address, String phone, String cityName) {
-        usersRepository.updateUsers(id, name, address, phone, cityName);
+    public void updateUsers(Integer id, String name, String address, String phone, String cityName, String imgUrl) {
+        usersRepository.updateUsers(id, name, address, phone, cityName, imgUrl);
     }
 
     //digunakan untuk mengubah password

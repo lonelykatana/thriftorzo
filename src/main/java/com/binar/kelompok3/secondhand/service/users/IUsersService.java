@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IUsersService {
 
-    void updateUsers(Integer id, String name, String address, String phone, String cityName);
+    void updateUsers(Integer id, String name, String address, String phone, String cityName, String imgUrl);
 
     void updatePassword(Integer id, String password);
 
