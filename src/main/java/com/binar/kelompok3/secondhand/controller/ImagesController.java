@@ -67,12 +67,5 @@ public class ImagesController {
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
 
-    public ResponseEntity<LinkedHashMap<String, Object>> updateImage(@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("title") String title, @RequestParam("userId") String userId, @RequestParam("userId") String id) {
-        String url = iCloudinaryService.uploadFile(imageFile);
-        iCloudinaryService.updateImage(url, title, Integer.valueOf(id));
 
-        LinkedHashMap<String, Object> jsonResponse = iCloudinaryService.modifyJsonResponse("create", url);
-        return new ResponseEntity<>(jsonResponse, HttpStatus.CREATED);
-
-    }
 }

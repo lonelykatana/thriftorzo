@@ -1,5 +1,6 @@
 package com.binar.kelompok3.secondhand.configuration;
 
+import com.binar.kelompok3.secondhand.enumeration.ERole;
 import com.binar.kelompok3.secondhand.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -51,13 +52,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String uncompleted = ERole.UNCOMPLETED.name();
+        String completed = ERole.COMPLETED.name();
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                // .antMatchers("/**").permitAll()
+                .antMatchers("/swagger-ui/index.html").permitAll()
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/users/**").hasAnyAuthority(uncompleted, completed)
+                .antMatchers("/image").hasAnyAuthority(uncompleted, completed);
 
-                .anyRequest().authenticated();
+        // .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
