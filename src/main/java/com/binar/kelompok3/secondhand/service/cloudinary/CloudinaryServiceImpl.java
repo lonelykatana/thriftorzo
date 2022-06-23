@@ -30,7 +30,6 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
             Map params = ObjectUtils.asMap(
                     "folder", "secondhand/"
             );
-          //  Map uploadResult = cloudinary.uploader().upload(uploadedFile, ObjectUtils.emptyMap());
             Map uploadResult = cloudinary.uploader().upload(uploadedFile, params);
             boolean isDeleted = uploadedFile.delete();
             if (isDeleted) {
@@ -104,7 +103,7 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
     }
 
     @Override
-    public void saveGifToDb(String imageUrl, String title, Users currentUser) {
+    public void saveImageDb(String imageUrl, String title, Users currentUser) {
         Images images = new Images();
         images.setImageUrl(imageUrl);
         images.setTitle(title);

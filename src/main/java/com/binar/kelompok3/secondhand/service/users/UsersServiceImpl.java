@@ -43,4 +43,9 @@ public class UsersServiceImpl implements IUsersService {
         return usersRepository.findUsersById(id);
     }
 
+    @Override
+    public Users getUsersAndImgUrl(Integer id) {
+        return usersRepository.getUsersAndImgUrl(id);
+    }
+
 }

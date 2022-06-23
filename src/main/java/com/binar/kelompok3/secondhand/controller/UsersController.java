@@ -40,4 +40,8 @@ public class UsersController {
     public Users getUser(Integer id) {
         return iUsersService.findUsersById(id);
     }
+
+    public Users getUsersAndImgUrl(Integer id){
+        return iUsersService.getUsersAndImgUrl(id);
+    }
 }
