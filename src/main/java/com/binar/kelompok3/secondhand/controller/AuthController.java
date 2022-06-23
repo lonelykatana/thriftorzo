@@ -5,6 +5,8 @@ import com.binar.kelompok3.secondhand.enumeration.ERole;
 import com.binar.kelompok3.secondhand.model.entity.Roles;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.auth.*;
+import com.binar.kelompok3.secondhand.model.request.SigninRequest;
+import com.binar.kelompok3.secondhand.model.request.SignupRequest;
 import com.binar.kelompok3.secondhand.repository.RolesRepository;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +76,7 @@ public class AuthController {
         Users user = new Users(request.getName(), request.getEmail(), passwordEncoder.encode(request.getPassword()));
 
         // Add a 'SIGNED' role to user (HARDCODED)
-        Roles role = rolesRepository.findByName(ERole.valueOf(ERole.SIGNED.name())).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+        Roles role = rolesRepository.findByName(ERole.valueOf(ERole.UNCOMPLETED.name())).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
         Set<Roles> roles = new HashSet<>();
         roles.add(role);
         user.setRoles(roles);
