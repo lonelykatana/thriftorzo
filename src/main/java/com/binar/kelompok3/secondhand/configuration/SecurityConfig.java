@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/**").hasAnyAuthority(uncompleted, completed)
                 .antMatchers("/image").hasAnyAuthority(uncompleted, completed);
 
-        // .anyRequest().authenticated();
+        //.anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

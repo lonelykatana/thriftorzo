@@ -18,7 +18,7 @@ public class ConfigRoles {
     private RolesRepository rolesRepository;
 
     @Bean
-    public void prerun() {
+    public void preAssignRoles() {
         for (ERole role : ERole.values()) {
             try {
                 Roles roles = rolesRepository.findByName(role).orElseThrow(() -> new RuntimeException("Roles not found"));

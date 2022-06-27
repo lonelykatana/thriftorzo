@@ -6,11 +6,9 @@ import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 import java.util.List;
 
 @AllArgsConstructor
@@ -45,7 +43,6 @@ public class ProductsController {
         iProductsService.updateProducts(request.getName(), request.getPrice(), request.getStatus(), request.getDescription(), productId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
     @DeleteMapping("/delete-product/{productId}")
     public ResponseEntity<HttpStatus> deleteProducts(@PathVariable("productId") Integer id) {

@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/users")
-// @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsersController {
 
     private IUsersService iUsersService;
