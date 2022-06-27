@@ -1,19 +1,18 @@
-package com.binar.kelompok3.secondhand.model;
+package com.binar.kelompok3.secondhand.model.entity;
 
-import com.binar.kelompok3.secondhand.model.Cities;
-import com.binar.kelompok3.secondhand.model.Roles;
+import com.binar.kelompok3.secondhand.model.DateModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -25,7 +24,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = "id"),
         @UniqueConstraint(columnNames = "email")
 })
-public class Users implements Serializable {
+public class Users extends DateModel implements Serializable {
 
     private static final long serialVersionUID = 1865643891L;
 
@@ -49,15 +48,11 @@ public class Users implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "image")
-    private String image;
-
     @Column(name = "cityName")
     private String cityName;
 
-    @CreatedDate
-    @Column(name = "created_date")
-    private Date createdDate;
+    @Column(name = "img_url")
+    private String imgUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
@@ -70,4 +65,5 @@ public class Users implements Serializable {
         this.email = email;
         this.password = password;
     }
+
 }

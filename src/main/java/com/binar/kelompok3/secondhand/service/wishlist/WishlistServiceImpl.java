@@ -1,9 +1,7 @@
 package com.binar.kelompok3.secondhand.service.wishlist;
 
-import com.binar.kelompok3.secondhand.model.Users;
-import com.binar.kelompok3.secondhand.model.Wishlist;
+import com.binar.kelompok3.secondhand.model.entity.Wishlist;
 import com.binar.kelompok3.secondhand.repository.WishlistRepository;
-import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +21,7 @@ public class WishlistServiceImpl implements IWishlistService {
 
     @Override
     public List<Wishlist> readWishList(Integer userId) {
-        return wishlistRepository.findAllByUserIdOrderByCreatedDateDesc(userId);
+        return wishlistRepository.findAllByUserIdOrderByCreatedOnDesc(userId);
     }
 
     @Override

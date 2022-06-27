@@ -1,38 +1,76 @@
 package com.binar.kelompok3.secondhand.controller;
 
-import com.binar.kelompok3.secondhand.model.Users;
+import com.binar.kelompok3.secondhand.model.entity.Users;
+import com.binar.kelompok3.secondhand.model.request.UpdatePasswordRequest;
+import com.binar.kelompok3.secondhand.model.request.UpdateUserRequest;
+import com.binar.kelompok3.secondhand.service.cloudinary.ICloudinaryService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 
-@Controller
+@RestController
 @AllArgsConstructor
+@RequestMapping("/users")
+// @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsersController {
 
     private IUsersService iUsersService;
+    private ICloudinaryService iCloudinaryService;
 
-    public String updateUsers(Integer id, String name, String address, String phone, String cityName) {
-        iUsersService.updateUsers(id, name, address, phone, cityName);
-        return "sukses mengupdate user : " + iUsersService.findUsersById(id);
+    @GetMapping("/get-user/{id}")
+    public ResponseEntity<Users> getUser(@PathVariable("id") Integer id) {
+        Users user = iUsersService.findUsersById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    public String updatePassword(Integer id, String password) {
-        iUsersService.updatePassword(id, password);
-        return "sukses mengubah password : " + iUsersService.findUsersById(id);
+    @GetMapping("/get-all-users")
+    public ResponseEntity<List<Users>> getAllUsers() {
+        List<Users> users = iUsersService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    public List<Users> getAllUsers() {
-        return iUsersService.getAllUsers();
+    @GetMapping("/get-user-by-token")
+    public ResponseEntity<Users> getUserByToken(Authentication authentication) {
+        Users user = iUsersService.findByEmail(authentication.getName());
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    public String deleteUser(Integer id) {
+    @PutMapping("/update-data/{id}")
+    public ResponseEntity<HttpStatus> updateUsers(@PathVariable("id") Integer id,
+                                                  @Valid @RequestBody UpdateUserRequest request) {
+        iUsersService.updateUsers(id, request.getName(), request.getAddress(), request.getPhone(), request.getCityName(), request.getImgUrl());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/change-password/{id}")
+    public ResponseEntity<HttpStatus> updatePassword(@PathVariable("id") Integer id,
+                                                     @RequestBody UpdatePasswordRequest request) {
+        iUsersService.updatePassword(id, request.getPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete-user/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Integer id) {
         iUsersService.deleteUsersById(id);
-        return "sukses menghapus user : " + iUsersService.findUsersById(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    public Users getUser(Integer id) {
-        return iUsersService.findUsersById(id);
+    @GetMapping("/get-user-and-url/{id}")
+    public Users getUsersAndImgUrl(@PathVariable("id") Integer id) {
+        return iUsersService.getUsersAndImgUrl(id);
+    }
+
+    @PostMapping("/upload-image")
+    public ResponseEntity<String> uploadImage(@RequestParam("imageFile") MultipartFile imageFile) {
+        String url = iCloudinaryService.uploadFile(imageFile);
+        return new ResponseEntity<>(url, HttpStatus.CREATED);
+
     }
 }

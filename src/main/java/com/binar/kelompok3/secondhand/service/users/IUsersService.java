@@ -1,12 +1,12 @@
 package com.binar.kelompok3.secondhand.service.users;
 
-import com.binar.kelompok3.secondhand.model.Users;
+import com.binar.kelompok3.secondhand.model.entity.Users;
 
 import java.util.List;
 
 public interface IUsersService {
 
-    void updateUsers(Integer id, String name, String address, String phone, String cityName);
+    void updateUsers(Integer id, String name, String address, String phone, String cityName, String imgUrl);
 
     void updatePassword(Integer id, String password);
 
@@ -15,4 +15,8 @@ public interface IUsersService {
     void deleteUsersById(Integer id);
 
     Users findUsersById(Integer id);
+
+    Users findByEmail(String email);
+
+    Users getUsersAndImgUrl(Integer id);
 }

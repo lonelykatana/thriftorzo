@@ -1,5 +1,6 @@
-package com.binar.kelompok3.secondhand.model;
+package com.binar.kelompok3.secondhand.model.entity;
 
+import com.binar.kelompok3.secondhand.model.DateModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,7 +17,7 @@ import java.util.Date;
 @Table(name = "offers", uniqueConstraints = {
         @UniqueConstraint(columnNames = "id")
 })
-public class Offers implements Serializable {
+public class Offers extends DateModel implements Serializable {
 
     private static final long serialVersionUID = 1865643895L;
 
@@ -39,10 +40,4 @@ public class Offers implements Serializable {
     @Column(name = "status")
     private Integer status;
 
-    @Column(name = "isRead")
-    private Boolean isRead;
-
-    @CreatedDate
-    @Column(name = "created_date")
-    private Date createdDate;
 }

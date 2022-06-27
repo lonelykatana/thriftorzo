@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand.repository;
 
-import com.binar.kelompok3.secondhand.model.Products;
+import com.binar.kelompok3.secondhand.model.entity.Products;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

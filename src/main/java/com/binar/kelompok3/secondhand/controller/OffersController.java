@@ -1,14 +1,16 @@
 package com.binar.kelompok3.secondhand.controller;
 
-import com.binar.kelompok3.secondhand.model.Offers;
+import com.binar.kelompok3.secondhand.model.entity.Offers;
 import com.binar.kelompok3.secondhand.service.offers.IOffersService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class OffersController {
 
     private IOffersService iOffersService;

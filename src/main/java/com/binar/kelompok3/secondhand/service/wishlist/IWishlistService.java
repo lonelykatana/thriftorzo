@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand.service.wishlist;
 
-import com.binar.kelompok3.secondhand.model.Wishlist;
+import com.binar.kelompok3.secondhand.model.entity.Wishlist;
 
 import java.util.List;
 

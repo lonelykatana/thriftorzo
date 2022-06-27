@@ -1,5 +1,6 @@
-package com.binar.kelompok3.secondhand.model;
+package com.binar.kelompok3.secondhand.model.entity;
 
+import com.binar.kelompok3.secondhand.model.DateModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +19,7 @@ import java.util.Date;
 @Table(name = "wishlist", uniqueConstraints = {
         @UniqueConstraint(columnNames = "id")
 })
-public class Wishlist implements Serializable {
+public class Wishlist extends DateModel implements Serializable {
 
     private static final long serialVersionUID = 1865643897L;
 
@@ -27,13 +28,10 @@ public class Wishlist implements Serializable {
     @Column(columnDefinition = "serial", name = "id", nullable = false)
     private Integer id;
 
-    @OneToOne(targetEntity = Users.class,fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Users.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private Users userId;
 
-    @CreatedDate
-    @Column(name = "created_date")
-    private Date createdDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
@@ -42,7 +40,6 @@ public class Wishlist implements Serializable {
     public Wishlist(Users userId, Products productId) {
         this.userId = userId;
         this.productId = productId;
-        this.createdDate = new Date();
     }
 
 }
