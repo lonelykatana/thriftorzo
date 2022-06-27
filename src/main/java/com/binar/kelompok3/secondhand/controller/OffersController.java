@@ -10,7 +10,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class OffersController {
 
     private IOffersService iOffersService;

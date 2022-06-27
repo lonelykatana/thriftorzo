@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+// @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class WishlistController {
 
     private IWishlistService iWishlistService;
@@ -34,7 +34,7 @@ public class WishlistController {
     public String addWishList(Integer productId, Integer userId) {
         Users users = iUsersService.findUsersById(userId);
         Products products = iProductsService.findProductsById(productId);
-        Wishlist wishlist = new Wishlist(users,products);
+        Wishlist wishlist = new Wishlist(users, products);
         iWishlistService.createWishList(wishlist);
         return "sukses menambah wishlist";
     }
