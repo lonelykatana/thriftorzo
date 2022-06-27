@@ -52,8 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String uncompleted = ERole.UNCOMPLETED.name();
-        String completed = ERole.COMPLETED.name();
+        String buyer = ERole.BUYER.name();
+        String seller = ERole.SELLER.name();
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).
                 and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
@@ -62,8 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // .antMatchers("/**").permitAll()
                 .antMatchers("/swagger-ui/index.html").permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/users/**").hasAnyAuthority(uncompleted, completed)
-                .antMatchers("/image").hasAnyAuthority(uncompleted, completed);
+                .antMatchers("/users/**").hasAnyAuthority(buyer, seller)
+                .antMatchers("/image").hasAnyAuthority(buyer, seller);
 
         //.anyRequest().authenticated();
 
