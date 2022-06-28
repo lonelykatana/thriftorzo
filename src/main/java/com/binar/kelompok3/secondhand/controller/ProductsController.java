@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @AllArgsConstructor
@@ -58,9 +55,8 @@ public class ProductsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-    @DeleteMapping("/delete-product/{id}")
-    public ResponseEntity<HttpStatus> deleteProducts(@PathVariable("id") Integer id) {
+    @DeleteMapping("/delete-product/{productId}")
+    public ResponseEntity<HttpStatus> deleteProducts(@PathVariable("productId") Integer id) {
         iProductsService.deleteProductsById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

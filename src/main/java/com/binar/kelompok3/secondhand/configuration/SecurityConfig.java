@@ -15,11 +15,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -52,21 +52,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String uncompleted = ERole.UNCOMPLETED.name();
-        String completed = ERole.COMPLETED.name();
-        http.cors().and().csrf().disable()
+        String buyer = ERole.BUYER.name();
+        String seller = ERole.SELLER.name();
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).
+                and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 // .antMatchers("/**").permitAll()
                 .antMatchers("/swagger-ui/index.html").permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/product/**").permitAll()
-                .antMatchers("/wishlist/**").permitAll()
-                .antMatchers("/users/**").hasAnyAuthority(uncompleted, completed)
-                .antMatchers("/image").hasAnyAuthority(uncompleted, completed);
+                .antMatchers("/users/**").hasAnyAuthority(buyer, seller)
+                .antMatchers("/image").hasAnyAuthority(buyer, seller);
 
-        // .anyRequest().authenticated();
+        //.anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

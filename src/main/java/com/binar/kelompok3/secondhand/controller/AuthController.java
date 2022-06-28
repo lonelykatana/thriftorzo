@@ -25,7 +25,6 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthController {
 
     // For user authentication
@@ -74,15 +73,16 @@ public class AuthController {
 
         // Add NAME, EMAIL, PASSWORD to db
         Users user = new Users(request.getName(), request.getEmail(), passwordEncoder.encode(request.getPassword()));
-
-        // Add a 'SIGNED' role to user (HARDCODED)
-        Roles role =
-                rolesRepository.findByName(ERole.valueOf(ERole.UNCOMPLETED.name())).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
         Set<Roles> roles = new HashSet<>();
-        roles.add(role);
-        user.setRoles(roles);
+
+        // Assigned user Roles
+        for (ERole role : ERole.values()) {
+            Roles mRole = rolesRepository.findByName(ERole.valueOf(role.name())).orElseThrow(() -> new RuntimeException("Error: Role " + role + " is not found"));
+            roles.add(mRole);
+        }
 
         // Save user to db
+        user.setRoles(roles);
         usersRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully"));
     }
