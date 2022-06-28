@@ -60,14 +60,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 // .antMatchers("/**").permitAll()
-                .antMatchers("/swagger-ui/index.html", "/Secondhand-docs.html").permitAll()
+                .antMatchers("/swagger-ui/index.html").permitAll()
+                .antMatchers("/Secondhand-docs.html").permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/users/**").hasAnyAuthority(buyer, seller)
+                .antMatchers("/user/**").hasAnyAuthority(buyer, seller)
                 .antMatchers("/image").hasAnyAuthority(buyer, seller)
+                .antMatchers("/product").hasAnyAuthority(buyer, seller) // Masalah get all product untuk homepage
                 .antMatchers("/wishlist").hasAnyAuthority(buyer, seller);
-
-        //.anyRequest().authenticated();
-
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
