@@ -5,6 +5,8 @@ import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.repository.ProductsRepository;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +39,11 @@ public class ProductsServiceImpl implements IProductsService {
     @Override
     public List<Products> getAllProducts() {
         return productsRepository.getAllProducts();
+    }
+
+    @Override
+    public Page<Products> getAllProductsPaginated(Pageable pageable) {
+        return productsRepository.getAllProductsPaginated(pageable);
     }
 
     @Override

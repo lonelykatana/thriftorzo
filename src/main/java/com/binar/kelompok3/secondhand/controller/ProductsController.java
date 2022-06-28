@@ -4,6 +4,8 @@ import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.request.ProductRequest;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,13 @@ public class ProductsController {
                                                   @Valid @RequestBody ProductRequest request) {
         iProductsService.saveProducts(request.getName(), request.getPrice(), request.getStatus(), request.getDescription(), userId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/get-all-products-paginated")
+    public ResponseEntity<Page<Products>> getAllProductsPaginated(@RequestParam("page") int page,
+                                                                  @RequestParam("size") int size) {
+        Page<Products> products = iProductsService.getAllProductsPaginated(PageRequest.of(page, size));
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @PutMapping("/update-product/{productId}")
