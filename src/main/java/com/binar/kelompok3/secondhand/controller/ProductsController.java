@@ -20,6 +20,7 @@ public class ProductsController {
 
     private IProductsService iProductsService;
 
+    // >>>> GET PRODUCTS
     @GetMapping("/get-product/{productId}")
     public ResponseEntity<Products> findProducts(@PathVariable("productId") Integer id) {
         Products product = iProductsService.findProductsById(id);
@@ -32,13 +33,6 @@ public class ProductsController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @PostMapping("/add-product/{userId}")
-    public ResponseEntity<HttpStatus> addProducts(@PathVariable("id") Integer userId,
-                                                  @Valid @RequestBody ProductRequest request) {
-        iProductsService.saveProducts(request.getName(), request.getPrice(), request.getStatus(), request.getDescription(), userId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @GetMapping("/get-all-products-paginated")
     public ResponseEntity<Page<Products>> getAllProductsPaginated(@RequestParam("page") int page,
                                                                   @RequestParam("size") int size) {
@@ -46,6 +40,15 @@ public class ProductsController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    // >>>> ADD PRODUCT
+    @PostMapping("/add-product/{userId}")
+    public ResponseEntity<HttpStatus> addProducts(@PathVariable("id") Integer userId,
+                                                  @Valid @RequestBody ProductRequest request) {
+        iProductsService.saveProducts(request.getName(), request.getPrice(), request.getStatus(), request.getDescription(), userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // >>>> UPDATE PRODUCT
     @PutMapping("/update-product/{productId}")
     public ResponseEntity<HttpStatus> updateProducts(@PathVariable("id") Integer productId,
                                                      @Valid @RequestBody ProductRequest request) {
@@ -53,6 +56,26 @@ public class ProductsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // >>>> SEARCH BY NAME PRODUCT
+    @GetMapping("/search")
+    public ResponseEntity<Page<Products>> searchProductByNamePaginated(@RequestParam(defaultValue = "", required = false) String productName,
+                                                                       @RequestParam("page") int page,
+                                                                       @RequestParam("size") int size) {
+        Page<Products> products = iProductsService.searchProductByNamePaginated(productName, PageRequest.of(page, size));
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    // >>>> FILTER BY CATEGORY PRODUCT
+    @GetMapping("/filter-category")
+    public ResponseEntity<Page<Products>> filterProductByCategoryPaginated(@RequestParam(defaultValue = "", required = false) String category,
+                                                                           @RequestParam("page") int page,
+                                                                           @RequestParam("size") int size) {
+        Page<Products> products = iProductsService.filterProductByCategoryPaginated(category, PageRequest.of(page, size));
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+
+    // >>>> DELETE PRODUCT
     @DeleteMapping("/delete-product/{productId}")
     public ResponseEntity<HttpStatus> deleteProducts(@PathVariable("productId") Integer id) {
         iProductsService.deleteProductsById(id);
