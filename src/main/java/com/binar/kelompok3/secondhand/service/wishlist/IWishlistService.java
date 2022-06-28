@@ -10,5 +10,5 @@ public interface IWishlistService {
 
     List<Wishlist> readWishList(Integer userId);
 
-    void deleteById(Integer id);
+    void deleteWishlistByProductIdAndUserId(Integer productId, Integer userId);
 }

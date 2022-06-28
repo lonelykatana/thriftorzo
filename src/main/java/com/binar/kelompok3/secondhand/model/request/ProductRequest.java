@@ -20,4 +20,5 @@ public class ProductRequest {
 
     Integer status;
     String description;
+    String category;
 }

@@ -20,25 +20,25 @@ public class OffersController {
         return "sukses add offer";
     }
 
-    public List<Offers> getBuyerHistory(Integer userId){
+    public List<Offers> getBuyerHistory(Integer userId) {
         return iOffersService.getAllByUserId(userId);
     }
 
-    public List<Offers> getHistorySeller(Integer productId, Integer userId){
-        return iOffersService.getHistorySeller(productId,userId);
+    public List<Offers> getHistorySeller(Integer productId, Integer userId) {
+        return iOffersService.getHistorySeller(productId, userId);
     }
 
-    public String updateOffers(Integer id, Integer status){
+    public String updateOffers(Integer id, Integer status) {
         iOffersService.updateOffers(id, status);
-        return "sukses update offer : "+iOffersService.getOffersById(id);
+        return "sukses update offer : " + iOffersService.getOffersById(id);
     }
 
-    public String deleteOffers(Integer id){
+    public String deleteOffers(Integer id) {
         iOffersService.deleteOffersById(id);
-        return "sukses menghapus offer : "+iOffersService.getOffersById(id);
+        return "sukses menghapus offer : " + iOffersService.getOffersById(id);
     }
 
-    public Offers getOffer(Integer id){
+    public Offers getOffer(Integer id) {
         return iOffersService.getOffersById(id);
     }
 
