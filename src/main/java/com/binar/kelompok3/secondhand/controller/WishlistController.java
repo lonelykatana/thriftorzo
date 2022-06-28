@@ -1,19 +1,25 @@
 package com.binar.kelompok3.secondhand.controller;
 
+import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.entity.Wishlist;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import com.binar.kelompok3.secondhand.service.wishlist.IWishlistService;
+import com.sun.org.apache.regexp.internal.RE;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+
+@RestController
+@RequestMapping("/wishlist")
 @AllArgsConstructor
 public class WishlistController {
 
@@ -21,22 +27,32 @@ public class WishlistController {
     private IUsersService iUsersService;
     private IProductsService iProductsService;
 
-    public List<Products> getWishList(Integer userId) {
+    @GetMapping("/get/{userId}")
+    public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("userId") Integer userId) {
         List<Wishlist> body = iWishlistService.readWishList(userId);
-        List<Products> products = new ArrayList<>();
+        List<ProductDto> products = new ArrayList<>();
         for (Wishlist wishlist : body) {
-            products.add((wishlist.getProductId()));
+            products.add(iProductsService.getDtoFromProduct(wishlist.getProductId()));
         }
-        return products;
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    public String addWishList(Integer productId, Integer userId) {
+    @PostMapping("/add")
+    public ResponseEntity<String> addWishList(@RequestParam("productId") Integer productId,
+                                              @RequestParam("userId") Integer userId) {
         Users users = iUsersService.findUsersById(userId);
         Products products = iProductsService.findProductsById(productId);
         Wishlist wishlist = new Wishlist(users, products);
         iWishlistService.createWishList(wishlist);
-        return "sukses menambah wishlist";
+        return new ResponseEntity<>("Sukses menambah wishlist", HttpStatus.CREATED);
     }
 
-    // Tambahin delete wishlist
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteWishlist(@RequestParam("productId") Integer productId,
+                                                 @RequestParam("userId") Integer userId) {
+        Products products = iProductsService.findProductsById(productId);
+        iWishlistService.deleteWishlistByProductIdAndUserId(productId, userId);
+        return new ResponseEntity<>("Sukses menghapus : " + products.getName() + " dari wishlist",
+                HttpStatus.ACCEPTED);
+    }
 }

@@ -1,6 +1,9 @@
 package com.binar.kelompok3.secondhand.model.entity;
 
 import com.binar.kelompok3.secondhand.model.DateModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -8,7 +11,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,11 +40,11 @@ public class Products extends DateModel implements Serializable {
     @Column(name = "status")
     private Integer status;
 
-    @Column(name = "description", length = 500)
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+//    @Column(name = "image_url")
+//    private String imageUrl;
 
     @Column(name = "category")
     private String category;
@@ -48,5 +53,27 @@ public class Products extends DateModel implements Serializable {
     @JoinColumn(name = "user_id")
     private Users userId;
 
+    @OneToMany(
+            mappedBy = "products",
+            cascade = CascadeType.MERGE,
+            orphanRemoval = true
+    )
+    //@JsonIgnore
+    @JsonManagedReference
+    private List<ImageProduct> imageProducts = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productId")
+    private List<Wishlist> wishlists;
+
+    public void add(ImageProduct imageProduct) {
+        imageProducts.add(imageProduct);
+        imageProduct.setProducts(this);
+    }
+
+    public void deleteImageProduct(ImageProduct imageProduct) {
+        imageProducts.remove(imageProduct);
+        imageProduct.setProducts(null);
+    }
 
 }

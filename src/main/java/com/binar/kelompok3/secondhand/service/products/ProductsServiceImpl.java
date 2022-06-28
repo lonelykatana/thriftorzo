@@ -1,5 +1,7 @@
 package com.binar.kelompok3.secondhand.service.products;
 
+import com.binar.kelompok3.secondhand.dto.IImageAndProductDto;
+import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.repository.ProductsRepository;
@@ -7,6 +9,9 @@ import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -17,16 +22,19 @@ public class ProductsServiceImpl implements IProductsService {
     private IUsersService iUsersService;
 
     @Override
-    public void saveProducts(String name, Double price, Integer status, String description, Integer userId) {
+    public void saveProducts(String name, Double price, Integer status, String description,
+                             String category, Integer userId) {
         Products products = new Products();
         products.setName(name);
         products.setPrice(price);
         products.setStatus(status);
         products.setDescription(description);
+        products.setCategory(category);
         Users users = iUsersService.findUsersById(userId);
         products.setUserId(users);
         productsRepository.save(products);
     }
+
 
     @Override
     public void updateProducts(String name, Double price, Integer status, String description, Integer id) {
@@ -48,4 +56,43 @@ public class ProductsServiceImpl implements IProductsService {
     public Products findProductsById(Integer id) {
         return productsRepository.findProductsById(id);
     }
+
+    @Override
+    public List<IImageAndProductDto> getProductsAndImage(Integer id) {
+        return productsRepository.getProductsAndImage(id);
+    }
+
+
+    @Override
+    public LinkedHashMap<String, Object> modifyJsonResponse(String requestType, Integer id) {
+        LinkedHashMap<String, Object> jsonResponse = new LinkedHashMap<>();
+        Products products = productsRepository.findProductsById(id);
+
+
+        if (requestType.equals("get")) {
+            jsonResponse.put("status", "success");
+            LinkedHashMap<String, Object> data = new LinkedHashMap<>();
+
+            data.put("id", products.getId().toString());
+            data.put("name", products.getName());
+            data.put("price", products.getPrice().toString());
+            data.put("status", products.getStatus().toString());
+            data.put("description", products.getDescription());
+            data.put("category", products.getCategory());
+            data.put("userId", products.getUserId().getId());
+            data.put("imageProducts", products.getImageProducts());
+
+            jsonResponse.put("data", data);
+        }
+
+
+        return jsonResponse;
+    }
+
+    public ProductDto getDtoFromProduct(Products products) {
+        ProductDto productDto = new ProductDto(products);
+        return productDto;
+    }
+
+
 }
