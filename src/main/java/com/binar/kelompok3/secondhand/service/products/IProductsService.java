@@ -32,6 +32,6 @@ public interface IProductsService {
 
     LinkedHashMap<String, Object> modifyJsonResponse(String requestType, Integer id);
 
-    public ProductDto getDtoFromProduct(Products products);
+    ProductDto getDtoFromProduct(Products products);
 
 }

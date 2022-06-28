@@ -1,9 +1,5 @@
 package com.binar.kelompok3.secondhand.service.cloudinary;
 
-import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
-import com.binar.kelompok3.secondhand.model.entity.Products;
-import com.binar.kelompok3.secondhand.model.entity.Users;
-import com.binar.kelompok3.secondhand.repository.ImageProductRepository;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import lombok.AllArgsConstructor;
@@ -13,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service

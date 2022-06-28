@@ -1,13 +1,11 @@
 package com.binar.kelompok3.secondhand.model.entity;
 
 import com.binar.kelompok3.secondhand.model.DateModel;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;

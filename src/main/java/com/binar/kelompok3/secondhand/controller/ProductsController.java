@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,8 +30,6 @@ public class ProductsController {
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        LinkedHashMap<String, Object> jsonResponseSpec = iProductsService.modifyJsonResponse("get", id);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
@@ -49,6 +46,12 @@ public class ProductsController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    @GetMapping("/get-product-and-image/{id}")
+    public ResponseEntity<List<IImageAndProductDto>> getProductsAndImage(@PathVariable("id") Integer id) {
+        List<IImageAndProductDto> productDtos = iProductsService.getProductsAndImage(id);
+        return new ResponseEntity<>(productDtos, HttpStatus.OK);
+    }
+
     // >>>> ADD PRODUCT
     @PostMapping("/add-product/{userId}")
     public ResponseEntity<HttpStatus> addProducts(@PathVariable("userId") Integer userId,
@@ -63,7 +66,7 @@ public class ProductsController {
     public ResponseEntity<HttpStatus> updateProducts(@PathVariable("id") Integer productId,
                                                      @Valid @RequestBody ProductRequest request) {
         iProductsService.updateProducts(request.getName(), request.getPrice(), request.getStatus(),
-                request.getDescription(), id);
+                request.getDescription(), productId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -92,15 +95,5 @@ public class ProductsController {
         iProductsService.deleteProductsById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-
-
-
-    @GetMapping("/get-product-and-image/{id}")
-    public ResponseEntity<List<IImageAndProductDto>> getProductsAndImage(@PathVariable("id") Integer id) {
-        List<IImageAndProductDto> productDtos = iProductsService.getProductsAndImage(id);
-        return new ResponseEntity<>(productDtos, HttpStatus.OK);
-    }
-
-
 
 }
