@@ -1,6 +1,8 @@
 package com.binar.kelompok3.secondhand;
 
 
+import com.binar.kelompok3.secondhand.controller.ProductsController;
+import com.binar.kelompok3.secondhand.model.request.ProductRequest;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +18,9 @@ class TestApp {
 
     @Autowired
     private IUsersService iUsersService;
+
+    @Autowired
+    private ProductsController productsController;
 
 //    @Test
 //    @DisplayName("Test save cities")
@@ -52,7 +57,11 @@ class TestApp {
         Assertions.assertEquals("sukses delete user",iUsersService.deleteUsersById(2));
     }*/
 
-
+    /*@Test
+    void addProduct() {
+        ProductRequest request = new ProductRequest("Produk4", 12000d, 1, "produk4 desc");
+        productsController.addProducts(1, request);
+    }*/
 
 
 }
