@@ -1,6 +1,5 @@
 package com.binar.kelompok3.secondhand.service.products;
 
-import com.binar.kelompok3.secondhand.dto.IImageAndProductDto;
 import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
@@ -71,12 +70,6 @@ public class ProductsServiceImpl implements IProductsService {
     public Products findProductsById(Integer id) {
         return productsRepository.findProductsById(id);
     }
-
-    @Override
-    public List<IImageAndProductDto> getProductsAndImage(Integer id) {
-        return productsRepository.getProductsAndImage(id);
-    }
-
 
     @Override
     public LinkedHashMap<String, Object> modifyJsonResponse(String requestType, Integer id) {

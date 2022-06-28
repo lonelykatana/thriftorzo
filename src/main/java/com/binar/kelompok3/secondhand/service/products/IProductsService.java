@@ -1,6 +1,5 @@
 package com.binar.kelompok3.secondhand.service.products;
 
-import com.binar.kelompok3.secondhand.dto.IImageAndProductDto;
 import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import org.springframework.data.domain.Page;
@@ -27,8 +26,6 @@ public interface IProductsService {
     void deleteProductsById(Integer id);
 
     Products findProductsById(Integer id);
-
-    List<IImageAndProductDto> getProductsAndImage(Integer id);
 
     LinkedHashMap<String, Object> modifyJsonResponse(String requestType, Integer id);
 
