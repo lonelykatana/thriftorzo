@@ -1,6 +1,6 @@
 package com.binar.kelompok3.secondhand.controller;
 
-import com.binar.kelompok3.secondhand.dto.IImageAndProductDto;
+import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.request.ProductRequest;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
@@ -21,12 +21,11 @@ import java.util.List;
 public class ProductsController {
 
     private IProductsService iProductsService;
-    private IImageProductService iImageProductService;
 
     // >>>> GET PRODUCTS
     @GetMapping("/get-product/{productId}")
-    public ResponseEntity<Products> findProducts(@PathVariable("productId") Integer id) {
-        Products product = iProductsService.findProductsById(id);
+    public ResponseEntity<ProductDto> findProducts(@PathVariable("productId") Integer id) {
+        ProductDto product = iProductsService.getDtoFromProduct(iProductsService.findProductsById(id));
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -46,11 +45,6 @@ public class ProductsController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping("/get-product-and-image/{id}")
-    public ResponseEntity<List<IImageAndProductDto>> getProductsAndImage(@PathVariable("id") Integer id) {
-        List<IImageAndProductDto> productDtos = iProductsService.getProductsAndImage(id);
-        return new ResponseEntity<>(productDtos, HttpStatus.OK);
-    }
 
     // >>>> ADD PRODUCT
     @PostMapping("/add-product/{userId}")

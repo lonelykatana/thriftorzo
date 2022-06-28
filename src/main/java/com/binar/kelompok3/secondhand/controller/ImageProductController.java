@@ -24,6 +24,7 @@ public class ImageProductController {
     private IProductsService iProductsService;
     private IImageProductService iImageProductService;
 
+    //id yg dimaksud adalah id product
     @PostMapping("/upload-products-image")
     public ResponseEntity<List<String>> uploadImage(@RequestParam("imageFiles") MultipartFile[] imageFiles,
                                                     @RequestParam("id") Integer id) {

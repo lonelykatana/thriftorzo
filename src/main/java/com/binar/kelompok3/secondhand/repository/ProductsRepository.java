@@ -1,6 +1,5 @@
 package com.binar.kelompok3.secondhand.repository;
 
-import com.binar.kelompok3.secondhand.dto.IImageAndProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,13 +33,6 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     Products findProductsById(Integer id);
 
-    @Modifying
-    @Query(value =
-            "select p.id as id, p.name as name, p.price as price, p.status as status, p.description as description, p.category as category\n" +
-                    ",p.user_id as user_id, p.created_on as created_on, p.updated_on as updated_on, ip.url  as url \n" +
-                    "from products p join image_product ip on p.id = ip.product_id where p.id =?1",
-            nativeQuery = true)
-    List<IImageAndProductDto> getProductsAndImage(Integer id);
 
 
 }
