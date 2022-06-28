@@ -1,6 +1,9 @@
 package com.binar.kelompok3.secondhand.service.cloudinary;
 
+import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
+import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
+import com.binar.kelompok3.secondhand.repository.ImageProductRepository;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import lombok.AllArgsConstructor;
@@ -18,6 +21,7 @@ import java.util.Map;
 public class CloudinaryServiceImpl implements ICloudinaryService {
 
     private Cloudinary cloudinary;
+
 
     @Override
     public String uploadFile(MultipartFile image) {
@@ -47,6 +51,5 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
         fos.close();
         return convFile;
     }
-
 
 }

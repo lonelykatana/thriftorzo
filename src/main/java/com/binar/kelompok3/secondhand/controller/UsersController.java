@@ -44,7 +44,8 @@ public class UsersController {
     @PutMapping("/update-data/{id}")
     public ResponseEntity<HttpStatus> updateUsers(@PathVariable("id") Integer id,
                                                   @Valid @RequestBody UpdateUserRequest request) {
-        iUsersService.updateUsers(id, request.getName(), request.getAddress(), request.getPhone(), request.getCityName(), request.getImgUrl());
+        iUsersService.updateUsers(id, request.getName(), request.getAddress(), request.getPhone(),
+                request.getCityName(), request.getImgUrl());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
