@@ -13,7 +13,8 @@ public interface IProductsService {
     void saveProducts(String id, String name, Double price, Integer status, String description,
                       String category, Integer userId);
 
-    void updateProducts(String name, Double price, Integer status, String description, String id);
+    void updateProducts(String name, Double price, Integer status, String description,
+                        String category, String id);
 
     List<Products> getAllProducts();
 

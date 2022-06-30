@@ -53,17 +53,21 @@ public class ProductsController {
 
     // >>>> ADD PRODUCT
     @PostMapping("/add-product")
-    public ResponseEntity<HttpStatus> addProducts(@ModelAttribute ProductRequest request, @RequestParam
-            MultipartFile[] imageFiles, @RequestParam("userId") Integer userId) {
+    public ResponseEntity<HttpStatus> addProducts(@RequestParam
+                                                          MultipartFile[] imageFiles,
+                                                  @RequestParam("userId") Integer userId,
+                                                  @RequestParam("name") String name,
+                                                  @RequestParam("price") Double price,
+                                                  @RequestParam("status") Integer status,
+                                                  @RequestParam("description") String description,
+                                                  @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
         UUID uuid = UUID.randomUUID();
         String productId = uuid.toString();
         Arrays.stream(imageFiles)
                 .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
 
-        iProductsService.saveProducts(productId, request.getName(), request.getPrice(),
-                request.getStatus(),
-                request.getDescription(), request.getCategory(), userId);
+        iProductsService.saveProducts(productId, name, price, status, description, category, userId);
 
         Products currentProduct = iProductsService.findProductsById(productId);
         if (currentProduct == null) {
@@ -80,7 +84,12 @@ public class ProductsController {
     // >>>> UPDATE PRODUCT
     @PutMapping("/update-product")
     public ResponseEntity<HttpStatus> updateProducts(@ModelAttribute ProductRequest request, @RequestParam
-            MultipartFile[] imageFiles, @RequestParam("productId") String productId) {
+            MultipartFile[] imageFiles, @RequestParam("productId") String productId,
+                                                     @RequestParam("name") String name,
+                                                     @RequestParam("price") Double price,
+                                                     @RequestParam("status") Integer status,
+                                                     @RequestParam("description") String description,
+                                                     @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
         Arrays.stream(imageFiles)
                 .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
@@ -93,8 +102,8 @@ public class ProductsController {
                 iImageProductService.saveImageProductToDb(url, currentProduct);
             }
         }
-        iProductsService.updateProducts(request.getName(), request.getPrice(), request.getStatus(),
-                request.getDescription(), productId);
+        iProductsService.updateProducts(name,price, status,
+               description, category, productId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
