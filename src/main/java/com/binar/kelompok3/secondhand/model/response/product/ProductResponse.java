@@ -2,7 +2,6 @@ package com.binar.kelompok3.secondhand.model.response.product;
 
 import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
 import com.binar.kelompok3.secondhand.model.entity.Products;
-import com.binar.kelompok3.secondhand.model.entity.Users;
 import lombok.Data;
 
 import java.util.List;
@@ -36,21 +35,4 @@ public class ProductResponse {
                 .map(ImageProduct::getUrl)
                 .collect(Collectors.toList());
     }
-
-    public ProductResponse(Integer userId, Integer id, String name, Double price, String description, String category, Integer status, List<String> imgUrl) {
-        this.userId = userId;
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.category = category;
-        this.status = status;
-        this.imgUrl = imgUrl;
-    }
-
-    public void mappingUserIdAndProduct(Users users) {
-        this.userId = users.getId();
-    }
-
-
 }

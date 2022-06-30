@@ -52,10 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String buyer = ERole.BUYER.name();
-        String seller = ERole.SELLER.name();
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).
-                and().csrf().disable()
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()

@@ -3,6 +3,7 @@ package com.binar.kelompok3.secondhand.controller;
 import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.request.ProductRequest;
+import com.binar.kelompok3.secondhand.model.response.product.ErrorResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponsePage;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
@@ -59,12 +60,12 @@ public class ProductsController {
             if (products.hasContent()) {
                 ProductResponsePage productResponsePage = new ProductResponsePage(products.getTotalPages(),
                         products.getTotalElements(), page, products.isFirst(), products.isLast(), productResponses);
-                return new ResponseEntity<>(productResponsePage, HttpStatus.OK);
+                return new ResponseEntity(productResponsePage, HttpStatus.OK);
             } else {
-                throw new Exception("product tidak ditemukan");
+                return new ResponseEntity(new ErrorResponse("569", "Data Kosong!"), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (Exception e) {
-            return new ResponseEntity("Kambing", HttpStatus.OK);
+            return new ResponseEntity(new ErrorResponse(null, "Data Tidak Ditemukan!"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
