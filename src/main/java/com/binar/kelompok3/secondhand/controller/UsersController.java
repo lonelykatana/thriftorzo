@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsersController {
 
     private IUsersService iUsersService;
@@ -68,6 +67,7 @@ public class UsersController {
         return iUsersService.getUsersAndImgUrl(id);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/upload-image")
     public ResponseEntity<String> uploadImage(@RequestParam("imageFile") MultipartFile imageFile) {
         String url = iCloudinaryService.uploadFile(imageFile);
