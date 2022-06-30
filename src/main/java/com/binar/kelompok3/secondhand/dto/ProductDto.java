@@ -1,13 +1,11 @@
 package com.binar.kelompok3.secondhand.dto;
 
-import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 

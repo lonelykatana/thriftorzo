@@ -2,12 +2,12 @@ package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
-import com.binar.kelompok3.secondhand.model.request.ProductRequest;
 import com.binar.kelompok3.secondhand.model.response.product.ErrorResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponsePage;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
+import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +29,7 @@ public class ProductsController {
 
     private IProductsService iProductsService;
     private IImageProductService iImageProductService;
+    private IUsersService iUsersService;
 
     // >>>> GET PRODUCTS
     @GetMapping("/get-product/{productId}")
@@ -41,31 +41,31 @@ public class ProductsController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @GetMapping("/get-all-products")
+    /*@GetMapping("/get-all-products")
     public ResponseEntity<List<Products>> getAllProducts() {
         List<Products> products = iProductsService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
-    }
+    }*/
 
-    @GetMapping("/get-all-products-paginated")
+    /*@GetMapping("/get-all-products-paginated")
     public ResponseEntity<Page<Products>> getAllProductsPaginated(@RequestParam(value = "page", defaultValue = "0") int page,
                                                                   @RequestParam(value = "size", defaultValue = "10") int size) {
         Page<Products> products = iProductsService.getAllProductsPaginated(PageRequest.of(page, size));
         return new ResponseEntity<>(products, HttpStatus.OK);
-    }
+    }*/
 
-    @GetMapping("get-all-products-paginated-test")
+    @GetMapping("get-all-products-paginated")
     public ResponseEntity getAllProductsPaginatedTest(@RequestParam(value = "page", defaultValue = "0") int page,
                                                       @RequestParam(value = "size", defaultValue = "10") int size) {
         try {
             Page<Products> products = iProductsService.getAllProductsPaginated(PageRequest.of(page, size));
 
             List<ProductResponse> productResponses = products.stream()
-                    .map(ProductResponse::new)
+                    .map(product -> new ProductResponse(product, product.getUserId()))
                     .collect(Collectors.toList());
             if (products.hasContent()) {
                 ProductResponsePage productResponsePage = new ProductResponsePage(products.getTotalPages(),
-                        products.getTotalElements(), page, products.isFirst(), products.isLast(), productResponses);
+                        products.getTotalElements(), page, products.isFirst(), products.isLast(), products.getSize(), productResponses);
                 return new ResponseEntity(productResponsePage, HttpStatus.OK);
             } else {
                 return new ResponseEntity(new ErrorResponse("569", "Data Kosong!"), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -78,8 +78,7 @@ public class ProductsController {
 
     // >>>> ADD PRODUCT
     @PostMapping("/add-product")
-    public ResponseEntity<HttpStatus> addProducts(@RequestParam
-                                                          MultipartFile[] imageFiles,
+    public ResponseEntity<HttpStatus> addProducts(@RequestParam MultipartFile[] imageFiles,
                                                   @RequestParam("userId") Integer userId,
                                                   @RequestParam("name") String name,
                                                   @RequestParam("price") Double price,
@@ -108,8 +107,8 @@ public class ProductsController {
 
     // >>>> UPDATE PRODUCT
     @PutMapping("/update-product")
-    public ResponseEntity<HttpStatus> updateProducts(@ModelAttribute ProductRequest request, @RequestParam
-            MultipartFile[] imageFiles, @RequestParam("productId") String productId,
+    public ResponseEntity<HttpStatus> updateProducts(@RequestParam MultipartFile[] imageFiles,
+                                                     @RequestParam("productId") String productId,
                                                      @RequestParam("name") String name,
                                                      @RequestParam("price") Double price,
                                                      @RequestParam("status") Integer status,
@@ -127,8 +126,8 @@ public class ProductsController {
                 iImageProductService.saveImageProductToDb(url, currentProduct);
             }
         }
-        iProductsService.updateProducts(name,price, status,
-               description, category, productId);
+        iProductsService.updateProducts(name, price, status,
+                description, category, productId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
