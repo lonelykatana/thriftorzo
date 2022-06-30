@@ -6,6 +6,7 @@ import com.binar.kelompok3.secondhand.model.request.ProductRequest;
 import com.binar.kelompok3.secondhand.model.response.product.ErrorResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponsePage;
+import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController

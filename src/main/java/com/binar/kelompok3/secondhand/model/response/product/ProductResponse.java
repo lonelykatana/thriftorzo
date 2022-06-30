@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Data
 public class ProductResponse {
-    Integer id;
+    String id;
     String name;
     Double price;
     String description;
