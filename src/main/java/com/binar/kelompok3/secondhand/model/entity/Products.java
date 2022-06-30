@@ -24,9 +24,8 @@ public class Products extends DateModel implements Serializable {
     private static final long serialVersionUID = 1865643894L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial", name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "id")
+    private String id;
 
     @Column(name = "name")
     private String name;

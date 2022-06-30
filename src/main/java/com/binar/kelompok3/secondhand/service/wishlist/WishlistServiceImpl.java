@@ -25,7 +25,7 @@ public class WishlistServiceImpl implements IWishlistService {
     }
 
     @Override
-    public void deleteWishlistByProductIdAndUserId(Integer productId, Integer userId) {
+    public void deleteWishlistByProductIdAndUserId(String productId, Integer userId) {
          wishlistRepository.deleteWishlistByProductIdAndUserId(productId,userId);
     }
 
