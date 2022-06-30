@@ -41,6 +41,16 @@ public class ProductsController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @GetMapping("/get-product-ada-penjual/{productId}")
+    public ResponseEntity<ProductResponse> findProductById(@PathVariable("productId") String id) {
+        Products products = iProductsService.findProductsById(id);
+        ProductResponse response = new ProductResponse(products, products.getUserId());
+        if (response == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     /*@GetMapping("/get-all-products")
     public ResponseEntity<List<Products>> getAllProducts() {
         List<Products> products = iProductsService.getAllProducts();
