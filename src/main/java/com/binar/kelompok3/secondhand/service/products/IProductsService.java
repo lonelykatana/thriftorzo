@@ -10,10 +10,11 @@ import java.util.List;
 
 public interface IProductsService {
 
-    void saveProducts(String name, Double price, Integer status, String description, String Category,
-                      Integer userId);
+    void saveProducts(String id, String name, Double price, Integer status, String description,
+                      String category, Integer userId);
 
-    void updateProducts(String name, Double price, Integer status, String description, Integer id);
+    void updateProducts(String name, Double price, Integer status, String description,
+                        String category, String id);
 
     List<Products> getAllProducts();
 
@@ -23,11 +24,11 @@ public interface IProductsService {
 
     Page<Products> filterProductByCategoryPaginated(String category, Pageable pageable);
 
-    void deleteProductsById(Integer id);
+    void deleteProductsById(String id);
 
-    Products findProductsById(Integer id);
+    Products findProductsById(String id);
 
-    LinkedHashMap<String, Object> modifyJsonResponse(String requestType, Integer id);
+    LinkedHashMap<String, Object> modifyJsonResponse(String requestType, String id);
 
     ProductDto getDtoFromProduct(Products products);
 

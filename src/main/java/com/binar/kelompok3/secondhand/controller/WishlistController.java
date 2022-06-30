@@ -36,7 +36,7 @@ public class WishlistController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addWishList(@RequestParam("productId") Integer productId,
+    public ResponseEntity<String> addWishList(@RequestParam("productId") String productId,
                                               @RequestParam("userId") Integer userId) {
         Users users = iUsersService.findUsersById(userId);
         Products products = iProductsService.findProductsById(productId);
@@ -46,7 +46,7 @@ public class WishlistController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteWishlist(@RequestParam("productId") Integer productId,
+    public ResponseEntity<String> deleteWishlist(@RequestParam("productId") String productId,
                                                  @RequestParam("userId") Integer userId) {
         Products products = iProductsService.findProductsById(productId);
         iWishlistService.deleteWishlistByProductIdAndUserId(productId, userId);

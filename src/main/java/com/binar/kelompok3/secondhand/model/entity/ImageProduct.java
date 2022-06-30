@@ -22,4 +22,5 @@ public class ImageProduct extends DateModel implements Serializable {
     @JoinColumn(name = "product_id")
     @JsonBackReference
     private Products products;
+
 }

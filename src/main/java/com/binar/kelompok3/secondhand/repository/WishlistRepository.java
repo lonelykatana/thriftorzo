@@ -16,6 +16,6 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Integer> {
 
     @Modifying
     @Query(value ="delete from wishlist where product_id=?1 and user_id=?2" ,nativeQuery = true)
-    void deleteWishlistByProductIdAndUserId(Integer productId, Integer userId);
+    void deleteWishlistByProductIdAndUserId(String productId, Integer userId);
 
 }

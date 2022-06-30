@@ -21,9 +21,10 @@ public class ProductsServiceImpl implements IProductsService {
     private IUsersService iUsersService;
 
     @Override
-    public void saveProducts(String name, Double price, Integer status, String description,
+    public void saveProducts(String id, String name, Double price, Integer status, String description,
                              String category, Integer userId) {
         Products products = new Products();
+        products.setId(id);
         products.setName(name);
         products.setPrice(price);
         products.setStatus(status);
@@ -36,7 +37,8 @@ public class ProductsServiceImpl implements IProductsService {
 
 
     @Override
-    public void updateProducts(String name, Double price, Integer status, String description, Integer id) {
+    public void updateProducts(String name, Double price, Integer status, String description,
+                               String category, String id) {
         productsRepository.updateProducts(name, price, status, description, id);
     }
 
@@ -62,17 +64,17 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    public void deleteProductsById(Integer id) {
+    public void deleteProductsById(String id) {
         productsRepository.deleteProductsById(id);
     }
 
     @Override
-    public Products findProductsById(Integer id) {
+    public Products findProductsById(String id) {
         return productsRepository.findProductsById(id);
     }
 
     @Override
-    public LinkedHashMap<String, Object> modifyJsonResponse(String requestType, Integer id) {
+    public LinkedHashMap<String, Object> modifyJsonResponse(String requestType, String id) {
         LinkedHashMap<String, Object> jsonResponse = new LinkedHashMap<>();
         Products products = productsRepository.findProductsById(id);
 

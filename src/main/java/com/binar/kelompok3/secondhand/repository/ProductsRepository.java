@@ -25,13 +25,13 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     Page<Products> findProductsByCategoryContainingIgnoreCase(String category, Pageable pageable);
 
-    String deleteProductsById(Integer id);
+    String deleteProductsById(String id);
 
     @Modifying
     @Query(value = "update products set name=?1, price=?2, status=?3, description=?4 where id=?5", nativeQuery = true)
-    Integer updateProducts(String name, Double price, Integer status, String description, Integer id);
+    Integer updateProducts(String name, Double price, Integer status, String description, String id);
 
-    Products findProductsById(Integer id);
+    Products findProductsById(String id);
 
 
 

@@ -26,21 +26,20 @@ public class ImageProductController {
 
     //id yg dimaksud adalah id product
     @PostMapping("/upload-products-image")
-    public ResponseEntity<List<String>> uploadImage(@RequestParam("imageFiles") MultipartFile[] imageFiles,
-                                                    @RequestParam("id") Integer id) {
+    public ResponseEntity<List<String>> uploadImage(@RequestParam("imageFiles") MultipartFile[] imageFiles) {
         List<String> urls = new ArrayList<>();
         Arrays.stream(imageFiles)
                 .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
-        Products currentProduct = iProductsService.findProductsById(id);
-        for (String url : urls) {
-            iImageProductService.saveImageProductToDb(url, currentProduct);
-        }
+        //Products currentProduct = iProductsService.findProductsById(id);
+//        for (String url : urls) {
+//            iImageProductService.saveImageProductToDb(url, currentProduct);
+//        }
         return new ResponseEntity<>(urls, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete-image/{url}")
-    public ResponseEntity<LinkedHashMap<String, Object>> deleteGif(@PathVariable String url,
-                                                                   Integer productId) {
+    public ResponseEntity<LinkedHashMap<String, Object>> deleteImage(@PathVariable String url,
+                                                                   String productId) {
         Products products = iProductsService.findProductsById(productId);
         ImageProduct imageProduct = iImageProductService.findImageProductByUrl(url);
 
