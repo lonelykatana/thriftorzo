@@ -8,7 +8,7 @@ public interface IOffersService {
 
     List<Offers> getAllOffers();
 
-    void saveOffers(Integer userId, Integer productId, Double offerPrice, Integer status);
+    void saveOffers(Integer userId, String productId, Double offerPrice, Integer status);
 
     List<Offers> getAllByUserId(Integer userId);
 

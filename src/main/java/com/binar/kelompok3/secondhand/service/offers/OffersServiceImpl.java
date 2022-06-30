@@ -25,7 +25,7 @@ public class OffersServiceImpl implements IOffersService {
     }
 
     @Override
-    public void saveOffers(Integer userId, Integer productId, Double offerPrice, Integer status) {
+    public void saveOffers(Integer userId, String productId, Double offerPrice, Integer status) {
         Offers offers = new Offers();
         Users users = iUsersService.findUsersById(userId);
         Products products = iProductsService.findProductsById(productId);

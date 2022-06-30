@@ -13,7 +13,7 @@ public class OffersController {
 
     private IOffersService iOffersService;
 
-    public String addOffers(Integer userId, Integer productId, Double offerPrice, Integer status) {
+    public String addOffers(Integer userId, String productId, Double offerPrice, Integer status) {
         iOffersService.saveOffers(userId, productId, offerPrice, status);
         return "sukses add offer";
     }
