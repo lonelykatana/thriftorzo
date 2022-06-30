@@ -83,7 +83,7 @@ public class ProductsServiceImpl implements IProductsService {
             jsonResponse.put("status", "success");
             LinkedHashMap<String, Object> data = new LinkedHashMap<>();
 
-            data.put("id", products.getId().toString());
+            data.put("id", products.getId());
             data.put("name", products.getName());
             data.put("price", products.getPrice().toString());
             data.put("status", products.getStatus().toString());
