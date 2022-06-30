@@ -52,22 +52,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String buyer = ERole.BUYER.name();
-        String seller = ERole.SELLER.name();
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).
-                and().csrf().disable()
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 // .antMatchers("/**").permitAll()
-                .antMatchers("/swagger-ui/index.html", "/Secondhand-docs.html").permitAll()
+                .antMatchers("/swagger-ui/index.html").permitAll()
+                .antMatchers("/Secondhand-docs.html").permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/users/**").hasAnyAuthority(buyer, seller)
-                .antMatchers("/image").hasAnyAuthority(buyer, seller)
-                .antMatchers("/wishlist").hasAnyAuthority(buyer, seller);
-
-        //.anyRequest().authenticated();
-
+                .antMatchers("/user/**").authenticated()
+                .antMatchers("/image/**").authenticated()
+                .antMatchers("/product/**").authenticated() // Masalah get all product untuk homepage
+                .antMatchers("/wishlist/**").authenticated();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
