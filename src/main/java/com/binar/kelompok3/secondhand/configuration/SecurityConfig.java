@@ -63,10 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/index.html").permitAll()
                 .antMatchers("/Secondhand-docs.html").permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/user/**").hasAnyAuthority(buyer, seller)
-                .antMatchers("/image").hasAnyAuthority(buyer, seller)
-                .antMatchers("/product").hasAnyAuthority(buyer, seller) // Masalah get all product untuk homepage
-                .antMatchers("/wishlist").hasAnyAuthority(buyer, seller);
+                .antMatchers("/user/**").authenticated()
+                .antMatchers("/image/**").authenticated()
+                .antMatchers("/product/**").authenticated() // Masalah get all product untuk homepage
+                .antMatchers("/wishlist/**").authenticated();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
