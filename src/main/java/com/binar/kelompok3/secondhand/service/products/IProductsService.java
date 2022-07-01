@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IProductsService {
 
-    void saveProducts(String id, String name, Double price, Integer status, String description,
+    void saveProducts(String id, String name, Double price, Integer status, Integer publish, String description,
                       String category, Integer userId);
 
     void updateProducts(String name, Double price, Integer status, String description,
@@ -19,6 +19,8 @@ public interface IProductsService {
     List<Products> getAllProducts();
 
     Page<Products> getAllProductsPaginated(Pageable pageable);
+
+    Page<Products> getAllProductReadyPaginated(Pageable pageable);
 
     Page<Products> searchProductByNamePaginated(String name, Pageable pageable);
 

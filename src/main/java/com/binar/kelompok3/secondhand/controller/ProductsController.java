@@ -2,15 +2,10 @@ package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
-import com.binar.kelompok3.secondhand.model.response.product.ErrorResponse;
-import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
-import com.binar.kelompok3.secondhand.model.response.product.ProductResponsePage;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -41,51 +35,6 @@ public class ProductsController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @GetMapping("/get-product-ada-penjual/{productId}")
-    public ResponseEntity<ProductResponse> findProductById(@PathVariable("productId") String id) {
-        Products products = iProductsService.findProductsById(id);
-        ProductResponse response = new ProductResponse(products, products.getUserId());
-        if (response == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    /*@GetMapping("/get-all-products")
-    public ResponseEntity<List<Products>> getAllProducts() {
-        List<Products> products = iProductsService.getAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }*/
-
-    /*@GetMapping("/get-all-products-paginated")
-    public ResponseEntity<Page<Products>> getAllProductsPaginated(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                                  @RequestParam(value = "size", defaultValue = "10") int size) {
-        Page<Products> products = iProductsService.getAllProductsPaginated(PageRequest.of(page, size));
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }*/
-
-    @GetMapping("/get-all-products-paginated")
-    public ResponseEntity getAllProductsPaginatedTest(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                      @RequestParam(value = "size", defaultValue = "10") int size) {
-        try {
-            Page<Products> products = iProductsService.getAllProductsPaginated(PageRequest.of(page, size));
-
-            List<ProductResponse> productResponses = products.stream()
-                    .map(product -> new ProductResponse(product, product.getUserId()))
-                    .collect(Collectors.toList());
-            if (products.hasContent()) {
-                ProductResponsePage productResponsePage = new ProductResponsePage(products.getTotalPages(),
-                        products.getTotalElements(), page, products.isFirst(), products.isLast(), products.getSize(), productResponses);
-                return new ResponseEntity(productResponsePage, HttpStatus.OK);
-            } else {
-                return new ResponseEntity(new ErrorResponse("569", "Data Kosong!"), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity(new ErrorResponse(null, "Data Tidak Ditemukan!"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
     // >>>> ADD PRODUCT
     @PostMapping("/add-product")
     public ResponseEntity<Products> addProducts(@RequestParam MultipartFile[] imageFiles,
@@ -93,6 +42,7 @@ public class ProductsController {
                                                 @RequestParam("name") String name,
                                                 @RequestParam("price") Double price,
                                                 @RequestParam("status") Integer status,
+                                                @RequestParam("publish") Integer publish,
                                                 @RequestParam("description") String description,
                                                 @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
@@ -101,7 +51,7 @@ public class ProductsController {
         Arrays.stream(imageFiles)
                 .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
 
-        iProductsService.saveProducts(productId, name, price, status, description, category, userId);
+        iProductsService.saveProducts(productId, name, price, status, publish, description, category, userId);
 
         Products currentProduct = iProductsService.findProductsById(productId);
         if (currentProduct == null) {
@@ -114,7 +64,6 @@ public class ProductsController {
 
         Products products = iProductsService.findProductsById(productId);
         return new ResponseEntity<>(products, HttpStatus.CREATED);
-
     }
 
     // >>>> UPDATE PRODUCT
@@ -124,6 +73,7 @@ public class ProductsController {
                                                    @RequestParam("name") String name,
                                                    @RequestParam("price") Double price,
                                                    @RequestParam("status") Integer status,
+                                                   @RequestParam("publish") Integer publish,
                                                    @RequestParam("description") String description,
                                                    @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
@@ -144,29 +94,6 @@ public class ProductsController {
         Products updatedProduct = iProductsService.findProductsById(productId);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
-
-    // >>>> SEARCH BY NAME PRODUCT
-    @GetMapping("/search")
-    public ResponseEntity<Page<Products>> searchProductByNamePaginated(
-            @RequestParam(defaultValue = "", required = false) String productName,
-            @RequestParam("page") int page,
-            @RequestParam("size") int size) {
-        Page<Products> products =
-                iProductsService.searchProductByNamePaginated(productName, PageRequest.of(page, size));
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }
-
-    // >>>> FILTER BY CATEGORY PRODUCT
-    @GetMapping("/filter-category")
-    public ResponseEntity<Page<Products>> filterProductByCategoryPaginated(
-            @RequestParam(defaultValue = "", required = false) String category,
-            @RequestParam("page") int page,
-            @RequestParam("size") int size) {
-        Page<Products> products =
-                iProductsService.filterProductByCategoryPaginated(category, PageRequest.of(page, size));
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }
-
 
     // >>>> DELETE PRODUCT
     @DeleteMapping("/delete-product/{productId}")

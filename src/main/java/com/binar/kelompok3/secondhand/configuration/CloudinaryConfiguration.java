@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-// @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CloudinaryConfiguration {
 
     @Value("${cloudinary.cloud_name}")
