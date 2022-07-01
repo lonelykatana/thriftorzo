@@ -21,6 +21,9 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
     @Query(value = "select * from products", nativeQuery = true)
     Page<Products> getAllProductsPaginated(Pageable pageable);
 
+    @Query(value = "select * from products where publish = 1", nativeQuery = true)
+    Page<Products> getAllProductReadyPaginated(Pageable pageable);
+
     Page<Products> findProductsByNameContainingIgnoreCase(String name, Pageable pageable);
 
     Page<Products> findProductsByCategoryContainingIgnoreCase(String category, Pageable pageable);
@@ -32,7 +35,6 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
     Integer updateProducts(String name, Double price, Integer status, String description, String id);
 
     Products findProductsById(String id);
-
 
 
 }

@@ -20,6 +20,8 @@ public interface IProductsService {
 
     Page<Products> getAllProductsPaginated(Pageable pageable);
 
+    Page<Products> getAllProductReadyPaginated(Pageable pageable);
+
     Page<Products> searchProductByNamePaginated(String name, Pageable pageable);
 
     Page<Products> filterProductByCategoryPaginated(String category, Pageable pageable);
