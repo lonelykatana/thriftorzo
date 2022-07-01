@@ -43,6 +43,7 @@ public class UsersController {
     }
 
     @PutMapping("/update-data/{id}")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<HttpStatus> updateUsers(@PathVariable("id") Integer id,
                                                   @Valid @RequestBody UpdateUserRequest request) {
         iUsersService.updateUsers(id, request.getName(), request.getAddress(), request.getPhone(),

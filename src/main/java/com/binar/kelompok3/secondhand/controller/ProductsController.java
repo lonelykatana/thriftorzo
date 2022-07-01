@@ -88,13 +88,13 @@ public class ProductsController {
 
     // >>>> ADD PRODUCT
     @PostMapping("/add-product")
-    public ResponseEntity<HttpStatus> addProducts(@RequestParam MultipartFile[] imageFiles,
-                                                  @RequestParam("userId") Integer userId,
-                                                  @RequestParam("name") String name,
-                                                  @RequestParam("price") Double price,
-                                                  @RequestParam("status") Integer status,
-                                                  @RequestParam("description") String description,
-                                                  @RequestParam("category") String category) {
+    public ResponseEntity<Products> addProducts(@RequestParam MultipartFile[] imageFiles,
+                                                @RequestParam("userId") Integer userId,
+                                                @RequestParam("name") String name,
+                                                @RequestParam("price") Double price,
+                                                @RequestParam("status") Integer status,
+                                                @RequestParam("description") String description,
+                                                @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
         UUID uuid = UUID.randomUUID();
         String productId = uuid.toString();
@@ -111,19 +111,21 @@ public class ProductsController {
                 iImageProductService.saveImageProductToDb(url, currentProduct);
             }
         }
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        Products products = iProductsService.findProductsById(productId);
+        return new ResponseEntity<>(products, HttpStatus.CREATED);
 
     }
 
     // >>>> UPDATE PRODUCT
     @PutMapping("/update-product")
-    public ResponseEntity<HttpStatus> updateProducts(@RequestParam MultipartFile[] imageFiles,
-                                                     @RequestParam("productId") String productId,
-                                                     @RequestParam("name") String name,
-                                                     @RequestParam("price") Double price,
-                                                     @RequestParam("status") Integer status,
-                                                     @RequestParam("description") String description,
-                                                     @RequestParam("category") String category) {
+    public ResponseEntity<Products> updateProducts(@RequestParam MultipartFile[] imageFiles,
+                                                   @RequestParam("productId") String productId,
+                                                   @RequestParam("name") String name,
+                                                   @RequestParam("price") Double price,
+                                                   @RequestParam("status") Integer status,
+                                                   @RequestParam("description") String description,
+                                                   @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
         Arrays.stream(imageFiles)
                 .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
@@ -138,7 +140,9 @@ public class ProductsController {
         }
         iProductsService.updateProducts(name, price, status,
                 description, category, productId);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        Products updatedProduct = iProductsService.findProductsById(productId);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 
     // >>>> SEARCH BY NAME PRODUCT
