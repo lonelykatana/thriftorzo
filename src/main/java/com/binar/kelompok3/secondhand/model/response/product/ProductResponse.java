@@ -19,6 +19,7 @@ public class ProductResponse {
     Double price;
     String description;
     String category;
+    Integer publish;
     Integer status;
     UserResponse userResponse;
     List<String> imgUrl;
@@ -32,6 +33,7 @@ public class ProductResponse {
         this.id = products.getId();
         this.name = products.getName();
         this.price = products.getPrice();
+        this.publish = products.getPublish();
         this.description = products.getDescription();
         this.category = products.getCategory();
         this.status = products.getStatus();
