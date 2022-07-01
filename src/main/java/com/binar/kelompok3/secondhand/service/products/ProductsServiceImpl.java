@@ -21,13 +21,14 @@ public class ProductsServiceImpl implements IProductsService {
     private IUsersService iUsersService;
 
     @Override
-    public void saveProducts(String id, String name, Double price, Integer status, String description,
+    public void saveProducts(String id, String name, Double price, Integer status, Integer publish, String description,
                              String category, Integer userId) {
         Products products = new Products();
         products.setId(id);
         products.setName(name);
         products.setPrice(price);
         products.setStatus(status);
+        products.setPublish(publish);
         products.setDescription(description);
         products.setCategory(category);
         Users users = iUsersService.findUsersById(userId);

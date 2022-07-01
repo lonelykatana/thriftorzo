@@ -93,6 +93,7 @@ public class ProductsController {
                                                 @RequestParam("name") String name,
                                                 @RequestParam("price") Double price,
                                                 @RequestParam("status") Integer status,
+                                                @RequestParam("publish") Integer publish,
                                                 @RequestParam("description") String description,
                                                 @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
@@ -101,7 +102,7 @@ public class ProductsController {
         Arrays.stream(imageFiles)
                 .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
 
-        iProductsService.saveProducts(productId, name, price, status, description, category, userId);
+        iProductsService.saveProducts(productId, name, price, status, publish, description, category, userId);
 
         Products currentProduct = iProductsService.findProductsById(productId);
         if (currentProduct == null) {
@@ -124,6 +125,7 @@ public class ProductsController {
                                                    @RequestParam("name") String name,
                                                    @RequestParam("price") Double price,
                                                    @RequestParam("status") Integer status,
+                                                   @RequestParam("publish") Integer publish,
                                                    @RequestParam("description") String description,
                                                    @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
