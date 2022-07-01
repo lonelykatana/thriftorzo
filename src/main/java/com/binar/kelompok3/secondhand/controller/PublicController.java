@@ -57,7 +57,7 @@ public class PublicController {
         }
     }
 
-    @GetMapping("/get-all-product-ready")
+    @GetMapping("/get-all-products-ready")
     public ResponseEntity getAllProductReadyPaginated(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                                       @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
         try {
