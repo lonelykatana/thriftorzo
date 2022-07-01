@@ -78,8 +78,6 @@ public class PublicController {
         }
     }
 
-    // TODO Get all product where product ready
-
     @GetMapping("/filter-category")
     public ResponseEntity<Page<Products>> filterProductByCategoryPaginated(
             @RequestParam(defaultValue = "", required = false) String category,
