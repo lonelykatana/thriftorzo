@@ -64,7 +64,7 @@ public class ProductsController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }*/
 
-    @GetMapping("get-all-products-paginated")
+    @GetMapping("/get-all-products-paginated")
     public ResponseEntity getAllProductsPaginatedTest(@RequestParam(value = "page", defaultValue = "0") int page,
                                                       @RequestParam(value = "size", defaultValue = "10") int size) {
         try {
