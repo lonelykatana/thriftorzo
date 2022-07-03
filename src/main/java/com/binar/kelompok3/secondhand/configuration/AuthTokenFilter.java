@@ -1,5 +1,6 @@
 package com.binar.kelompok3.secondhand.configuration;
 
+import com.binar.kelompok3.secondhand.utils.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

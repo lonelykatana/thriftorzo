@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.configuration;
+package com.binar.kelompok3.secondhand.utils;
 
 import com.binar.kelompok3.secondhand.model.auth.UserDetailsImpl;
 import io.jsonwebtoken.*;

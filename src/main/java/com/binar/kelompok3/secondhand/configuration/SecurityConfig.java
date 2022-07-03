@@ -1,6 +1,7 @@
 package com.binar.kelompok3.secondhand.configuration;
 
 import com.binar.kelompok3.secondhand.service.UserDetailsServiceImpl;
+import com.binar.kelompok3.secondhand.utils.AuthEntryPointJwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

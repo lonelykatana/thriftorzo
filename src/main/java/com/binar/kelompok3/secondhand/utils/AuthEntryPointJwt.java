@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.configuration;
+package com.binar.kelompok3.secondhand.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
