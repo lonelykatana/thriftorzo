@@ -1,7 +1,7 @@
 package com.binar.kelompok3.secondhand.controller;
 
-import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
+import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
@@ -26,13 +26,14 @@ public class ProductsController {
     private IUsersService iUsersService;
 
     // >>>> GET PRODUCTS
-    @GetMapping("/get-product/{productId}")
-    public ResponseEntity<ProductDto> findProducts(@PathVariable("productId") String id) {
-        ProductDto product = iProductsService.getDtoFromProduct(iProductsService.findProductsById(id));
+    @GetMapping("/get/{productId}")
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable("productId") String productId) {
+        Products product = iProductsService.findProductsById(productId);
+        ProductResponse productResponse = new ProductResponse(product, product.getUserId());
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
 
     // >>>> ADD PRODUCT

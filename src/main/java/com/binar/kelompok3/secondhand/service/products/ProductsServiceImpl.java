@@ -1,6 +1,5 @@
 package com.binar.kelompok3.secondhand.service.products;
 
-import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.repository.ProductsRepository;
@@ -104,11 +103,4 @@ public class ProductsServiceImpl implements IProductsService {
 
         return jsonResponse;
     }
-
-    public ProductDto getDtoFromProduct(Products products) {
-        ProductDto productDto = new ProductDto(products);
-        return productDto;
-    }
-
-
 }
