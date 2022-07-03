@@ -1,6 +1,5 @@
 package com.binar.kelompok3.secondhand.service.products;
 
-import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +31,5 @@ public interface IProductsService {
 
     LinkedHashMap<String, Object> modifyJsonResponse(String requestType, String id);
 
-    ProductDto getDtoFromProduct(Products products);
 
 }

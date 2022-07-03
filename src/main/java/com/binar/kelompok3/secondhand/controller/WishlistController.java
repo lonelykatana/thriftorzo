@@ -1,9 +1,9 @@
 package com.binar.kelompok3.secondhand.controller;
 
-import com.binar.kelompok3.secondhand.dto.ProductDto;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.entity.Wishlist;
+import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import com.binar.kelompok3.secondhand.service.wishlist.IWishlistService;
@@ -25,12 +25,14 @@ public class WishlistController {
     private IUsersService iUsersService;
     private IProductsService iProductsService;
 
-    @GetMapping("/get/{userId}")
-    public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("userId") Integer userId) {
+    @GetMapping("/get-all/{userId}")
+    public ResponseEntity<List<ProductResponse>> getAllWishList(@PathVariable("userId") Integer userId) {
         List<Wishlist> body = iWishlistService.readWishList(userId);
-        List<ProductDto> products = new ArrayList<>();
+        List<ProductResponse> products = new ArrayList<>();
         for (Wishlist wishlist : body) {
-            products.add(iProductsService.getDtoFromProduct(wishlist.getProductId()));
+            Products product = wishlist.getProductId();
+            ProductResponse productResponse = new ProductResponse(product, product.getUserId());
+            products.add(productResponse);
         }
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
