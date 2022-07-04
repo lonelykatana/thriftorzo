@@ -90,7 +90,7 @@ public class ProductsController {
                 iImageProductService.saveImageProductToDb(url, currentProduct);
             }
         }
-        iProductsService.updateProducts(name, price, status,
+        iProductsService.updateProducts(name, price, status, publish,
                 description, category, productId);
 
         Products updatedProduct = iProductsService.findProductsById(productId);

@@ -37,9 +37,9 @@ public class ProductsServiceImpl implements IProductsService {
 
 
     @Override
-    public void updateProducts(String name, Double price, Integer status, String description,
+    public void updateProducts(String name, Double price, Integer status, Integer publish, String description,
                                String category, String id) {
-        productsRepository.updateProducts(name, price, status, description, id);
+        productsRepository.updateProducts(name, price, status, publish, description, category, id);
     }
 
 

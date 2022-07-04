@@ -31,8 +31,8 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
     String deleteProductsById(String id);
 
     @Modifying
-    @Query(value = "update products set name=?1, price=?2, status=?3, description=?4 where id=?5", nativeQuery = true)
-    Integer updateProducts(String name, Double price, Integer status, String description, String id);
+    @Query(value = "update products set name=?1, price=?2, status=?3, publish=?4, description=?5, category=?6 where id=?7", nativeQuery = true)
+    Integer updateProducts(String name, Double price, Integer status, Integer publish, String description, String category, String id);
 
     Products findProductsById(String id);
 
