@@ -70,7 +70,7 @@ public class ProductsController {
 
     // >>>> UPDATE PRODUCT
     @PutMapping("/update-product")
-    public ResponseEntity<Products> updateProducts(@RequestParam MultipartFile[] imageFiles,
+    public ResponseEntity<Products> updateProducts(@RequestParam(required = false) MultipartFile[] imageFiles,
                                                    @RequestParam("productId") String productId,
                                                    @RequestParam("name") String name,
                                                    @RequestParam("price") Double price,
