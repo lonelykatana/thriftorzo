@@ -9,9 +9,12 @@ import java.io.IOException;
 @Component
 public class MyCORSFilter implements Filter {
 
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        Filter.super.init(filterConfig);
     }
 
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse res, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -20,9 +23,12 @@ public class MyCORSFilter implements Filter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, Access-Control-Request-Headers");
         filterChain.doFilter(servletRequest, res);
+
     }
 
+    @Override
     public void destroy() {
+        Filter.super.destroy();
     }
-
 }
+
