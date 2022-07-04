@@ -38,22 +38,6 @@ public class ImageProductController {
         return new ResponseEntity<>(urls, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete-image/{url}")
-    public ResponseEntity<LinkedHashMap<String, Object>> deleteImage(@PathVariable String url,
-                                                                     String productId) {
-        Products products = iProductsService.findProductsById(productId);
-        ImageProduct imageProduct = iImageProductService.findImageProductByUrl(url);
-
-        if (imageProduct == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        iImageProductService.deleteImageProduct(imageProduct, products);
-        LinkedHashMap<String, Object> jsonResponse = iImageProductService.modifyJsonResponse("delete", null);
-
-        return new ResponseEntity<>(jsonResponse, HttpStatus.ACCEPTED);
-    }
-
     @GetMapping("/image/{url}")
     public ResponseEntity<LinkedHashMap<String, Object>> getASpecificGif(@PathVariable String url) {
         ImageProduct imageProduct = iImageProductService.findImageProductByUrl(url);

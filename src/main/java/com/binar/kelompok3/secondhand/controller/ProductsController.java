@@ -1,5 +1,6 @@
 package com.binar.kelompok3.secondhand.controller;
 
+import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
@@ -11,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
 @RestController
@@ -113,6 +111,22 @@ public class ProductsController {
     public ResponseEntity<HttpStatus> deleteProducts(@PathVariable("productId") String id) {
         iProductsService.deleteProductsById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/delete-image")
+    public ResponseEntity<LinkedHashMap<String, Object>> deleteImage(@RequestParam String url,
+                                                                     @RequestParam String productId) {
+        Products products = iProductsService.findProductsById(productId);
+        ImageProduct imageProduct = iImageProductService.findImageProductByUrl(url);
+
+        if (imageProduct == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        iImageProductService.deleteImageProduct(imageProduct, products);
+        LinkedHashMap<String, Object> jsonResponse = iImageProductService.modifyJsonResponse("delete", null);
+
+        return new ResponseEntity<>(jsonResponse, HttpStatus.ACCEPTED);
     }
 
 }
