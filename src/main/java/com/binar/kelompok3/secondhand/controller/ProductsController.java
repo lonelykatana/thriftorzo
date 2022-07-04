@@ -39,14 +39,14 @@ public class ProductsController {
 
     // >>>> ADD PRODUCT
     @PostMapping("/add-product")
-    public ResponseEntity<Products> addProducts(@RequestParam MultipartFile[] imageFiles,
-                                                @RequestParam("userId") Integer userId,
-                                                @RequestParam("name") String name,
-                                                @RequestParam("price") Double price,
-                                                @RequestParam("status") Integer status,
-                                                @RequestParam("publish") Integer publish,
-                                                @RequestParam("description") String description,
-                                                @RequestParam("category") String category) {
+    public ResponseEntity<ProductResponse> addProducts(@RequestParam MultipartFile[] imageFiles,
+                                                       @RequestParam("userId") Integer userId,
+                                                       @RequestParam("name") String name,
+                                                       @RequestParam("price") Double price,
+                                                       @RequestParam("status") Integer status,
+                                                       @RequestParam("publish") Integer publish,
+                                                       @RequestParam("description") String description,
+                                                       @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
         UUID uuid = UUID.randomUUID();
         String productId = uuid.toString();
@@ -64,37 +64,48 @@ public class ProductsController {
             }
         }
 
-        Products products = iProductsService.findProductsById(productId);
-        return new ResponseEntity<>(products, HttpStatus.CREATED);
+        Products product = iProductsService.findProductsById(productId);
+        ProductResponse productResponse = new ProductResponse(product, product.getUserId());
+
+        return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
     }
 
     // >>>> UPDATE PRODUCT
     @PutMapping("/update-product")
-    public ResponseEntity<Products> updateProducts(@RequestParam(required = false) MultipartFile[] imageFiles,
-                                                   @RequestParam("productId") String productId,
-                                                   @RequestParam("name") String name,
-                                                   @RequestParam("price") Double price,
-                                                   @RequestParam("status") Integer status,
-                                                   @RequestParam("publish") Integer publish,
-                                                   @RequestParam("description") String description,
-                                                   @RequestParam("category") String category) {
+    public ResponseEntity<ProductResponse> updateProducts(
+            @RequestParam(required = false) MultipartFile[] imageFiles,
+            @RequestParam("productId") String productId,
+            @RequestParam("name") String name,
+            @RequestParam("price") Double price,
+            @RequestParam("status") Integer status,
+            @RequestParam("publish") Integer publish,
+            @RequestParam("description") String description,
+            @RequestParam("category") String category) {
+
         List<String> urls = new ArrayList<>();
-        Arrays.stream(imageFiles)
-                .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
-
-        Products currentProduct = iProductsService.findProductsById(productId);
-        if (currentProduct == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (imageFiles == null) {
+            iProductsService.updateProducts(name, price, status, publish,
+                    description, category, productId);
         } else {
-            for (String url : urls) {
-                iImageProductService.saveImageProductToDb(url, currentProduct);
-            }
-        }
-        iProductsService.updateProducts(name, price, status, publish,
-                description, category, productId);
+            Arrays.stream(imageFiles)
+                    .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
 
+            Products currentProduct = iProductsService.findProductsById(productId);
+            if (currentProduct == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                for (String url : urls) {
+                    iImageProductService.saveImageProductToDb(url, currentProduct);
+                }
+            }
+            iProductsService.updateProducts(name, price, status, publish,
+                    description, category, productId);
+
+        }
         Products updatedProduct = iProductsService.findProductsById(productId);
-        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+        ProductResponse productResponse = new ProductResponse(updatedProduct, updatedProduct.getUserId());
+
+        return new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
 
     // >>>> DELETE PRODUCT
