@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/image")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ImageProductController {
 
     private IProductsService iProductsService;
@@ -39,7 +40,7 @@ public class ImageProductController {
 
     @DeleteMapping("/delete-image/{url}")
     public ResponseEntity<LinkedHashMap<String, Object>> deleteImage(@PathVariable String url,
-                                                                   String productId) {
+                                                                     String productId) {
         Products products = iProductsService.findProductsById(productId);
         ImageProduct imageProduct = iImageProductService.findImageProductByUrl(url);
 
@@ -47,20 +48,20 @@ public class ImageProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        iImageProductService.deleteImageProduct(imageProduct,products);
+        iImageProductService.deleteImageProduct(imageProduct, products);
         LinkedHashMap<String, Object> jsonResponse = iImageProductService.modifyJsonResponse("delete", null);
 
         return new ResponseEntity<>(jsonResponse, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/image/{url}")
-    public ResponseEntity<LinkedHashMap<String, Object>> getASpecificGif(@PathVariable String url){
+    public ResponseEntity<LinkedHashMap<String, Object>> getASpecificGif(@PathVariable String url) {
         ImageProduct imageProduct = iImageProductService.findImageProductByUrl(url);
 
-        if(imageProduct == null){
+        if (imageProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        LinkedHashMap<String, Object> jsonResponseSpec = iImageProductService.modifyJsonResponse("get",url);
+        LinkedHashMap<String, Object> jsonResponseSpec = iImageProductService.modifyJsonResponse("get", url);
 
         return new ResponseEntity<>(jsonResponseSpec, HttpStatus.OK);
     }

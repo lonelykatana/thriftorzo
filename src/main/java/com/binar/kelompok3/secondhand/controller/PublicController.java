@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/public")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PublicController {
 
     private IProductsService iProductsService;

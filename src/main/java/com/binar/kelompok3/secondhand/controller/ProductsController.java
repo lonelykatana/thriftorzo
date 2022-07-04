@@ -19,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/product")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProductsController {
 
     private IProductsService iProductsService;
@@ -69,7 +70,7 @@ public class ProductsController {
 
     // >>>> UPDATE PRODUCT
     @PutMapping("/update-product")
-    public ResponseEntity<Products> updateProducts(@RequestParam MultipartFile[] imageFiles,
+    public ResponseEntity<Products> updateProducts(@RequestParam(required = false) MultipartFile[] imageFiles,
                                                    @RequestParam("productId") String productId,
                                                    @RequestParam("name") String name,
                                                    @RequestParam("price") Double price,
@@ -89,7 +90,7 @@ public class ProductsController {
                 iImageProductService.saveImageProductToDb(url, currentProduct);
             }
         }
-        iProductsService.updateProducts(name, price, status,
+        iProductsService.updateProducts(name, price, status, publish,
                 description, category, productId);
 
         Products updatedProduct = iProductsService.findProductsById(productId);
