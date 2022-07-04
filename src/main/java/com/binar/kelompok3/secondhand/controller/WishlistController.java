@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/wishlist")
 @AllArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class WishlistController {
 
     private IWishlistService iWishlistService;

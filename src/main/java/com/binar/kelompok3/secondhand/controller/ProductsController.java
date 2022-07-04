@@ -19,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/product")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProductsController {
 
     private IProductsService iProductsService;

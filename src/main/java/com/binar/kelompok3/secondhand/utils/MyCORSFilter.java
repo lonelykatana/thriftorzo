@@ -6,7 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
+/*@Component
 public class MyCORSFilter implements Filter {
 
     @Override
@@ -30,5 +30,5 @@ public class MyCORSFilter implements Filter {
     public void destroy() {
         Filter.super.destroy();
     }
-}
+}*/
 
