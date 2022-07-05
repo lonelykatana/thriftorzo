@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
-import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -42,19 +42,13 @@ public class ProductsServiceImpl implements IProductsService {
         productsRepository.updateProducts(name, price, status, publish, description, category, id);
     }
 
-
-    @Override
-    public List<Products> getAllProducts() {
-        return productsRepository.getAllProducts();
-    }
-
     @Override
     public Page<Products> getAllProductsPaginated(Pageable pageable) {
-        return productsRepository.getAllProductsPaginated(pageable);
+        return productsRepository.findAllByOrderByCreatedOnDesc(pageable);
     }
 
     @Override
-    public Page<Products> getAllProductReadyPaginated(Pageable pageable) {
+    public Page<Products> getAllProductPublishPaginated(Pageable pageable) {
         return productsRepository.getAllProductReadyPaginated(pageable);
     }
 

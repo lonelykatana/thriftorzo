@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.model.auth;
+package com.binar.kelompok3.secondhand.model.response;
 
 public class MessageResponse {
     private String message;
