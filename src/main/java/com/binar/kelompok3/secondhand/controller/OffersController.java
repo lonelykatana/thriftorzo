@@ -51,6 +51,9 @@ public class OffersController {
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
 
+    @PutMapping("/update/{id}/{status}")
+    public ResponseEntity<MessageResponse> updateOffers(@PathVariable Integer id,
+                                                           @PathVariable Integer status) {
     @PostMapping("/add/{usedId}")
     public ResponseEntity<OfferRequest> addOffers(@PathVariable(value = "usedId") Integer userId,
                                                   @RequestBody OfferRequest offerRequest) {
@@ -64,6 +67,9 @@ public class OffersController {
     public ResponseEntity<OfferResponseBuyer> updateOffers(@RequestParam Integer id,
                                                            @RequestParam Integer status) {
         iOffersService.updateOffers(id, status);
+
+
+        return ResponseEntity.ok(new MessageResponse("Sukses mengupdate tawaran"));
         Offers offers = iOffersService.getOffersById(id);
         OfferResponseBuyer offerResponse = new OfferResponseBuyer(offers);
         return new ResponseEntity<>(offerResponse, HttpStatus.OK);

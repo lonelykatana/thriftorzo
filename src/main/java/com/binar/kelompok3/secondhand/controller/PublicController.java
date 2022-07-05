@@ -85,17 +85,6 @@ public class PublicController {
 
     private ResponseEntity<ErrorResponse> getErrorResponseResponseEntity(
             @RequestParam(value = "page", defaultValue = "0", required = false) int page, Page<Products> products) {
-        List<ProductResponse> productResponses = products.stream()
-                .map(product -> new ProductResponse(product, product.getUserId()))
-                .collect(Collectors.toList());
-        if (products.hasContent()) {
-            ProductResponsePage productResponsePage = new ProductResponsePage(products.getTotalPages(),
-                    products.getTotalElements(), page, products.isFirst(), products.isLast(),
-                    products.getSize(), productResponses);
-            return new ResponseEntity(productResponsePage, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new ErrorResponse("569", "Data Kosong!"),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return getErrorResponseResponseEntity(page, products);
     }
 }

@@ -54,6 +54,12 @@ public class ProductsController {
         Page<Products> products =
                 iProductsService.getAllSoldProductsPaginated(user.getId(), PageRequest.of(page, size));
 
+        return getErrorResponseResponseEntity(page, products);
+    }
+
+    static ResponseEntity<ErrorResponse> getErrorResponseResponseEntity(
+            @RequestParam(value = "page", defaultValue = "0",
+                    required = false) int page, Page<Products> products) {
         List<ProductResponse> productResponses = products.stream()
                 .map(product -> new ProductResponse(product, product.getUserId()))
                 .collect(Collectors.toList());
