@@ -79,8 +79,7 @@ public class ProductsController {
                                                        @RequestParam("userId") Integer userId,
                                                        @RequestParam("name") String name,
                                                        @RequestParam("price") Double price,
-                                                       @RequestParam(value = "status",required = false, defaultValue = "1")
-                                                               Integer status,
+                                                       @RequestParam(value = "status", required = false, defaultValue = "1") Integer status,
                                                        @RequestParam("publish") Integer publish,
                                                        @RequestParam("description") String description,
                                                        @RequestParam("category") String category) {
