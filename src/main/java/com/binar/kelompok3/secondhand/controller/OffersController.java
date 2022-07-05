@@ -51,12 +51,12 @@ public class OffersController {
     }
 
     @PutMapping("/update/{id}/{status}")
-    public ResponseEntity<OfferResponseSeller> updateOffers(@PathVariable Integer id,
+    public ResponseEntity<MessageResponse> updateOffers(@PathVariable Integer id,
                                                            @PathVariable Integer status) {
         iOffersService.updateOffers(id, status);
-        Offers offers = iOffersService.findOffersById(id);
-        OfferResponseSeller offerResponse = new OfferResponseSeller(offers);
-        return new ResponseEntity<>(offerResponse, HttpStatus.OK);
+
+
+        return ResponseEntity.ok(new MessageResponse("Sukses mengupdate tawaran"));
     }
 
     @DeleteMapping("/delete/{id}")
