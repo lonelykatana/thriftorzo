@@ -1,5 +1,6 @@
 package com.binar.kelompok3.secondhand.controller;
 
+import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.JwtResponse;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.utils.JwtUtils;

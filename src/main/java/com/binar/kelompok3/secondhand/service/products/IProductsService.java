@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 public interface IProductsService {
 
@@ -15,11 +14,9 @@ public interface IProductsService {
     void updateProducts(String name, Double price, Integer status, Integer publish, String description,
                         String category, String id);
 
-    List<Products> getAllProducts();
-
     Page<Products> getAllProductsPaginated(Pageable pageable);
 
-    Page<Products> getAllProductReadyPaginated(Pageable pageable);
+    Page<Products> getAllProductPublishPaginated(Pageable pageable);
 
     Page<Products> searchProductByNamePaginated(String name, Pageable pageable);
 
@@ -30,6 +27,4 @@ public interface IProductsService {
     Products findProductsById(String id);
 
     LinkedHashMap<String, Object> modifyJsonResponse(String requestType, String id);
-
-
 }

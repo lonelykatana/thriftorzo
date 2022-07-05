@@ -18,8 +18,7 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
     @Query(value = "select * from products", nativeQuery = true)
     List<Products> getAllProducts();
 
-    @Query(value = "select * from products", nativeQuery = true)
-    Page<Products> getAllProductsPaginated(Pageable pageable);
+    Page<Products> findAllByOrderByCreatedOnDesc(Pageable pageable);
 
     @Query(value = "select * from products where publish = 1", nativeQuery = true)
     Page<Products> getAllProductReadyPaginated(Pageable pageable);
