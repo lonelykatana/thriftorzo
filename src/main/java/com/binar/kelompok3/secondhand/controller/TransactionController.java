@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/transaction")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class OffersController {
+public class TransactionController {
 
     private IOffersService iOffersService;
 
-    @PostMapping("/add-transaction/{usedId}")
-    public ResponseEntity<OfferRequest> addOffers(@PathVariable(value = "usedId") Integer userId,
+    @PostMapping("/buy-transaction/{userId}")
+    public ResponseEntity<OfferRequest> addOffers(@PathVariable(value = "userId") Integer userId,
                                                   @RequestBody OfferRequest offerRequest) {
         iOffersService.saveOffers(userId, offerRequest.getProductId(),
                 offerRequest.getOfferPrice(), offerRequest.getStatus());

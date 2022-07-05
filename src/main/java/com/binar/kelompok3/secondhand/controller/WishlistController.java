@@ -3,11 +3,13 @@ package com.binar.kelompok3.secondhand.controller;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.entity.Wishlist;
-import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
+import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import com.binar.kelompok3.secondhand.service.wishlist.IWishlistService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,19 +28,27 @@ public class WishlistController {
     private IUsersService iUsersService;
     private IProductsService iProductsService;
 
-    @GetMapping("/get-all/{userId}")
-    public ResponseEntity<List<ProductResponse>> getAllWishList(@PathVariable("userId") Integer userId) {
+    @GetMapping("/get-all-by/{userId}")
+    public ResponseEntity<ErrorResponse> getAllWishList(@PathVariable("userId") Integer userId,
+                                                        @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+                                                        @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
         List<Wishlist> body = iWishlistService.readWishList(userId);
-        List<ProductResponse> products = new ArrayList<>();
+        List<Products> products = new ArrayList<>();
         for (Wishlist wishlist : body) {
             Products product = wishlist.getProductId();
-            ProductResponse productResponse = new ProductResponse(product, product.getUserId());
-            products.add(productResponse);
+            products.add(product);
         }
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        Page<Products> productResponsePage = new PageImpl<>(products);
+        try {
+            return iProductsService.getErrorResponseResponseEntity(page, size, productResponsePage);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse(null, "Data Tidak Ditemukan!"),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add-wishlist")
     public ResponseEntity<String> addWishList(@RequestParam("productId") String productId,
                                               @RequestParam("userId") Integer userId) {
         Users users = iUsersService.findUsersById(userId);
@@ -48,7 +58,7 @@ public class WishlistController {
         return new ResponseEntity<>("Sukses menambah wishlist", HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete-wishlist")
     public ResponseEntity<String> deleteWishlist(@RequestParam("productId") String productId,
                                                  @RequestParam("userId") Integer userId) {
         Products products = iProductsService.findProductsById(productId);

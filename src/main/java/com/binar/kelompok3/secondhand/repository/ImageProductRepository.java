@@ -14,6 +14,6 @@ public interface ImageProductRepository extends JpaRepository<ImageProduct,Strin
 
     ImageProduct findImageProductByCreatedOn(Date createdOn);
 
-    List<ImageProduct> findImageProductByProducts(Integer Products);
+    List<ImageProduct> findImageProductByProducts(Integer products);
 
 }

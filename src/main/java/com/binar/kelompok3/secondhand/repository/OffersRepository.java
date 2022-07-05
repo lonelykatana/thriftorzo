@@ -31,11 +31,11 @@ public interface OffersRepository extends JpaRepository<Offers, Integer> {
     @Query(value = "update offers set status=?2 where id=?1", nativeQuery = true)
     Integer updateOffers(Integer id, Integer status);
 
-    @Query(value ="select * from offers where id=?1" ,nativeQuery = true)
+    @Query(value = "select * from offers where id=?1", nativeQuery = true)
     Offers findOffersById(Integer id);
 
     @Modifying
-    @Query(value ="update offers set status = 2 where product_id=?1 and id<>?2" ,nativeQuery = true)
-    void setAllStatusToDeclined(String product_id,Integer id);
+    @Query(value = "update offers set status = 2 where product_id=?1 and id<>?2", nativeQuery = true)
+    void setAllStatusToDeclined(String productId, Integer id);
 
 }

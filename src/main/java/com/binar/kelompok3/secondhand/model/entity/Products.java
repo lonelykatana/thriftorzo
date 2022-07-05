@@ -36,15 +36,11 @@ public class Products extends DateModel implements Serializable {
     @Column(name = "status")
     private Integer status;
 
-    // UNTUK PREVIEW ATAU UDAH PUBLISH
     @Column(name = "publish")
     private Integer publish;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
-
-//    @Column(name = "image_url")
-//    private String imageUrl;
 
     @Column(name = "category")
     private String category;

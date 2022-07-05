@@ -3,7 +3,6 @@ package com.binar.kelompok3.secondhand.model.response.product;
 import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
-import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.Data;
 
 import java.util.List;
@@ -12,17 +11,15 @@ import java.util.stream.Collectors;
 @Data
 public class ProductResponse {
 
-    private IUsersService usersService;
-
-    String id;
-    String name;
-    Double price;
-    String description;
-    String category;
-    Integer publish;
-    Integer status;
-    UserResponse userResponse;
-    List<String> imgUrl;
+    private String id;
+    private String name;
+    private Double price;
+    private String description;
+    private String category;
+    private Integer publish;
+    private Integer status;
+    private UserResponse userResponse;
+    private List<String> imgUrl;
 
     public ProductResponse() {
     }

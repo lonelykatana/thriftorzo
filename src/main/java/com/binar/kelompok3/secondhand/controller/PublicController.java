@@ -84,8 +84,6 @@ public class PublicController {
         try {
             Page<Products> products = iProductsService.searchProductByNamePaginated(productName, PageRequest.of(page, size));
             return iProductsService.getErrorResponseResponseEntity(page, size, products);
-
-
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse(null, "Data Tidak Ditemukan!"),
                     HttpStatus.INTERNAL_SERVER_ERROR);
