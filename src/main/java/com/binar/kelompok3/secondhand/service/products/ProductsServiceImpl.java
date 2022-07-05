@@ -53,6 +53,11 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
+    public Page<Products> getAllSoldProductsPaginated(Integer userId, Pageable pageable) {
+        return productsRepository.getAllProductSoldPaginated(userId, pageable);
+    }
+
+    @Override
     public Page<Products> searchProductByNamePaginated(String productName, Pageable pageable) {
         return productsRepository.findProductsByNameContainingIgnoreCase(productName, pageable);
     }

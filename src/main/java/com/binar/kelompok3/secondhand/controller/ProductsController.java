@@ -2,17 +2,24 @@ package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
 import com.binar.kelompok3.secondhand.model.entity.Products;
+import com.binar.kelompok3.secondhand.model.entity.Users;
+import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
+import com.binar.kelompok3.secondhand.model.response.product.ProductResponsePage;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -33,6 +40,27 @@ public class ProductsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(productResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-sold-products")
+    public ResponseEntity<ErrorResponse> getSoldProducts(Authentication authentication,
+                                                         @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+                                                         @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
+        Users user = iUsersService.findByEmail(authentication.getName());
+        Page<Products> products = iProductsService.getAllSoldProductsPaginated(user.getId(), PageRequest.of(page, size));
+
+        List<ProductResponse> productResponses = products.stream()
+                .map(product -> new ProductResponse(product, product.getUserId()))
+                .collect(Collectors.toList());
+        if (products.hasContent()) {
+            ProductResponsePage productResponsePage = new ProductResponsePage(products.getTotalPages(),
+                    products.getTotalElements(), page, products.isFirst(), products.isLast(),
+                    products.getSize(), productResponses);
+            return new ResponseEntity(productResponsePage, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new ErrorResponse("569", "Data Kosong!"),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // >>>> ADD PRODUCT

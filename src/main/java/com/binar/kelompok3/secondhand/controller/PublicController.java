@@ -67,8 +67,8 @@ public class PublicController {
     @GetMapping("/filter-category")
     public ResponseEntity<Page<Products>> filterProductByCategoryPaginated(
             @RequestParam(defaultValue = "", required = false) String category,
-            @RequestParam("page") int page,
-            @RequestParam("size") int size) {
+            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
         Page<Products> products =
                 iProductsService.filterProductByCategoryPaginated(category, PageRequest.of(page, size));
         return new ResponseEntity<>(products, HttpStatus.OK);
@@ -76,11 +76,10 @@ public class PublicController {
 
     @GetMapping("/search")
     public ResponseEntity<Page<Products>> searchProductByNamePaginated(
-            @RequestParam(defaultValue = "", required = false) String productName,
-            @RequestParam("page") int page,
-            @RequestParam("size") int size) {
-        Page<Products> products =
-                iProductsService.searchProductByNamePaginated(productName, PageRequest.of(page, size));
+            @RequestParam(value = "productName", defaultValue = "", required = false) String productName,
+            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
+        Page<Products> products = iProductsService.searchProductByNamePaginated(productName, PageRequest.of(page, size));
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
@@ -99,5 +98,4 @@ public class PublicController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

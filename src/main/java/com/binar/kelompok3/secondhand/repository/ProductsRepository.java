@@ -20,8 +20,11 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     Page<Products> findAllByOrderByCreatedOnDesc(Pageable pageable);
 
-    @Query(value = "select * from products where publish = 1", nativeQuery = true)
+    @Query(value = "select * from products where publish=1", nativeQuery = true)
     Page<Products> getAllProductReadyPaginated(Pageable pageable);
+
+    @Query(value = "select * from products where status=1 and user_id=?1", nativeQuery = true)
+    Page<Products> getAllProductSoldPaginated(Integer userId, Pageable pageable);
 
     Page<Products> findProductsByNameContainingIgnoreCase(String name, Pageable pageable);
 
