@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.model.auth;
+package com.binar.kelompok3.secondhand.model.response;
 
 import lombok.Getter;
 import lombok.Setter;

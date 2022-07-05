@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Data
 public class ProductResponse {
 
-    IUsersService usersService;
+    private IUsersService usersService;
 
     String id;
     String name;

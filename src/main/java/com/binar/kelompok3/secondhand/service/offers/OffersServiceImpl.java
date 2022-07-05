@@ -33,19 +33,20 @@ public class OffersServiceImpl implements IOffersService {
         offers.setProductId(products);
         offers.setOfferPrice(offerPrice);
         offers.setStatus(status);
+        offersRepository.save(offers);
     }
 
     //service untuk riwayat tawaran buyer
     @Override
     public List<Offers> getAllByUserId(Integer userId) {
-        return offersRepository.getAllByUserId(userId);
+        return offersRepository.findAllByUserId(userId);
     }
 
     //service untuk riwayat tawaran penjual
 
     @Override
-    public List<Offers> getHistorySeller(Integer productId, Integer userId) {
-        return offersRepository.getHistorySeller(productId, userId);
+    public List<Offers> getHistorySeller(Integer userId) {
+        return offersRepository.getHistorySeller(userId);
     }
 
 
@@ -64,4 +65,5 @@ public class OffersServiceImpl implements IOffersService {
     public Offers getOffersById(Integer id) {
         return offersRepository.getOffersById(id);
     }
+
 }

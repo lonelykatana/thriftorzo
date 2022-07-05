@@ -16,10 +16,14 @@ public interface OffersRepository extends JpaRepository<Offers, Integer> {
     @Query(value = "select * from offers", nativeQuery = true)
     List<Offers> getAllOffers();
 
-    List<Offers> getAllByUserId(Integer userId);
+    @Query(value = "select * from offers where user_id=?1 order by updated_on DESC", nativeQuery = true)
+    List<Offers> findAllByUserId(Integer userId);
 
-    @Query(value = "select * from offers where offers.product_id = (select id from products where prodcuts.user_id = users.id)", nativeQuery = true)
-    List<Offers> getHistorySeller(Integer productId, Integer userId);
+    @Query(value =
+            "select offers.id, offers.created_on,offers.updated_on, offers.offer_price, offers.status, offers.product_id,offers.user_id\n" +
+                    "from offers inner join(select id from products where products.user_id =?1)p on offers" +
+                    ".product_id = p.id; ", nativeQuery = true)
+    List<Offers> getHistorySeller(Integer userId);
 
     Integer deleteOffersById(Integer id);
 

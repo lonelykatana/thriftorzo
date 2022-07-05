@@ -22,7 +22,6 @@ public class ProductsController {
 
     private IProductsService iProductsService;
     private IImageProductService iImageProductService;
-    private IUsersService iUsersService;
 
     // >>>> GET PRODUCTS
     @GetMapping("/get/{productId}")

@@ -12,7 +12,7 @@ public interface IOffersService {
 
     List<Offers> getAllByUserId(Integer userId);
 
-    List<Offers> getHistorySeller(Integer productId,Integer userId);
+    List<Offers> getHistorySeller(Integer userId);
 
     void updateOffers(Integer id, Integer status);
 
