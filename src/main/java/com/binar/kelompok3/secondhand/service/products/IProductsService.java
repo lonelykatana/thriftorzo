@@ -4,8 +4,6 @@ import com.binar.kelompok3.secondhand.model.entity.Products;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.LinkedHashMap;
-
 public interface IProductsService {
 
     void saveProducts(String id, String name, Double price, Integer status, Integer publish, String description,

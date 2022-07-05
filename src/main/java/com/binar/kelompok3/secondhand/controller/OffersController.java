@@ -22,18 +22,18 @@ public class OffersController {
 
     private IOffersService iOffersService;
 
-    @GetMapping("/get")
-    public ResponseEntity<OfferResponseSeller> getOffer(@RequestParam Integer id) {
-        Offers offers = iOffersService.getOffersById(id);
-        OfferResponseSeller offerResponse = new OfferResponseSeller(offers);
-        return new ResponseEntity<>(offerResponse, HttpStatus.OK);
+    @PostMapping("/add/{usedId}")
+    public ResponseEntity<OfferRequest> addOffers(@PathVariable(value = "usedId") Integer userId,
+                                                  @RequestBody OfferRequest offerRequest) {
+        iOffersService.saveOffers(userId, offerRequest.getProductId(),
+                offerRequest.getOfferPrice(), offerRequest.getStatus());
+        return new ResponseEntity<>(offerRequest, HttpStatus.OK);
     }
 
     @GetMapping("/buyer-history/{userId}")
     public ResponseEntity<List<OfferResponseBuyer>> getBuyerHistory(@PathVariable Integer userId) {
         List<Offers> offers = iOffersService.getAllByUserId(userId);
-        List<OfferResponseBuyer> offerResponses = offers
-                .stream()
+        List<OfferResponseBuyer> offerResponses = offers.stream()
                 .map(OfferResponseBuyer::new)
                 .collect(Collectors.toList());
 
@@ -43,8 +43,7 @@ public class OffersController {
     @GetMapping("/seller-history/{userId}")
     public ResponseEntity<List<OfferResponseSeller>> getHistorySeller(@PathVariable Integer userId) {
         List<Offers> offers = iOffersService.getHistorySeller(userId);
-        List<OfferResponseSeller> offerResponses = offers
-                .stream()
+        List<OfferResponseSeller> offerResponses = offers.stream()
                 .map(OfferResponseSeller::new)
                 .collect(Collectors.toList());
 
@@ -52,33 +51,24 @@ public class OffersController {
     }
 
     @PutMapping("/update/{id}/{status}")
-    public ResponseEntity<MessageResponse> updateOffers(@PathVariable Integer id,
-                                                           @PathVariable Integer status) {
-    @PostMapping("/add/{usedId}")
-    public ResponseEntity<OfferRequest> addOffers(@PathVariable(value = "usedId") Integer userId,
-                                                  @RequestBody OfferRequest offerRequest) {
-        iOffersService.saveOffers(userId, offerRequest.getProductId(),
-                offerRequest.getOfferPrice(), offerRequest.getStatus());
-        return new ResponseEntity<>(offerRequest, HttpStatus.OK);
+    public ResponseEntity<MessageResponse> updateOffers(@RequestParam Integer offerId,
+                                                        @RequestParam Integer status) {
+        iOffersService.updateOffers(offerId, status);
+        return ResponseEntity.ok(new MessageResponse("Sukses mengupdate tawaran"));
     }
 
+    @DeleteMapping("/delete/{offerId}")
+    public ResponseEntity<MessageResponse> deleteOffers(@PathVariable Integer offerId) {
+        iOffersService.deleteOffersById(offerId);
+        return ResponseEntity.ok(
+                new MessageResponse("Sukses menghapus tawaran" + iOffersService.findOffersById(offerId)));
+    }
 
-    @PutMapping("/update")
-    public ResponseEntity<OfferResponseBuyer> updateOffers(@RequestParam Integer id,
-                                                           @RequestParam Integer status) {
-        iOffersService.updateOffers(id, status);
-
-
-        return ResponseEntity.ok(new MessageResponse("Sukses mengupdate tawaran"));
-        Offers offers = iOffersService.getOffersById(id);
-        OfferResponseBuyer offerResponse = new OfferResponseBuyer(offers);
+    @GetMapping("/get/{offerId}")
+    public ResponseEntity<OfferResponseSeller> getOffer(@PathVariable Integer offerId) {
+        Offers offers = iOffersService.findOffersById(offerId);
+        OfferResponseSeller offerResponse = new OfferResponseSeller(offers);
         return new ResponseEntity<>(offerResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<MessageResponse> deleteOffers(@RequestParam Integer id) {
-        iOffersService.deleteOffersById(id);
-        return ResponseEntity.ok(
-                new MessageResponse("Sukses menghapus tawaran" + iOffersService.getOffersById(id)));
-    }
 }

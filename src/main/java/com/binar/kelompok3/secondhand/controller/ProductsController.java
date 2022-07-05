@@ -31,7 +31,6 @@ public class ProductsController {
     private IProductsService iProductsService;
     private IUsersService iUsersService;
     private IImageProductService iImageProductService;
-    private IUsersService iUsersService;
 
     // >>>> GET PRODUCTS
     @GetMapping("/get/{productId}")
