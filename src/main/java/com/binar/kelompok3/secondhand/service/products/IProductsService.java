@@ -18,6 +18,8 @@ public interface IProductsService {
 
     Page<Products> getAllProductPublishPaginated(Pageable pageable);
 
+    Page<Products> getAllSoldProductsPaginated(Integer userId, Pageable pageable);
+
     Page<Products> searchProductByNamePaginated(String name, Pageable pageable);
 
     Page<Products> filterProductByCategoryPaginated(String category, Pageable pageable);
@@ -27,4 +29,5 @@ public interface IProductsService {
     Products findProductsById(String id);
 
     LinkedHashMap<String, Object> modifyJsonResponse(String requestType, String id);
+
 }
