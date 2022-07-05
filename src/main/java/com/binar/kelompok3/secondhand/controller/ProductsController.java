@@ -4,6 +4,7 @@ import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
+import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponsePage;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
@@ -29,6 +30,7 @@ public class ProductsController {
 
     private IProductsService iProductsService;
     private IImageProductService iImageProductService;
+    private IUsersService iUsersService;
 
     // >>>> GET PRODUCTS
     @GetMapping("/get/{productId}")
@@ -43,10 +45,13 @@ public class ProductsController {
 
     @GetMapping("/get-sold-products")
     public ResponseEntity<ErrorResponse> getSoldProducts(Authentication authentication,
-                                                         @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-                                                         @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
+                                                         @RequestParam(value = "page", defaultValue = "0",
+                                                                 required = false) int page,
+                                                         @RequestParam(value = "size", defaultValue = "10",
+                                                                 required = false) int size) {
         Users user = iUsersService.findByEmail(authentication.getName());
-        Page<Products> products = iProductsService.getAllSoldProductsPaginated(user.getId(), PageRequest.of(page, size));
+        Page<Products> products =
+                iProductsService.getAllSoldProductsPaginated(user.getId(), PageRequest.of(page, size));
 
         List<ProductResponse> productResponses = products.stream()
                 .map(product -> new ProductResponse(product, product.getUserId()))
@@ -68,7 +73,8 @@ public class ProductsController {
                                                        @RequestParam("userId") Integer userId,
                                                        @RequestParam("name") String name,
                                                        @RequestParam("price") Double price,
-                                                       @RequestParam("status") Integer status,
+                                                       @RequestParam(value = "status",required = false, defaultValue = "1")
+                                                               Integer status,
                                                        @RequestParam("publish") Integer publish,
                                                        @RequestParam("description") String description,
                                                        @RequestParam("category") String category) {
@@ -155,5 +161,6 @@ public class ProductsController {
 
         return new ResponseEntity<>(jsonResponse, HttpStatus.ACCEPTED);
     }
+
 
 }

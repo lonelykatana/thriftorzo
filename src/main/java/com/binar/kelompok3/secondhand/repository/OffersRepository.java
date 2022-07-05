@@ -22,7 +22,7 @@ public interface OffersRepository extends JpaRepository<Offers, Integer> {
     @Query(value =
             "select offers.id, offers.created_on,offers.updated_on, offers.offer_price, offers.status, offers.product_id,offers.user_id\n" +
                     "from offers inner join(select id from products where products.user_id =?1)p on offers" +
-                    ".product_id = p.id; ", nativeQuery = true)
+                    ".product_id = p.id order by updated_on DESC; ", nativeQuery = true)
     List<Offers> getHistorySeller(Integer userId);
 
     Integer deleteOffersById(Integer id);
@@ -31,6 +31,10 @@ public interface OffersRepository extends JpaRepository<Offers, Integer> {
     @Query(value = "update offers set status=?2 where id=?1", nativeQuery = true)
     Integer updateOffers(Integer id, Integer status);
 
-    Offers getOffersById(Integer id);
+    Offers findOffersById(Integer id);
+
+    @Modifying
+    @Query(value ="update offers set status = 2 where product_id=?1 and id<>?2" ,nativeQuery = true)
+    void setAllStatusToDeclined(String product_id,Integer id);
 
 }

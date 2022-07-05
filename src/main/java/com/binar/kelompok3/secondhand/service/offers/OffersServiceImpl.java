@@ -53,7 +53,14 @@ public class OffersServiceImpl implements IOffersService {
     //update status pada tawaran
     @Override
     public void updateOffers(Integer id, Integer status) {
-        offersRepository.updateOffers(id, status);
+
+        String productId = findOffersById(id).getProductId().getId();
+        if (status.equals(4)) {
+            iProductsService.updateStatus(productId, 2);
+            offersRepository.setAllStatusToDeclined(productId, id);
+            offersRepository.updateOffers(id, status);
+        } else offersRepository.updateOffers(id, status);
+
     }
 
     @Override
@@ -62,8 +69,8 @@ public class OffersServiceImpl implements IOffersService {
     }
 
     @Override
-    public Offers getOffersById(Integer id) {
-        return offersRepository.getOffersById(id);
+    public Offers findOffersById(Integer id) {
+        return offersRepository.findOffersById(id);
     }
 
 }

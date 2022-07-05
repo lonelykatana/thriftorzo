@@ -18,7 +18,7 @@ public interface IOffersService {
 
     void deleteOffersById(Integer id);
 
-    Offers getOffersById(Integer id);
+    Offers findOffersById(Integer id);
 
 
 
