@@ -2,7 +2,6 @@ package com.binar.kelompok3.secondhand.controller;
 
 
 import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
-import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import lombok.AllArgsConstructor;
@@ -25,16 +24,12 @@ public class ImageProductController {
     private IProductsService iProductsService;
     private IImageProductService iImageProductService;
 
-    //id yg dimaksud adalah id product
+    // id yg dimaksud adalah id product
     @PostMapping("/upload-products-image")
     public ResponseEntity<List<String>> uploadImage(@RequestParam("imageFiles") MultipartFile[] imageFiles) {
         List<String> urls = new ArrayList<>();
         Arrays.stream(imageFiles)
                 .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
-        //Products currentProduct = iProductsService.findProductsById(id);
-//        for (String url : urls) {
-//            iImageProductService.saveImageProductToDb(url, currentProduct);
-//        }
         return new ResponseEntity<>(urls, HttpStatus.CREATED);
     }
 

@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.model.response.product;
+package com.binar.kelompok3.secondhand.model.response;
 
 import lombok.Data;
 
