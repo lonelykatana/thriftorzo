@@ -49,6 +49,10 @@ public class OffersServiceImpl implements IOffersService {
         return offersRepository.getHistorySeller(userId);
     }
 
+    @Override
+    public Offers findOffersById(Integer id) {
+        return offersRepository.findOffersById(id);
+    }
 
     //update status pada tawaran
     @Override
@@ -68,9 +72,6 @@ public class OffersServiceImpl implements IOffersService {
         offersRepository.deleteOffersById(id);
     }
 
-    @Override
-    public Offers findOffersById(Integer id) {
-        return offersRepository.findOffersById(id);
-    }
+
 
 }
