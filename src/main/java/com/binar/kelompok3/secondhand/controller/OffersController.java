@@ -22,20 +22,20 @@ public class OffersController {
 
     private IOffersService iOffersService;
 
-
-    @PostMapping("/add")
-    public ResponseEntity<OfferRequest> addOffers(@RequestBody OfferRequest offerRequest) {
-        iOffersService.saveOffers(offerRequest.getUserId(), offerRequest.getProductId(),
-                offerRequest.getOfferPrice(), offerRequest.getStatus());
-        return new ResponseEntity<>(offerRequest, HttpStatus.OK);
+    @GetMapping("/get")
+    public ResponseEntity<OfferResponseSeller> getOffer(@RequestParam Integer id) {
+        Offers offers = iOffersService.getOffersById(id);
+        OfferResponseSeller offerResponse = new OfferResponseSeller(offers);
+        return new ResponseEntity<>(offerResponse, HttpStatus.OK);
     }
 
     @GetMapping("/buyer-history/{userId}")
     public ResponseEntity<List<OfferResponseBuyer>> getBuyerHistory(@PathVariable Integer userId) {
         List<Offers> offers = iOffersService.getAllByUserId(userId);
-        List<OfferResponseBuyer> offerResponses =
-                offers.stream().map(offers1 -> new OfferResponseBuyer(offers1)).collect(
-                        Collectors.toList());
+        List<OfferResponseBuyer> offerResponses = offers
+                .stream()
+                .map(OfferResponseBuyer::new)
+                .collect(Collectors.toList());
 
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
@@ -43,34 +43,36 @@ public class OffersController {
     @GetMapping("/seller-history/{userId}")
     public ResponseEntity<List<OfferResponseSeller>> getHistorySeller(@PathVariable Integer userId) {
         List<Offers> offers = iOffersService.getHistorySeller(userId);
-        List<OfferResponseSeller> offerResponses =
-                offers.stream().map(offers1 -> new OfferResponseSeller(offers1)).collect(
-                        Collectors.toList());
+        List<OfferResponseSeller> offerResponses = offers
+                .stream()
+                .map(OfferResponseSeller::new)
+                .collect(Collectors.toList());
 
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}/{status}")
-    public ResponseEntity<OfferResponseBuyer> updateOffers(@PathVariable Integer id,
-                                                           @PathVariable Integer status) {
+    @PostMapping("/add/{usedId}")
+    public ResponseEntity<OfferRequest> addOffers(@PathVariable(value = "usedId") Integer userId,
+                                                  @RequestBody OfferRequest offerRequest) {
+        iOffersService.saveOffers(userId, offerRequest.getProductId(),
+                offerRequest.getOfferPrice(), offerRequest.getStatus());
+        return new ResponseEntity<>(offerRequest, HttpStatus.OK);
+    }
+
+
+    @PutMapping("/update")
+    public ResponseEntity<OfferResponseBuyer> updateOffers(@RequestParam Integer id,
+                                                           @RequestParam Integer status) {
         iOffersService.updateOffers(id, status);
         Offers offers = iOffersService.getOffersById(id);
         OfferResponseBuyer offerResponse = new OfferResponseBuyer(offers);
         return new ResponseEntity<>(offerResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<MessageResponse> deleteOffers(@PathVariable Integer id) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<MessageResponse> deleteOffers(@RequestParam Integer id) {
         iOffersService.deleteOffersById(id);
         return ResponseEntity.ok(
                 new MessageResponse("Sukses menghapus tawaran" + iOffersService.getOffersById(id)));
     }
-
-    @GetMapping("/get/{id}")
-    public ResponseEntity<OfferResponseBuyer> getOffer(@PathVariable Integer id) {
-        Offers offers = iOffersService.getOffersById(id);
-        OfferResponseBuyer offerResponse = new OfferResponseBuyer(offers);
-        return new ResponseEntity<>(offerResponse, HttpStatus.OK);
-    }
-
 }

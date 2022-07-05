@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class ProductsController {
 
     private IProductsService iProductsService;
+    private IUsersService iUsersService;
     private IImageProductService iImageProductService;
 
     // >>>> GET PRODUCTS

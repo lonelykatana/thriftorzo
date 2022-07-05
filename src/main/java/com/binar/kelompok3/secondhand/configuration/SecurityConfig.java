@@ -62,9 +62,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/Secondhand-docs.html").permitAll()
                 .antMatchers("/public/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/offer/**").authenticated()
+                .antMatchers("/product/**").authenticated()
                 .antMatchers("/user/**").authenticated()
-                .antMatchers("/image/**").authenticated()
-                .antMatchers("/product/**").authenticated() // Masalah get all product untuk homepage
                 .antMatchers("/wishlist/**").authenticated();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
