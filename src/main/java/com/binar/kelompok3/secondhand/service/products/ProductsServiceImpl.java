@@ -9,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
-
 
 @Service
 @AllArgsConstructor
@@ -20,7 +18,8 @@ public class ProductsServiceImpl implements IProductsService {
     private IUsersService iUsersService;
 
     @Override
-    public void saveProducts(String id, String name, Double price, Integer status, Integer publish, String description,
+    public void saveProducts(String id, String name, Double price, Integer status, Integer publish,
+                             String description,
                              String category, Integer userId) {
         Products products = new Products();
         products.setId(id);
@@ -78,28 +77,11 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    public LinkedHashMap<String, Object> modifyJsonResponse(String requestType, String id) {
-        LinkedHashMap<String, Object> jsonResponse = new LinkedHashMap<>();
-        Products products = productsRepository.findProductsById(id);
-
-
-        if (requestType.equals("get")) {
-            jsonResponse.put("status", "success");
-            LinkedHashMap<String, Object> data = new LinkedHashMap<>();
-
-            data.put("id", products.getId());
-            data.put("name", products.getName());
-            data.put("price", products.getPrice().toString());
-            data.put("status", products.getStatus().toString());
-            data.put("description", products.getDescription());
-            data.put("category", products.getCategory());
-            data.put("userId", products.getUserId().getId());
-            data.put("imageProducts", products.getImageProducts());
-
-            jsonResponse.put("data", data);
-        }
-
-
-        return jsonResponse;
+    public void updateStatus(String id, Integer status){
+        Products products = findProductsById(id);
+        products.setStatus(status);
+        productsRepository.save(products);
     }
+
+
 }

@@ -28,6 +28,6 @@ public interface IProductsService {
 
     Products findProductsById(String id);
 
-    LinkedHashMap<String, Object> modifyJsonResponse(String requestType, String id);
 
+    void updateStatus(String id, Integer status);
 }
