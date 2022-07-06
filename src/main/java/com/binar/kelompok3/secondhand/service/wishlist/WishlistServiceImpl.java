@@ -15,6 +15,11 @@ public class WishlistServiceImpl implements IWishlistService {
 
 
     @Override
+    public Wishlist getAWishlist(String productId, Integer userId) {
+        return wishlistRepository.getAWishlistByProductIdAndUserId(productId, userId);
+    }
+
+    @Override
     public void createWishList(Wishlist wishlist) {
         wishlistRepository.save(wishlist);
     }
@@ -26,7 +31,7 @@ public class WishlistServiceImpl implements IWishlistService {
 
     @Override
     public void deleteWishlistByProductIdAndUserId(String productId, Integer userId) {
-         wishlistRepository.deleteWishlistByProductIdAndUserId(productId,userId);
+        wishlistRepository.deleteWishlistByProductIdAndUserId(productId, userId);
     }
 
 
