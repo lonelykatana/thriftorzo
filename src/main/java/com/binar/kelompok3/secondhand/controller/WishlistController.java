@@ -49,10 +49,11 @@ public class WishlistController {
     }
 
     @GetMapping("/get-a-wishlist-product-user")
-    public ResponseEntity<Wishlist> getAWishlist(@RequestParam("productId") String productId,
-                                                 @RequestParam("userId") Integer userId) {
+    public ResponseEntity<Boolean> getAWishlist(@RequestParam("productId") String productId,
+                                                @RequestParam("userId") Integer userId) {
         Wishlist wishlist = iWishlistService.getAWishlist(productId, userId);
-        return new ResponseEntity<Wishlist>(wishlist, HttpStatus.OK);
+        Boolean hasil = wishlist != null;
+        return new ResponseEntity<>(hasil, HttpStatus.OK);
     }
 
     @PostMapping("/add-wishlist")
