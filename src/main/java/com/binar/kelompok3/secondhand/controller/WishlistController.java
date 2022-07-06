@@ -62,16 +62,6 @@ public class WishlistController {
         return new ResponseEntity<>(wishlistStatusResponse, HttpStatus.OK);
     }
 
-    /*@PostMapping("/add-wishlist")
-    public ResponseEntity<WishlistResponse> addWishList(@RequestParam("productId") String productId,
-                                                        @RequestParam("userId") Integer userId) {
-        Users users = iUsersService.findUsersById(userId);
-        Products products = iProductsService.findProductsById(productId);
-        Wishlist wishlist = new Wishlist(users, products);
-        iWishlistService.createWishList(wishlist);
-        WishlistResponse wishlistResponse = new WishlistResponse(productId, userId, "Add '" + products.getName() + "' to " + users.getName() + "'s Wishlist.");
-        return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
-    }*/
 
     @PostMapping("/add-wishlist")
     public ResponseEntity<WishlistResponse> addWishList(@RequestBody WishlistRequest request) {

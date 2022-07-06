@@ -9,11 +9,13 @@ import com.binar.kelompok3.secondhand.repository.ProductsRepository;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,13 +68,20 @@ public class ProductsServiceImpl implements IProductsService {
 
     @Override
     public Page<Products> searchProductByNamePaginated(String productName, Pageable pageable) {
-        return productsRepository.findProductsByNameContainingIgnoreCase(productName, pageable);
+        List<Products> products = productsRepository.findProductsByNameContainingIgnoreCase(productName, pageable);
+        List<Products> publishedProducts = products.stream()
+                .filter(val -> val.getPublish().equals(1))
+                .collect(Collectors.toList());
+        return new PageImpl<>(publishedProducts);
     }
 
     @Override
     public Page<Products> filterProductByCategoryPaginated(String category, Pageable pageable) {
-        // return productsRepository.findProductsByCategoryContainingIgnoreCase(category, pageable);
-        return productsRepository.getProductCategoryWhereReady(category, pageable);
+        List<Products> products = productsRepository.findProductsByCategoryContainingIgnoreCase(category, pageable);
+        List<Products> publishedProducts = products.stream()
+                .filter(val -> val.getPublish().equals(1))
+                .collect(Collectors.toList());
+        return new PageImpl<>(publishedProducts);
     }
 
     @Override
