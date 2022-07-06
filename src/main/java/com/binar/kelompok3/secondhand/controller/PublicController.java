@@ -48,7 +48,7 @@ public class PublicController {
         }
     }
 
-    /*@GetMapping("/get-all-products-ready")
+    @GetMapping("/get-all-products-ready")
     public ResponseEntity<ErrorResponse> getAllProductReadyPaginated(
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
             @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
@@ -89,7 +89,7 @@ public class PublicController {
             return new ResponseEntity<>(new ErrorResponse(null, "Data Tidak Ditemukan!"),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
+    }
 
 
     // COBAA

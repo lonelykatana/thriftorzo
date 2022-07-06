@@ -57,21 +57,23 @@ public class ProductsServiceImpl implements IProductsService {
         return productsRepository.findAllByOrderByCreatedOnDesc(pageable);
     }
 
-   /* @Override
+    // ini
+    @Override
     public Page<Products> getAllProductPublishPaginated(Pageable pageable) {
         return productsRepository.getAllProductReadyPaginated(pageable);
-    }*/
+    }
 
     @Override
     public Page<Products> getAllSoldProductsPaginated(Integer userId, Pageable pageable) {
         return productsRepository.getAllProductSoldPaginated(userId, pageable);
     }
 
-    /*@Override
+    // ini
+    @Override
     public Page<Products> searchProductByNamePaginated(String productName, Pageable pageable) {
         List<Products> products = productsRepository.findProductsByNameContainingIgnoreCase(productName, pageable);
         return new PageImpl<>(filterPublished(products));
-    }*/
+    }
 
     @Override
     public Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable) {
@@ -79,12 +81,13 @@ public class ProductsServiceImpl implements IProductsService {
         return new PageImpl<>(filterPublished(products));
     }
 
-    /*@Override
+    // ini
+    @Override
     public Page<Products> filterProductByCategoryPaginated(String category, Pageable pageable) {
         List<Products> products = productsRepository.findProductsByCategoryContainingIgnoreCase(category, pageable);
 
         return new PageImpl<>(filterPublished(products));
-    }*/
+    }
 
     @Override
     public void deleteProductsById(String id) {

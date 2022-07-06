@@ -21,14 +21,14 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
     Page<Products> findAllByOrderByCreatedOnDesc(Pageable pageable);
 
     @Query(value = "select * from products where publish=1", nativeQuery = true)
-    Page<Products> getAllProductReadyPaginated(Pageable pageable);
+    Page<Products> getAllProductReadyPaginated(Pageable pageable); // ini
 
     @Query(value = "select * from products where status=1 and user_id=?1", nativeQuery = true)
     Page<Products> getAllProductSoldPaginated(Integer userId, Pageable pageable);
 
-    // List<Products> findProductsByNameContainingIgnoreCase(String name, Pageable pageable);
+    List<Products> findProductsByNameContainingIgnoreCase(String name, Pageable pageable); // ini
 
-    // List<Products> findProductsByCategoryContainingIgnoreCase(String category, Pageable pageable);
+    List<Products> findProductsByCategoryContainingIgnoreCase(String category, Pageable pageable); // ini
 
     String deleteProductsById(String id);
 
@@ -39,8 +39,6 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
     Products findProductsById(String id);
 
     // COBA
-
-
     List<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable);
 
 
