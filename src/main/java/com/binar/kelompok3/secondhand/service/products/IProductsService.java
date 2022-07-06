@@ -16,13 +16,15 @@ public interface IProductsService {
 
     Page<Products> getAllProductsPaginated(Pageable pageable);
 
-    Page<Products> getAllProductPublishPaginated(Pageable pageable);
+    // Page<Products> getAllProductPublishPaginated(Pageable pageable);
 
     Page<Products> getAllSoldProductsPaginated(Integer userId, Pageable pageable);
 
-    Page<Products> searchProductByNamePaginated(String name, Pageable pageable);
+    // Page<Products> searchProductByNamePaginated(String name, Pageable pageable);
 
-    Page<Products> filterProductByCategoryPaginated(String category, Pageable pageable);
+    Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable);
+
+    // Page<Products> filterProductByCategoryPaginated(String category, Pageable pageable);
 
     void deleteProductsById(String id);
 

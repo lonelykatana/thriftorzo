@@ -1,5 +1,6 @@
 package com.binar.kelompok3.secondhand.service.products;
 
+import com.binar.kelompok3.secondhand.model.DateModel;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
@@ -15,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,33 +57,34 @@ public class ProductsServiceImpl implements IProductsService {
         return productsRepository.findAllByOrderByCreatedOnDesc(pageable);
     }
 
-    @Override
+   /* @Override
     public Page<Products> getAllProductPublishPaginated(Pageable pageable) {
         return productsRepository.getAllProductReadyPaginated(pageable);
-    }
+    }*/
 
     @Override
     public Page<Products> getAllSoldProductsPaginated(Integer userId, Pageable pageable) {
         return productsRepository.getAllProductSoldPaginated(userId, pageable);
     }
 
-    @Override
+    /*@Override
     public Page<Products> searchProductByNamePaginated(String productName, Pageable pageable) {
         List<Products> products = productsRepository.findProductsByNameContainingIgnoreCase(productName, pageable);
-        List<Products> publishedProducts = products.stream()
-                .filter(val -> val.getPublish().equals(1))
-                .collect(Collectors.toList());
-        return new PageImpl<>(publishedProducts);
-    }
+        return new PageImpl<>(filterPublished(products));
+    }*/
 
     @Override
+    public Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable) {
+        List<Products> products = productsRepository.findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(name, category, pageable);
+        return new PageImpl<>(filterPublished(products));
+    }
+
+    /*@Override
     public Page<Products> filterProductByCategoryPaginated(String category, Pageable pageable) {
         List<Products> products = productsRepository.findProductsByCategoryContainingIgnoreCase(category, pageable);
-        List<Products> publishedProducts = products.stream()
-                .filter(val -> val.getPublish().equals(1))
-                .collect(Collectors.toList());
-        return new PageImpl<>(publishedProducts);
-    }
+
+        return new PageImpl<>(filterPublished(products));
+    }*/
 
     @Override
     public void deleteProductsById(String id) {
@@ -117,5 +119,11 @@ public class ProductsServiceImpl implements IProductsService {
         }
     }
 
+    private List<Products> filterPublished(List<Products> products) {
+        return products.stream()
+                .filter(val -> val.getPublish().equals(1))
+                .sorted(Comparator.comparing(DateModel::getCreatedOn).reversed())
+                .collect(Collectors.toList());
+    }
 
 }
