@@ -4,6 +4,8 @@ import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.entity.Wishlist;
 import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
+import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistResponse;
+import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistStatusResponse;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import com.binar.kelompok3.secondhand.service.wishlist.IWishlistService;
@@ -48,30 +50,34 @@ public class WishlistController {
         }
     }
 
-    @GetMapping("/get-a-wishlist-product-user")
-    public ResponseEntity<Boolean> getAWishlist(@RequestParam("productId") String productId,
-                                                @RequestParam("userId") Integer userId) {
-        Wishlist wishlist = iWishlistService.getAWishlist(productId, userId);
-        Boolean hasil = wishlist != null;
-        return new ResponseEntity<>(hasil, HttpStatus.OK);
+    @GetMapping("/get-status-wishlist")
+    public ResponseEntity<WishlistStatusResponse> getAWishlist(@RequestParam("productId") String productId,
+                                                               @RequestParam("userId") Integer userId) {
+        List<Wishlist> wishlist = iWishlistService.getAWishlist(productId, userId);
+
+        Boolean hasil = !wishlist.isEmpty();
+
+        WishlistStatusResponse wishlistStatusResponse = new WishlistStatusResponse(productId, userId, hasil);
+        return new ResponseEntity<>(wishlistStatusResponse, HttpStatus.OK);
     }
 
     @PostMapping("/add-wishlist")
-    public ResponseEntity<String> addWishList(@RequestParam("productId") String productId,
-                                              @RequestParam("userId") Integer userId) {
+    public ResponseEntity<WishlistResponse> addWishList(@RequestParam("productId") String productId,
+                                                        @RequestParam("userId") Integer userId) {
         Users users = iUsersService.findUsersById(userId);
         Products products = iProductsService.findProductsById(productId);
         Wishlist wishlist = new Wishlist(users, products);
         iWishlistService.createWishList(wishlist);
-        return new ResponseEntity<>("Sukses menambah wishlist", HttpStatus.CREATED);
+        WishlistResponse wishlistResponse = new WishlistResponse(productId, userId, "Add '" + products.getName() + "' to " + users.getName() + "'s Wishlist.");
+        return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete-wishlist")
-    public ResponseEntity<String> deleteWishlist(@RequestParam("productId") String productId,
-                                                 @RequestParam("userId") Integer userId) {
+    public ResponseEntity<WishlistResponse> deleteWishlist(@RequestParam("productId") String productId,
+                                                           @RequestParam("userId") Integer userId) {
         Products products = iProductsService.findProductsById(productId);
         iWishlistService.deleteWishlistByProductIdAndUserId(productId, userId);
-        return new ResponseEntity<>("Sukses menghapus : " + products.getName() + " dari wishlist",
-                HttpStatus.ACCEPTED);
+        WishlistResponse wishlistResponse = new WishlistResponse(productId, userId, "Deleted '" + products.getName() + "' to " + userId + "'s Wishlist.");
+        return new ResponseEntity<>(wishlistResponse, HttpStatus.ACCEPTED);
     }
 }

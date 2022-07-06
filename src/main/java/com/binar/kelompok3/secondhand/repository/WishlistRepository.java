@@ -15,7 +15,7 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Integer> {
     List<Wishlist> findAllByUserIdOrderByCreatedOnDesc(Integer userId);
 
     @Query(value = "select * from wishlist where product_id=?1 and user_id=?2", nativeQuery = true)
-    Wishlist getAWishlistByProductIdAndUserId(String productId, Integer userId);
+    List<Wishlist> getAWishlistByProductIdAndUserId(String productId, Integer userId);
 
     @Modifying
     @Query(value = "delete from wishlist where product_id=?1 and user_id=?2", nativeQuery = true)

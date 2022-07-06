@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IWishlistService {
 
-    Wishlist getAWishlist(String productId, Integer userId);
+    List<Wishlist> getAWishlist(String productId, Integer userId);
 
     void createWishList(Wishlist wishlist);
 

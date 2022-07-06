@@ -15,7 +15,7 @@ public class WishlistServiceImpl implements IWishlistService {
 
 
     @Override
-    public Wishlist getAWishlist(String productId, Integer userId) {
+    public List<Wishlist> getAWishlist(String productId, Integer userId) {
         return wishlistRepository.getAWishlistByProductIdAndUserId(productId, userId);
     }
 
