@@ -3,6 +3,7 @@ package com.binar.kelompok3.secondhand.controller;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.entity.Wishlist;
+import com.binar.kelompok3.secondhand.model.request.WishlistRequest;
 import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
 import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistResponse;
 import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistStatusResponse;
@@ -61,7 +62,7 @@ public class WishlistController {
         return new ResponseEntity<>(wishlistStatusResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/add-wishlist")
+    /*@PostMapping("/add-wishlist")
     public ResponseEntity<WishlistResponse> addWishList(@RequestParam("productId") String productId,
                                                         @RequestParam("userId") Integer userId) {
         Users users = iUsersService.findUsersById(userId);
@@ -69,6 +70,16 @@ public class WishlistController {
         Wishlist wishlist = new Wishlist(users, products);
         iWishlistService.createWishList(wishlist);
         WishlistResponse wishlistResponse = new WishlistResponse(productId, userId, "Add '" + products.getName() + "' to " + users.getName() + "'s Wishlist.");
+        return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
+    }*/
+
+    @PostMapping("/add-wishlist")
+    public ResponseEntity<WishlistResponse> addWishList(@RequestBody WishlistRequest request) {
+        Users users = iUsersService.findUsersById(request.getUserId());
+        Products products = iProductsService.findProductsById(request.getProductId());
+        Wishlist wishlist = new Wishlist(users, products);
+        iWishlistService.createWishList(wishlist);
+        WishlistResponse wishlistResponse = new WishlistResponse(request.getProductId(), request.getUserId(), "Add '" + products.getName() + "' to " + users.getName() + "'s Wishlist.");
         return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
     }
 

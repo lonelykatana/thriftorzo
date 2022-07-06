@@ -30,6 +30,9 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     Page<Products> findProductsByCategoryContainingIgnoreCase(String category, Pageable pageable);
 
+    @Query(value = "select * from products where category=?1 and publish = 1", nativeQuery = true)
+    Page<Products> getProductCategoryWhereReady(String category, Pageable pageable);
+
     String deleteProductsById(String id);
 
     @Modifying
