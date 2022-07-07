@@ -4,6 +4,7 @@ import com.binar.kelompok3.secondhand.model.entity.Offers;
 import com.binar.kelompok3.secondhand.model.request.OfferRequest;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.offers.OfferResponseSeller;
+import com.binar.kelompok3.secondhand.model.response.offers.TransactionResponse;
 import com.binar.kelompok3.secondhand.service.offers.IOffersService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,10 +42,11 @@ public class TransactionController {
     }
 
     @GetMapping("/get-transaction")
-    public ResponseEntity<OfferResponseSeller> getOffer(@RequestParam Integer offerId) {
+    public ResponseEntity<TransactionResponse> getOffer(@RequestParam Integer offerId) {
         Offers offers = iOffersService.findOffersById(offerId);
-        OfferResponseSeller offerResponse = new OfferResponseSeller(offers);
-        return new ResponseEntity<>(offerResponse, HttpStatus.OK);
+        // OfferResponseSeller offerResponse = new OfferResponseSeller(offers);
+        TransactionResponse transactionResponse = new TransactionResponse(offers);
+        return new ResponseEntity<>(transactionResponse, HttpStatus.OK);
     }
 
 }
