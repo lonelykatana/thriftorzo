@@ -38,8 +38,8 @@ public class ProductsController {
         ProductResponse productResponse = new ProductResponse(product, product.getUserId());
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(productResponse, HttpStatus.OK);
+        } else return new ResponseEntity<>(productResponse, HttpStatus.OK);
+
     }
 
     @GetMapping("/get-sold-products")
@@ -52,6 +52,18 @@ public class ProductsController {
         Page<Products> products =
                 iProductsService.getAllSoldProductsPaginated(user.getId(), PageRequest.of(page, size));
 
+        return getErrorResponseResponseEntity(page, products);
+    }
+
+    @GetMapping("/get-diminati")
+    public ResponseEntity<ErrorResponse> getDiminati(Authentication authentication,
+                                                     @RequestParam(value = "page", defaultValue =
+                                                             "0", required = false) Integer page,
+                                                     @RequestParam(value = "size", defaultValue =
+                                                             "10", required = false) Integer size) {
+        Users users = iUsersService.findByEmail(authentication.getName());
+        Page<Products> products = iProductsService.getAllProductsDiminati(users.getId(),
+                PageRequest.of(page, size));
         return getErrorResponseResponseEntity(page, products);
     }
 
@@ -79,7 +91,7 @@ public class ProductsController {
                                                        @RequestParam("name") String name,
                                                        @RequestParam("price") Double price,
                                                        @RequestParam(value = "status", required = false, defaultValue = "1") Integer status,
-                                                       @RequestParam("publish") Integer publish,
+                                                       @RequestParam("publish") Boolean publish,
                                                        @RequestParam("description") String description,
                                                        @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
@@ -113,7 +125,7 @@ public class ProductsController {
             @RequestParam("name") String name,
             @RequestParam("price") Double price,
             @RequestParam("status") Integer status,
-            @RequestParam("publish") Integer publish,
+            @RequestParam("publish") Boolean publish,
             @RequestParam("description") String description,
             @RequestParam("category") String category) {
 

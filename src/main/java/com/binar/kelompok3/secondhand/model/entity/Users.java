@@ -31,7 +31,7 @@ public class Users extends DateModel implements Serializable {
     @Column(columnDefinition = "serial", name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "email", nullable = false)

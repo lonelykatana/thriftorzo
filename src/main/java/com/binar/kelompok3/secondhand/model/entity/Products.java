@@ -37,7 +37,7 @@ public class Products extends DateModel implements Serializable {
     private Integer status;
 
     @Column(name = "publish")
-    private Integer publish;
+    private Boolean publish = false;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;

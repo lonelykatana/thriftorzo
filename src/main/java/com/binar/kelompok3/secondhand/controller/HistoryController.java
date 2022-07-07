@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class HistoryController {
 
-    IOffersService iOffersService;
+    private IOffersService iOffersService;
 
     @GetMapping("/buyer-history/{userId}")
     public ResponseEntity<List<OfferResponseBuyer>> getBuyerHistory(@PathVariable Integer userId) {

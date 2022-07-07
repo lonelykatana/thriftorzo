@@ -6,6 +6,7 @@ import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponsePage;
 import com.binar.kelompok3.secondhand.repository.ProductsRepository;
+import com.binar.kelompok3.secondhand.service.notification.INotificationService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,9 +25,10 @@ public class ProductsServiceImpl implements IProductsService {
 
     private ProductsRepository productsRepository;
     private IUsersService iUsersService;
+    private INotificationService iNotificationService;
 
     @Override
-    public void saveProducts(String id, String name, Double price, Integer status, Integer publish,
+    public void saveProducts(String id, String name, Double price, Integer status, Boolean publish,
                              String description,
                              String category, Integer userId) {
         Products products = new Products();
@@ -40,11 +42,19 @@ public class ProductsServiceImpl implements IProductsService {
         Users users = iUsersService.findUsersById(userId);
         products.setUserId(users);
         productsRepository.save(products);
+
+        Products products1 = findProductsById(id);
+        if (Boolean.TRUE.equals(publish)) {
+            iNotificationService.saveNotification("Berhasil diterbitkan", products1, userId);
+        }
+
+
     }
 
 
     @Override
-    public void updateProducts(String name, Double price, Integer status, Integer publish, String description,
+    public void updateProducts(String name, Double price, Integer status, Boolean publish,
+                               String description,
                                String category, String id) {
         productsRepository.updateProducts(name, price, status, publish, description, category, id);
     }
@@ -62,6 +72,11 @@ public class ProductsServiceImpl implements IProductsService {
     @Override
     public Page<Products> getAllSoldProductsPaginated(Integer userId, Pageable pageable) {
         return productsRepository.getAllProductSoldPaginated(userId, pageable);
+    }
+
+    @Override
+    public Page<Products> getAllProductsDiminati(Integer userId, Pageable pageable) {
+        return productsRepository.getProductsDiminati(userId, pageable);
     }
 
     @Override
@@ -92,7 +107,8 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    public ResponseEntity<ErrorResponse> getErrorResponseResponseEntity(Integer page, Integer size, Page<Products> products) {
+    public ResponseEntity<ErrorResponse> getErrorResponseResponseEntity(Integer page, Integer size,
+                                                                        Page<Products> products) {
         List<ProductResponse> productResponses = products.stream()
                 .map(product -> new ProductResponse(product, product.getUserId()))
                 .collect(Collectors.toList());
