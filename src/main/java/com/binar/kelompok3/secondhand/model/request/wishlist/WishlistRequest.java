@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.model.request;
+package com.binar.kelompok3.secondhand.model.request.wishlist;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

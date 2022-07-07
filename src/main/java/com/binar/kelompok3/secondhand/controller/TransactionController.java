@@ -1,7 +1,8 @@
 package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.model.entity.Offers;
-import com.binar.kelompok3.secondhand.model.request.OfferRequest;
+import com.binar.kelompok3.secondhand.model.request.transaction.OfferRequest;
+import com.binar.kelompok3.secondhand.model.request.transaction.UpdateOfferRequest;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.offers.TransactionResponse;
 import com.binar.kelompok3.secondhand.service.offers.IOffersService;
@@ -27,9 +28,8 @@ public class TransactionController {
     }
 
     @PutMapping("/update-transaction")
-    public ResponseEntity<MessageResponse> updateOffers(@RequestParam Integer offerId,
-                                                        @RequestParam Integer status) {
-        iOffersService.updateOffers(offerId, status);
+    public ResponseEntity<MessageResponse> updateOffers(@RequestBody UpdateOfferRequest updateOfferRequest) {
+        iOffersService.updateOffers(updateOfferRequest.getOfferId(), updateOfferRequest.getStatus());
         return ResponseEntity.ok(new MessageResponse("Sukses mengupdate tawaran"));
     }
 
