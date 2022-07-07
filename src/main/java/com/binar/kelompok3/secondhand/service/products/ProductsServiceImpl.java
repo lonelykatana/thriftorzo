@@ -68,6 +68,12 @@ public class ProductsServiceImpl implements IProductsService {
         return productsRepository.getAllProductSoldPaginated(userId, pageable);
     }
 
+    @Override
+    public Page<Products> getProductsByUserId(Integer userId, Pageable pageable) {
+        List<Products> usersList = productsRepository.getProductsByUserId(userId);
+        return new PageImpl<>(usersList);
+    }
+
     // ini
     @Override
     public Page<Products> searchProductByNamePaginated(String productName, Pageable pageable) {

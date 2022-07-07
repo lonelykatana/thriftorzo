@@ -3,7 +3,6 @@ package com.binar.kelompok3.secondhand.controller;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
-import com.binar.kelompok3.secondhand.repository.ProductsRepository;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
@@ -93,7 +92,7 @@ public class PublicController {
 
 
     // COBAA
-    @GetMapping("/get-all-product-search-filter-paginated-test")
+    @GetMapping("/get-all-product-search-filter-paginated")
     public ResponseEntity<ErrorResponse> allAPI(
             @RequestParam(value = "productName", defaultValue = "", required = false) String name,
             @RequestParam(value = "category", defaultValue = "", required = false) String category,

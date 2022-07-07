@@ -20,6 +20,8 @@ public interface IProductsService {
 
     Page<Products> getAllSoldProductsPaginated(Integer userId, Pageable pageable);
 
+    Page<Products> getProductsByUserId(Integer userId, Pageable pageable);
+
     Page<Products> searchProductByNamePaginated(String name, Pageable pageable); // ini
 
     Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable);

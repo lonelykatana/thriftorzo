@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Repository
@@ -25,6 +26,9 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     @Query(value = "select * from products where status=1 and user_id=?1", nativeQuery = true)
     Page<Products> getAllProductSoldPaginated(Integer userId, Pageable pageable);
+
+    @Query(value = "select * from products where user_id=?1", nativeQuery = true)
+    List<Products> getProductsByUserId(Integer userId);
 
     List<Products> findProductsByNameContainingIgnoreCase(String name, Pageable pageable); // ini
 

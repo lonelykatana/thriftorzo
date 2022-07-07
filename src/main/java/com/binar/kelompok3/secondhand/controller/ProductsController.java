@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -52,24 +51,19 @@ public class ProductsController {
         Page<Products> products =
                 iProductsService.getAllSoldProductsPaginated(user.getId(), PageRequest.of(page, size));
 
-        return getErrorResponseResponseEntity(page, products);
+        return iProductsService.getErrorResponseResponseEntity(page, size, products);
     }
 
-    static ResponseEntity<ErrorResponse> getErrorResponseResponseEntity(
-            @RequestParam(value = "page", defaultValue = "0",
-                    required = false) int page, Page<Products> products) {
-        List<ProductResponse> productResponses = products.stream()
-                .map(product -> new ProductResponse(product, product.getUserId()))
-                .collect(Collectors.toList());
-        if (products.hasContent()) {
-            ProductResponsePage productResponsePage = new ProductResponsePage(products.getTotalPages(),
-                    products.getTotalElements(), page, products.isFirst(), products.isLast(),
-                    products.getSize(), productResponses);
-            return new ResponseEntity(productResponsePage, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new ErrorResponse("569", "Data Kosong!"),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("/get-products-by-userid")
+    public ResponseEntity<ErrorResponse> getAllProductById(Authentication authentication,
+                                                           @RequestParam(value = "page", defaultValue = "0",
+                                                                   required = false) int page,
+                                                           @RequestParam(value = "size", defaultValue = "10",
+                                                                   required = false) int size) {
+        Users user = iUsersService.findByEmail(authentication.getName());
+        Page<Products> products = iProductsService.getProductsByUserId(user.getId(), PageRequest.of(page, size));
+
+        return iProductsService.getErrorResponseResponseEntity(page, size, products);
     }
 
     // >>>> ADD PRODUCT
