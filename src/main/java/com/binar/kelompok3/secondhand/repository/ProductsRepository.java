@@ -49,8 +49,7 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
             nativeQuery = true)
     Page<Products> getProductsDiminati(Integer id, Pageable pageable);
 
-    // COBA
-    List<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable);
+    Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCaseAndStatusAndPublish(String name, String category, Integer status, Integer publish, Pageable pageable);
 
 
 }

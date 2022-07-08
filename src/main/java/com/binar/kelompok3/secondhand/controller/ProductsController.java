@@ -103,7 +103,6 @@ public class ProductsController {
                                                        @RequestParam("name") String name,
                                                        @RequestParam("price") Double price,
                                                        @RequestParam(value = "status", required = false, defaultValue = "1") Integer status,
-                                                       // @RequestParam("publish") Boolean publish,
                                                        @RequestParam("publish") Integer publish,
                                                        @RequestParam("description") String description,
                                                        @RequestParam("category") String category) {
@@ -169,8 +168,8 @@ public class ProductsController {
     }
 
     // >>>> DELETE PRODUCT
-    @DeleteMapping("/delete-product/{productId}")
-    public ResponseEntity<HttpStatus> deleteProducts(@PathVariable("productId") String id) {
+    @DeleteMapping("/delete-product")
+    public ResponseEntity<HttpStatus> deleteProducts(@RequestParam("productId") String id) {
         iProductsService.deleteProductsById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

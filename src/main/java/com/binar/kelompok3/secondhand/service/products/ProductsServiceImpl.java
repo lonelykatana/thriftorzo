@@ -97,11 +97,7 @@ public class ProductsServiceImpl implements IProductsService {
 
     @Override
     public Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable) {
-        List<Products> products = productsRepository.findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(name, category, pageable);
-        List<Products> availableProducts = products.stream()
-                .filter(val -> val.getStatus().equals(1))
-                .collect(Collectors.toList());
-        return new PageImpl<>(filterPublished(availableProducts));
+        return productsRepository.findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCaseAndStatusAndPublish(name, category, 1, 1, pageable);
     }
 
     // ini
