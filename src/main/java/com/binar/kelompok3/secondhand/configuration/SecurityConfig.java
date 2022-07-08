@@ -66,7 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/history/**").authenticated()
                 .antMatchers("/product/**").authenticated()
                 .antMatchers("/user/**").authenticated()
-                .antMatchers("/wishlist/**").authenticated();
+                .antMatchers("/wishlist/**").authenticated()
+                .antMatchers("/notification/**").authenticated();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 

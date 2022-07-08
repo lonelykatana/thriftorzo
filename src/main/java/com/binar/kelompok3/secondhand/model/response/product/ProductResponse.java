@@ -16,7 +16,7 @@ public class ProductResponse {
     private Double price;
     private String description;
     private String category;
-    private Integer publish;
+    private Boolean publish;
     private Integer status;
     private UserResponse userResponse;
     private List<String> imgUrl;
@@ -38,6 +38,10 @@ public class ProductResponse {
                 .stream()
                 .map(ImageProduct::getUrl)
                 .collect(Collectors.toList());
+    }
+
+
+    public ProductResponse(String name, Double price, String url) {
     }
 
     private UserResponse userMapper(Users user) {

@@ -4,6 +4,7 @@ import com.binar.kelompok3.secondhand.model.DateModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,30 +13,30 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "offers", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "id")
-})
-public class Offers extends DateModel implements Serializable {
-
-    private static final long serialVersionUID = 1865643895L;
+@Table(name = "notification")
+public class Notification extends DateModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "serial", name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private Users userId;
+    private String title;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    private String info;
+
+    @Nullable
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offer_id")
+    private Offers offerId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Products productId;
 
-    @Column(name = "offer_price")
-    private Double offerPrice;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Users userId;
 
-    @Column(name = "status")
-    private Integer status = 1;
-
+    private Boolean isRead = false;
 }

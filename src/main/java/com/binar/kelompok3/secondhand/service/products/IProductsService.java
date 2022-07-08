@@ -8,10 +8,12 @@ import org.springframework.http.ResponseEntity;
 
 public interface IProductsService {
 
-    void saveProducts(String id, String name, Double price, Integer status, Integer publish, String description,
+    void saveProducts(String id, String name, Double price, Integer status, Boolean publish,
+                      String description,
                       String category, Integer userId);
 
-    void updateProducts(String name, Double price, Integer status, Integer publish, String description,
+    void updateProducts(String name, Double price, Integer status, Boolean publish,
+                        String description,
                         String category, String id);
 
     Page<Products> getAllProductsPaginated(Pageable pageable);
@@ -19,6 +21,8 @@ public interface IProductsService {
     Page<Products> getAllProductPublishPaginated(Pageable pageable);
 
     Page<Products> getAllSoldProductsPaginated(Integer userId, Pageable pageable);
+
+    Page<Products> getAllProductsDiminati(Integer userId, Pageable pageable);
 
     Page<Products> searchProductByNamePaginated(String name, Pageable pageable);
 

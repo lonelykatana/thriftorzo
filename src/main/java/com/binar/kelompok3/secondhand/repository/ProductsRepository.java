@@ -20,7 +20,7 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     Page<Products> findAllByOrderByCreatedOnDesc(Pageable pageable);
 
-    @Query(value = "select * from products where publish=1", nativeQuery = true)
+    @Query(value = "select * from products where publish=true", nativeQuery = true)
     Page<Products> getAllProductReadyPaginated(Pageable pageable);
 
     @Query(value = "select * from products where status=1 and user_id=?1", nativeQuery = true)
@@ -34,9 +34,15 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     @Modifying
     @Query(value = "update products set name=?1, price=?2, status=?3, publish=?4, description=?5, category=?6 where id=?7", nativeQuery = true)
-    Integer updateProducts(String name, Double price, Integer status, Integer publish, String description, String category, String id);
+    Integer updateProducts(String name, Double price, Integer status, Boolean publish,
+                           String description, String category, String id);
 
     Products findProductsById(String id);
+
+    @Query(value ="select products.* from products inner join offers on products.id = offers.product_id \n" +
+            "where products.user_id=?1 order by updated_on DESC",
+            nativeQuery = true)
+    Page<Products> getProductsDiminati(Integer id, Pageable pageable);
 
 
 }
