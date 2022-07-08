@@ -7,16 +7,19 @@ import com.binar.kelompok3.secondhand.repository.OffersRepository;
 import com.binar.kelompok3.secondhand.service.notification.INotificationService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+
 public class OffersServiceImpl implements IOffersService {
 
     private OffersRepository offersRepository;
     private IUsersService iUsersService;
     private IProductsService iProductsService;
+    private INotificationService iNotificationService;
 
     public OffersServiceImpl(OffersRepository offersRepository, IUsersService iUsersService, IProductsService iProductsService, INotificationService iNotificationService) {
         this.offersRepository = offersRepository;
@@ -24,8 +27,6 @@ public class OffersServiceImpl implements IOffersService {
         this.iProductsService = iProductsService;
         this.iNotificationService = iNotificationService;
     }
-
-    private INotificationService iNotificationService;
 
 
     private String isiTitle = "Penawaran produk";
