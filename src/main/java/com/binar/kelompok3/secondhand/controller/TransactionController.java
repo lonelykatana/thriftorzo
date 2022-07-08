@@ -28,8 +28,8 @@ public class TransactionController {
     }
 
     @PutMapping("/update-transaction")
-    public ResponseEntity<MessageResponse> updateOffers(@RequestBody UpdateOfferRequest updateOfferRequest) {
-        iOffersService.updateOffers(updateOfferRequest.getOfferId(), updateOfferRequest.getStatus());
+    public ResponseEntity<MessageResponse> updateOffers(@RequestBody UpdateOfferRequest request) {
+        iOffersService.updateOffers(request.getOfferId(), request.getStatus());
         return ResponseEntity.ok(new MessageResponse("Sukses mengupdate tawaran"));
     }
 

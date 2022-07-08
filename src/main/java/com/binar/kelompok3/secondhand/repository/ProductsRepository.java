@@ -24,7 +24,7 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
     @Query(value = "select * from products where publish=1", nativeQuery = true)
     Page<Products> getAllProductReadyPaginated(Pageable pageable); // ini
 
-    @Query(value = "select * from products where status=1 and user_id=?1", nativeQuery = true)
+    @Query(value = "select * from products where status=2 and user_id=?1", nativeQuery = true)
     Page<Products> getAllProductSoldPaginated(Integer userId, Pageable pageable);
 
     @Query(value = "select * from products where user_id=?1", nativeQuery = true)
