@@ -58,6 +58,14 @@ public class Products extends DateModel implements Serializable {
     @JsonManagedReference
     private List<ImageProduct> imageProducts = new ArrayList<>();
 
+    @OneToMany(
+            mappedBy = "productId",
+            cascade = CascadeType.MERGE,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<Notification> notifications;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productId")
     private List<Wishlist> wishlists;

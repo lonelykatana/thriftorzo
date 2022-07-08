@@ -23,7 +23,6 @@ public class Wishlist extends DateModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial", name = "id", nullable = false)
     private Integer id;
 
     @OneToOne(targetEntity = Users.class, fetch = FetchType.EAGER)

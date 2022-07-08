@@ -33,7 +33,7 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     List<Products> findProductsByCategoryContainingIgnoreCase(String category, Pageable pageable); // ini
 
-    String deleteProductsById(String id);
+    void deleteProductsById(String id);
 
     @Modifying
     @Query(value = "update products set name=?1, price=?2, status=?3, publish=?4, description=?5, category=?6 where id=?7", nativeQuery = true)
@@ -42,7 +42,9 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     Products findProductsById(String id);
 
-    @Query(value ="select products.* from products inner join offers on products.id = offers.product_id \n" +
+    @Query(value = "select DISTINCT ON (products.id) products.* from products inner join offers on" +
+            " offers" +
+            ".product_id \n" +
             "where products.user_id=?1 order by updated_on DESC",
             nativeQuery = true)
     Page<Products> getProductsDiminati(Integer id, Pageable pageable);
