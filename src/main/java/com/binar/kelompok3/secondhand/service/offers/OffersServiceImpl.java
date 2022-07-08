@@ -13,13 +13,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+
 public class OffersServiceImpl implements IOffersService {
 
     private OffersRepository offersRepository;
     private IUsersService iUsersService;
     private IProductsService iProductsService;
     private INotificationService iNotificationService;
+
+    public OffersServiceImpl(OffersRepository offersRepository, IUsersService iUsersService, IProductsService iProductsService, INotificationService iNotificationService) {
+        this.offersRepository = offersRepository;
+        this.iUsersService = iUsersService;
+        this.iProductsService = iProductsService;
+        this.iNotificationService = iNotificationService;
+    }
 
     private String isiTitle = "Penawaran produk";
 
@@ -44,7 +51,9 @@ public class OffersServiceImpl implements IOffersService {
         Products products1 = iProductsService.findProductsById(productId);
         Offers offerId = findOffersById(offers.getId());
         iNotificationService.saveNotification(isiTitle, "Penawaran telah dilanjutkan ke" +
-                " penjual", offerId, products1, sellerId);
+                " penjual", offerId, products1, userId);
+        iNotificationService.saveNotification(isiTitle, "Anda mendapat tawaran", offerId, products1,
+                sellerId);
 
 
     }
