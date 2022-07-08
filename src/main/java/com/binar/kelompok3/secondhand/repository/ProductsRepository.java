@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Repository
@@ -23,12 +24,15 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
     @Query(value = "select * from products where publish=true", nativeQuery = true)
     Page<Products> getAllProductReadyPaginated(Pageable pageable);
 
-    @Query(value = "select * from products where status=1 and user_id=?1", nativeQuery = true)
+    @Query(value = "select * from products where status=2 and user_id=?1", nativeQuery = true)
     Page<Products> getAllProductSoldPaginated(Integer userId, Pageable pageable);
 
-    List<Products> findProductsByNameContainingIgnoreCase(String name, Pageable pageable);
+    @Query(value = "select * from products where user_id=?1", nativeQuery = true)
+    List<Products> getProductsByUserId(Integer userId);
 
-    List<Products> findProductsByCategoryContainingIgnoreCase(String category, Pageable pageable);
+    List<Products> findProductsByNameContainingIgnoreCase(String name, Pageable pageable); // ini
+
+    List<Products> findProductsByCategoryContainingIgnoreCase(String category, Pageable pageable); // ini
 
     String deleteProductsById(String id);
 
@@ -43,6 +47,9 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
             "where products.user_id=?1 order by updated_on DESC",
             nativeQuery = true)
     Page<Products> getProductsDiminati(Integer id, Pageable pageable);
+
+    // COBA
+    List<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable);
 
 
 }

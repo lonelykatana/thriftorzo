@@ -1,9 +1,10 @@
 package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.model.entity.Offers;
-import com.binar.kelompok3.secondhand.model.request.OfferRequest;
+import com.binar.kelompok3.secondhand.model.request.transaction.OfferRequest;
+import com.binar.kelompok3.secondhand.model.request.transaction.UpdateOfferRequest;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
-import com.binar.kelompok3.secondhand.model.response.offers.OfferResponseSeller;
+import com.binar.kelompok3.secondhand.model.response.offers.TransactionResponse;
 import com.binar.kelompok3.secondhand.service.offers.IOffersService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,9 +28,8 @@ public class TransactionController {
     }
 
     @PutMapping("/update-transaction")
-    public ResponseEntity<MessageResponse> updateOffers(@RequestParam Integer offerId,
-                                                        @RequestParam Integer status) {
-        iOffersService.updateOffers(offerId, status);
+    public ResponseEntity<MessageResponse> updateOffers(@RequestBody UpdateOfferRequest request) {
+        iOffersService.updateOffers(request.getOfferId(), request.getStatus());
         return ResponseEntity.ok(new MessageResponse("Sukses mengupdate tawaran"));
     }
 
@@ -41,10 +41,10 @@ public class TransactionController {
     }
 
     @GetMapping("/get-transaction")
-    public ResponseEntity<OfferResponseSeller> getOffer(@RequestParam Integer offerId) {
+    public ResponseEntity<TransactionResponse> getOffer(@RequestParam Integer offerId) {
         Offers offers = iOffersService.findOffersById(offerId);
-        OfferResponseSeller offerResponse = new OfferResponseSeller(offers);
-        return new ResponseEntity<>(offerResponse, HttpStatus.OK);
+        TransactionResponse transactionResponse = new TransactionResponse(offers);
+        return new ResponseEntity<>(transactionResponse, HttpStatus.OK);
     }
 
 }

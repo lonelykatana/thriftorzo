@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -38,8 +37,8 @@ public class ProductsController {
         ProductResponse productResponse = new ProductResponse(product, product.getUserId());
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else return new ResponseEntity<>(productResponse, HttpStatus.OK);
-
+        }
+        return new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
 
     @GetMapping("/get-sold-products")
@@ -52,8 +51,19 @@ public class ProductsController {
         Page<Products> products =
                 iProductsService.getAllSoldProductsPaginated(user.getId(), PageRequest.of(page, size));
 
-        return getErrorResponseResponseEntity(page, products);
+        return iProductsService.getErrorResponseResponseEntity(page, size, products);
     }
+
+    @GetMapping("/get-products-by-userid")
+    public ResponseEntity<ErrorResponse> getAllProductById(Authentication authentication,
+                                                           @RequestParam(value = "page", defaultValue = "0",
+                                                                   required = false) int page,
+                                                           @RequestParam(value = "size", defaultValue = "10",
+                                                                   required = false) int size) {
+        Users user = iUsersService.findByEmail(authentication.getName());
+        Page<Products> products = iProductsService.getProductsByUserId(user.getId(), PageRequest.of(page, size));
+
+        return iProductsService.getErrorResponseResponseEntity(page, size, products);
 
     @GetMapping("/get-diminati")
     public ResponseEntity<ErrorResponse> getDiminati(Authentication authentication,

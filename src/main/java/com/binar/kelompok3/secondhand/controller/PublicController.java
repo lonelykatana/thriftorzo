@@ -89,4 +89,22 @@ public class PublicController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    // COBAA
+    @GetMapping("/get-all-product-search-filter-paginated")
+    public ResponseEntity<ErrorResponse> allAPI(
+            @RequestParam(value = "productName", defaultValue = "", required = false) String name,
+            @RequestParam(value = "category", defaultValue = "", required = false) String category,
+            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
+        try {
+            Page<Products> products = iProductsService.findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(name, category, PageRequest.of(page, size/*, Sort.by("created_on").descending()*/));
+            return iProductsService.getErrorResponseResponseEntity(page, size, products);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse(null, "Data Tidak Ditemukan!"),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

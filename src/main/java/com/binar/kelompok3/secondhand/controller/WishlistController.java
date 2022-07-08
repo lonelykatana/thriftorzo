@@ -3,7 +3,7 @@ package com.binar.kelompok3.secondhand.controller;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.entity.Wishlist;
-import com.binar.kelompok3.secondhand.model.request.WishlistRequest;
+import com.binar.kelompok3.secondhand.model.request.wishlist.WishlistRequest;
 import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
 import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistResponse;
 import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistStatusResponse;

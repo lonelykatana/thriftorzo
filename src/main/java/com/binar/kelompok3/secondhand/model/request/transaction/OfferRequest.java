@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.model.request;
+package com.binar.kelompok3.secondhand.model.request.transaction;
 
 import lombok.*;
 
