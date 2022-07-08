@@ -31,7 +31,7 @@ public class ProductsServiceImpl implements IProductsService {
     private INotificationService iNotificationService;
 
     @Override
-    public void saveProducts(String id, String name, Double price, Integer status, Boolean publish,
+    public void saveProducts(String id, String name, Double price, Integer status, Integer publish,
                              String description,
                              String category, Integer userId) {
         Products products = new Products();
@@ -47,7 +47,7 @@ public class ProductsServiceImpl implements IProductsService {
         productsRepository.save(products);
 
         Products products1 = findProductsById(id);
-        if (Boolean.TRUE.equals(publish)) {
+        if (publish.equals(1)) {
             iNotificationService.saveNotification("Berhasil diterbitkan", products1, userId);
         }
 
@@ -56,7 +56,7 @@ public class ProductsServiceImpl implements IProductsService {
 
 
     @Override
-    public void updateProducts(String name, Double price, Integer status, Boolean publish,
+    public void updateProducts(String name, Double price, Integer status, Integer publish,
                                String description,
                                String category, String id) {
         productsRepository.updateProducts(name, price, status, publish, description, category, id);
@@ -67,7 +67,6 @@ public class ProductsServiceImpl implements IProductsService {
         return productsRepository.findAllByOrderByCreatedOnDesc(pageable);
     }
 
-    // ini
     @Override
     public Page<Products> getAllProductPublishPaginated(Pageable pageable) {
         return productsRepository.getAllProductReadyPaginated(pageable);

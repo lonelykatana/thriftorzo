@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -64,8 +65,9 @@ public class ProductsController {
         Page<Products> products = iProductsService.getProductsByUserId(user.getId(), PageRequest.of(page, size));
 
         return iProductsService.getErrorResponseResponseEntity(page, size, products);
+    }
 
-    @GetMapping("/get-diminati")
+    @GetMapping("/get-interested-products")
     public ResponseEntity<ErrorResponse> getDiminati(Authentication authentication,
                                                      @RequestParam(value = "page", defaultValue =
                                                              "0", required = false) Integer page,
@@ -101,7 +103,8 @@ public class ProductsController {
                                                        @RequestParam("name") String name,
                                                        @RequestParam("price") Double price,
                                                        @RequestParam(value = "status", required = false, defaultValue = "1") Integer status,
-                                                       @RequestParam("publish") Boolean publish,
+                                                       // @RequestParam("publish") Boolean publish,
+                                                       @RequestParam("publish") Integer publish,
                                                        @RequestParam("description") String description,
                                                        @RequestParam("category") String category) {
         List<String> urls = new ArrayList<>();
@@ -135,7 +138,7 @@ public class ProductsController {
             @RequestParam("name") String name,
             @RequestParam("price") Double price,
             @RequestParam("status") Integer status,
-            @RequestParam("publish") Boolean publish,
+            @RequestParam("publish") Integer publish,
             @RequestParam("description") String description,
             @RequestParam("category") String category) {
 

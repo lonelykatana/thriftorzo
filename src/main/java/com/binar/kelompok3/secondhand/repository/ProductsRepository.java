@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Repository
@@ -38,7 +37,7 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     @Modifying
     @Query(value = "update products set name=?1, price=?2, status=?3, publish=?4, description=?5, category=?6 where id=?7", nativeQuery = true)
-    Integer updateProducts(String name, Double price, Integer status, Boolean publish,
+    Integer updateProducts(String name, Double price, Integer status, Integer publish,
                            String description, String category, String id);
 
     Products findProductsById(String id);

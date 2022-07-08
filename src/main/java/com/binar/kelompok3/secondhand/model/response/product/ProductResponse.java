@@ -16,7 +16,7 @@ public class ProductResponse {
     private Double price;
     private String description;
     private String category;
-    private Boolean publish;
+    private Integer publish;
     private Integer status;
     private UserResponse userResponse;
     private List<String> imgUrl;
