@@ -3,7 +3,7 @@ package com.binar.kelompok3.secondhand.service.products;
 import com.binar.kelompok3.secondhand.model.DateModel;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
-import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
+import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponsePage;
 import com.binar.kelompok3.secondhand.repository.ProductsRepository;
@@ -50,8 +50,6 @@ public class ProductsServiceImpl implements IProductsService {
         if (publish.equals(1)) {
             iNotificationService.saveNotification("Berhasil diterbitkan", products1, userId);
         }
-
-
     }
 
 
@@ -126,8 +124,8 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    public ResponseEntity<ErrorResponse> getErrorResponseResponseEntity(Integer page, Integer size,
-                                                                        Page<Products> products) {
+    public ResponseEntity<MessageResponse> getMessageResponse(Integer page, Integer size,
+                                                              Page<Products> products) {
         List<ProductResponse> productResponses = products.stream()
                 .map(product -> new ProductResponse(product, product.getUserId()))
                 .collect(Collectors.toList());
@@ -137,8 +135,7 @@ public class ProductsServiceImpl implements IProductsService {
                     size/*products.getSize()*/, productResponses);
             return new ResponseEntity(productResponsePage, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new ErrorResponse("569", "Data Kosong!"),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(new MessageResponse("Data Kosong!"), HttpStatus.NO_CONTENT);
         }
     }
 

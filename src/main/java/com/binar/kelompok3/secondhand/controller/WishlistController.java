@@ -4,7 +4,7 @@ import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.entity.Wishlist;
 import com.binar.kelompok3.secondhand.model.request.wishlist.WishlistRequest;
-import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
+import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistResponse;
 import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistStatusResponse;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
@@ -32,9 +32,9 @@ public class WishlistController {
     private IProductsService iProductsService;
 
     @GetMapping("/get-all-by/{userId}")
-    public ResponseEntity<ErrorResponse> getAllWishList(@PathVariable("userId") Integer userId,
-                                                        @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-                                                        @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
+    public ResponseEntity<MessageResponse> getAllWishList(@PathVariable("userId") Integer userId,
+                                                          @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+                                                          @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
         List<Wishlist> body = iWishlistService.readWishList(userId);
         List<Products> products = new ArrayList<>();
         for (Wishlist wishlist : body) {
@@ -43,11 +43,10 @@ public class WishlistController {
         }
         Page<Products> productResponsePage = new PageImpl<>(products);
         try {
-            return iProductsService.getErrorResponseResponseEntity(page, size, productResponsePage);
+            return iProductsService.getMessageResponse(page, size, productResponsePage);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse(null, "Data Tidak Ditemukan!"),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(new MessageResponse("Data Kosong!"), HttpStatus.NOT_FOUND);
         }
     }
 

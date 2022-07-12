@@ -3,7 +3,7 @@ package com.binar.kelompok3.secondhand.controller;
 import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
-import com.binar.kelompok3.secondhand.model.response.ErrorResponse;
+import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponsePage;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
@@ -43,43 +43,43 @@ public class ProductsController {
     }
 
     @GetMapping("/get-sold-products")
-    public ResponseEntity<ErrorResponse> getSoldProducts(Authentication authentication,
-                                                         @RequestParam(value = "page", defaultValue = "0",
-                                                                 required = false) int page,
-                                                         @RequestParam(value = "size", defaultValue = "10",
-                                                                 required = false) int size) {
-        Users user = iUsersService.findByEmail(authentication.getName());
-        Page<Products> products =
-                iProductsService.getAllSoldProductsPaginated(user.getId(), PageRequest.of(page, size));
-
-        return iProductsService.getErrorResponseResponseEntity(page, size, products);
-    }
-
-    @GetMapping("/get-products-by-userid")
-    public ResponseEntity<ErrorResponse> getAllProductById(Authentication authentication,
+    public ResponseEntity<MessageResponse> getSoldProducts(Authentication authentication,
                                                            @RequestParam(value = "page", defaultValue = "0",
                                                                    required = false) int page,
                                                            @RequestParam(value = "size", defaultValue = "10",
                                                                    required = false) int size) {
         Users user = iUsersService.findByEmail(authentication.getName());
+        Page<Products> products =
+                iProductsService.getAllSoldProductsPaginated(user.getId(), PageRequest.of(page, size));
+
+        return iProductsService.getMessageResponse(page, size, products);
+    }
+
+    @GetMapping("/get-products-by-userid")
+    public ResponseEntity<MessageResponse> getAllProductById(Authentication authentication,
+                                                             @RequestParam(value = "page", defaultValue = "0",
+                                                                     required = false) int page,
+                                                             @RequestParam(value = "size", defaultValue = "10",
+                                                                     required = false) int size) {
+        Users user = iUsersService.findByEmail(authentication.getName());
         Page<Products> products = iProductsService.getProductsByUserId(user.getId(), PageRequest.of(page, size));
 
-        return iProductsService.getErrorResponseResponseEntity(page, size, products);
+        return iProductsService.getMessageResponse(page, size, products);
     }
 
     @GetMapping("/get-interested-products")
-    public ResponseEntity<ErrorResponse> getDiminati(Authentication authentication,
-                                                     @RequestParam(value = "page", defaultValue =
-                                                             "0", required = false) Integer page,
-                                                     @RequestParam(value = "size", defaultValue =
-                                                             "10", required = false) Integer size) {
+    public ResponseEntity<MessageResponse> getDiminati(Authentication authentication,
+                                                       @RequestParam(value = "page", defaultValue =
+                                                               "0", required = false) Integer page,
+                                                       @RequestParam(value = "size", defaultValue =
+                                                               "10", required = false) Integer size) {
         Users users = iUsersService.findByEmail(authentication.getName());
         Page<Products> products = iProductsService.getAllProductsDiminati(users.getId(),
                 PageRequest.of(page, size));
-        return getErrorResponseResponseEntity(page, products);
+        return getResponse(page, products);
     }
 
-    static ResponseEntity<ErrorResponse> getErrorResponseResponseEntity(
+    static ResponseEntity<MessageResponse> getResponse(
             @RequestParam(value = "page", defaultValue = "0",
                     required = false) int page, Page<Products> products) {
         List<ProductResponse> productResponses = products.stream()
@@ -91,8 +91,7 @@ public class ProductsController {
                     products.getSize(), productResponses);
             return new ResponseEntity(productResponsePage, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new ErrorResponse("569", "Data Kosong!"),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(new MessageResponse("Data Kosong!"), HttpStatus.NO_CONTENT);
         }
     }
 
