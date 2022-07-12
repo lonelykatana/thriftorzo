@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface IProductsService {
 
     void saveProducts(String id, String name, Double price, Integer status, Integer publish,
@@ -25,8 +27,8 @@ public interface IProductsService {
     Page<Products> getProductsByUserId(Integer userId, Pageable pageable);
 
     Page<Products> searchProductByNamePaginated(String name, Pageable pageable); // ini
-    Page<Products> getAllProductsDiminati(Integer userId, Pageable pageable);
 
+    Page<Products> getAllProductsDiminati(Integer userId, Pageable pageable);
 
     Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable);
 

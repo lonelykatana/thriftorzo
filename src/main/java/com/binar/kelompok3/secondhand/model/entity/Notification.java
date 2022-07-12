@@ -3,10 +3,7 @@ package com.binar.kelompok3.secondhand.model.entity;
 import com.binar.kelompok3.secondhand.model.DateModel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;

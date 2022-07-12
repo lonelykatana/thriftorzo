@@ -7,13 +7,11 @@ import com.binar.kelompok3.secondhand.repository.OffersRepository;
 import com.binar.kelompok3.secondhand.service.notification.INotificationService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-
 public class OffersServiceImpl implements IOffersService {
 
     private OffersRepository offersRepository;

@@ -17,6 +17,4 @@ public interface IUsersService {
     Users findUsersById(Integer id);
 
     Users findByEmail(String email);
-
-    Users getUsersAndImgUrl(Integer id);
 }

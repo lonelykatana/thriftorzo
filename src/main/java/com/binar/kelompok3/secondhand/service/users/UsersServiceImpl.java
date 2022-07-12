@@ -1,6 +1,7 @@
 package com.binar.kelompok3.secondhand.service.users;
 
 import com.binar.kelompok3.secondhand.model.entity.Users;
+import com.binar.kelompok3.secondhand.repository.ProductsRepository;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import java.util.List;
 public class UsersServiceImpl implements IUsersService {
 
     private UsersRepository usersRepository;
+    private ProductsRepository productsRepository;
     private PasswordEncoder passwordEncoder;
 
 
@@ -47,10 +49,4 @@ public class UsersServiceImpl implements IUsersService {
     public Users findByEmail(String email) {
         return usersRepository.findByEmail(email);
     }
-
-    @Override
-    public Users getUsersAndImgUrl(Integer id) {
-        return usersRepository.getUsersAndImgUrl(id);
-    }
-
 }
