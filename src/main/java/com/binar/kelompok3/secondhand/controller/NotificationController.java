@@ -3,10 +3,16 @@ package com.binar.kelompok3.secondhand.controller;
 import com.binar.kelompok3.secondhand.model.entity.Notification;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
-import com.binar.kelompok3.secondhand.model.response.NotificationResponse;
+import com.binar.kelompok3.secondhand.model.response.notif.NotificationPageResponse;
+import com.binar.kelompok3.secondhand.model.response.notif.NotificationResponse;
 import com.binar.kelompok3.secondhand.service.notification.INotificationService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -47,7 +53,9 @@ public class NotificationController {
     }*/
 
     @GetMapping("/get")
-    public ResponseEntity<List<NotificationResponse>> getNotificationAuth(Authentication authentication) {
+    public ResponseEntity<NotificationPageResponse> getNotificationAuth(Authentication authentication,
+                                                                        @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
+                                                                        @RequestParam(value = "size", defaultValue = "10", required = false) Integer size) {
 
         Users user = usersService.findByEmail(authentication.getName());
         List<Notification> notification = iNotificationService.getNotification(user.getId());
@@ -61,6 +69,17 @@ public class NotificationController {
                                     , notification1.getProductId(), notification1.getOfferId());
                         })
                         .collect(Collectors.toList());
-        return new ResponseEntity<>(notificationResponses, HttpStatus.OK);
+
+
+        // buat bikin pageable
+        int notifSize = notificationResponses.size();
+        Pageable paging = PageRequest.of(page, size);
+        int start = Math.min((int) paging.getOffset(), notifSize);
+        int end = Math.min((start + paging.getPageSize()), notifSize);
+        Page<NotificationResponse> paged = new PageImpl<>(notificationResponses.subList(start, end), paging, notifSize);
+        // ribet emang,jangan diapapapin it worked > https://stackoverflow.com/questions/37749559/conversion-of-list-to-page-in-spring
+
+        NotificationPageResponse pagedNotificationResponses = new NotificationPageResponse(paged, page);
+        return new ResponseEntity<>(pagedNotificationResponses, HttpStatus.OK);
     }
 }

@@ -25,5 +25,4 @@ public class ProductResponsePage {
         this.size = size;
         this.productResponses = productResponses;
     }
-
 }

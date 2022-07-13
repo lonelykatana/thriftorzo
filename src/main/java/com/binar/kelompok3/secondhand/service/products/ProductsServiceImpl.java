@@ -132,7 +132,7 @@ public class ProductsServiceImpl implements IProductsService {
         if (products.hasContent()) {
             ProductResponsePage productResponsePage = new ProductResponsePage(products.getTotalPages(),
                     products.getTotalElements(), page, products.isFirst(), products.isLast(),
-                    size/*products.getSize()*/, productResponses);
+                    size, productResponses);
             return new ResponseEntity(productResponsePage, HttpStatus.OK);
         } else {
             return new ResponseEntity(new MessageResponse("Data Kosong!"), HttpStatus.NO_CONTENT);
