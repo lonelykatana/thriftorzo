@@ -23,15 +23,15 @@ public class TransactionController {
     private IOffersService iOffersService;
     private IUsersService iUsersService;
 
-    @PostMapping("/buy-transaction/{userId}")
+    /*@PostMapping("/buy-transaction/{userId}")
     public ResponseEntity<OfferRequest> addOffers(@PathVariable(value = "userId") Integer userId,
                                                   @RequestBody OfferRequest offerRequest) {
         iOffersService.saveOffers(userId, offerRequest.getProductId(),
                 offerRequest.getOfferPrice(), offerRequest.getStatus());
         return new ResponseEntity<>(offerRequest, HttpStatus.OK);
-    }
+    }*/
 
-    @PostMapping("/buy-transaction-test")
+    @PostMapping("/buy-transaction")
     public ResponseEntity<OfferRequest> addOffersAuth(Authentication authentication,
                                                       @RequestBody OfferRequest offerRequest) {
         Users user = iUsersService.findByEmail(authentication.getName());

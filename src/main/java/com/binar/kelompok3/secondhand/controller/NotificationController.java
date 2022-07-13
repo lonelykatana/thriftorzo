@@ -30,7 +30,7 @@ public class NotificationController {
         return ResponseEntity.ok(new MessageResponse("Sukses membaca notfi"));
     }
 
-    @GetMapping("/get/{userId}")
+/*    @GetMapping("/get/{userId}")
     public ResponseEntity<List<NotificationResponse>> getNotification(@PathVariable Integer userId) {
         List<Notification> notification = iNotificationService.getNotification(userId);
         List<NotificationResponse> notificationResponses =
@@ -44,9 +44,9 @@ public class NotificationController {
                         })
                         .collect(Collectors.toList());
         return new ResponseEntity<>(notificationResponses, HttpStatus.OK);
-    }
+    }*/
 
-    @GetMapping("/get-test")
+    @GetMapping("/get")
     public ResponseEntity<List<NotificationResponse>> getNotificationAuth(Authentication authentication) {
 
         Users user = usersService.findByEmail(authentication.getName());

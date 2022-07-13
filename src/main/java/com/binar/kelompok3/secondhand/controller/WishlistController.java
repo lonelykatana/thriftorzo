@@ -33,7 +33,7 @@ public class WishlistController {
     private IUsersService iUsersService;
     private IProductsService iProductsService;
 
-    @GetMapping("/get-all-by/{userId}")
+   /* @GetMapping("/get-all-by/{userId}")
     public ResponseEntity<MessageResponse> getAllWishList(@PathVariable("userId") Integer userId,
                                                           @RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                                           @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
@@ -50,9 +50,9 @@ public class WishlistController {
         } catch (Exception e) {
             return new ResponseEntity(new MessageResponse("Data Kosong!"), HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
 
-    @GetMapping("/get-all-by-test")
+    @GetMapping("/get-user-wishlist")
     public ResponseEntity<MessageResponse> getAllWishListAuth(Authentication authentication,
                                                               @RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                                               @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
@@ -72,7 +72,7 @@ public class WishlistController {
         }
     }
 
-    @GetMapping("/get-status-wishlist")
+    /*@GetMapping("/get-status-wishlist")
     public ResponseEntity<WishlistStatusResponse> getAWishlist(@RequestParam("productId") String productId,
                                                                @RequestParam("userId") Integer userId) {
         List<Wishlist> wishlist = iWishlistService.getAWishlist(productId, userId);
@@ -81,9 +81,9 @@ public class WishlistController {
 
         WishlistStatusResponse wishlistStatusResponse = new WishlistStatusResponse(productId, userId, hasil);
         return new ResponseEntity<>(wishlistStatusResponse, HttpStatus.OK);
-    }
+    }*/
 
-    @GetMapping("/get-status-wishlist-test")
+    @GetMapping("/get-status-wishlist")
     public ResponseEntity<WishlistStatusResponse> getAWishlistAuth(@RequestParam("productId") String productId,
                                                                    Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());
@@ -97,7 +97,7 @@ public class WishlistController {
     }
 
 
-    @PostMapping("/add-wishlist")
+    /*@PostMapping("/add-wishlist")
     public ResponseEntity<WishlistResponse> addWishList(@RequestBody WishlistRequest request) {
         Users users = iUsersService.findUsersById(request.getUserId());
         Products products = iProductsService.findProductsById(request.getProductId());
@@ -105,9 +105,9 @@ public class WishlistController {
         iWishlistService.createWishList(wishlist);
         WishlistResponse wishlistResponse = new WishlistResponse(request.getProductId(), request.getUserId(), "Add '" + products.getName() + "' to " + users.getName() + "'s Wishlist.");
         return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
-    }
+    }*/
 
-    @PostMapping("/add-wishlist-test")
+    @PostMapping("/add-wishlist")
     public ResponseEntity<WishlistResponse> addWishListAuth(@RequestBody WishlistAuthRequest request,
                                                             Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());
@@ -120,16 +120,16 @@ public class WishlistController {
         return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete-wishlist")
+    /*@DeleteMapping("/delete-wishlist")
     public ResponseEntity<WishlistResponse> deleteWishlist(@RequestParam("productId") String productId,
                                                            @RequestParam("userId") Integer userId) {
         Products products = iProductsService.findProductsById(productId);
         iWishlistService.deleteWishlistByProductIdAndUserId(productId, userId);
         WishlistResponse wishlistResponse = new WishlistResponse(productId, userId, "Deleted '" + products.getName() + "' to " + userId + "'s Wishlist.");
         return new ResponseEntity<>(wishlistResponse, HttpStatus.ACCEPTED);
-    }
+    }*/
 
-    @DeleteMapping("/delete-wishlist-test")
+    @DeleteMapping("/delete-wishlist")
     public ResponseEntity<WishlistResponse> deleteWishlistAuth(@RequestParam("productId") String productId,
                                                                Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());

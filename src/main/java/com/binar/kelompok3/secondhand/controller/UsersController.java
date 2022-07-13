@@ -25,11 +25,11 @@ public class UsersController {
     private IUsersService iUsersService;
     private ICloudinaryService iCloudinaryService;
 
-    @GetMapping("/get-user/{id}")
+   /* @GetMapping("/get-user/{id}")
     public ResponseEntity<Users> getUser(@PathVariable("id") Integer id) {
         Users user = iUsersService.findUsersById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("/get-all-users")
     public ResponseEntity<List<Users>> getAllUsers() {
@@ -37,22 +37,22 @@ public class UsersController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/get-user-test")
+    @GetMapping("/get-user")
     public ResponseEntity<UserResponse> getUserByToken(Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());
         UserResponse userResponse = new UserResponse(user);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/update-data/{id}")
+    /*@PutMapping("/update-data/{id}")
     public ResponseEntity<HttpStatus> updateUsers(@PathVariable("id") Integer id,
                                                   @Valid @RequestBody UpdateUserRequest request) {
         iUsersService.updateUsers(id, request.getName(), request.getAddress(), request.getPhone(),
                 request.getCityName(), request.getImgUrl());
         return new ResponseEntity<>(HttpStatus.OK);
-    }
+    }*/
 
-    @PutMapping("/update-data-test")
+    @PutMapping("/update-data")
     public ResponseEntity<HttpStatus> updateUsersAuth(Authentication authentication,
                                                       @Valid @RequestBody UpdateUserRequest request) {
         Users user = iUsersService.findByEmail(authentication.getName());
@@ -61,14 +61,14 @@ public class UsersController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/change-password/{id}")
+    /*@PutMapping("/change-password/{id}")
     public ResponseEntity<HttpStatus> updatePassword(@PathVariable("id") Integer id,
                                                      @RequestBody UpdatePasswordRequest request) {
         iUsersService.updatePassword(id, request.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
-    }
+    }*/
 
-    @PutMapping("/change-password-test")
+    @PutMapping("/change-password")
     public ResponseEntity<HttpStatus> updatePasswordAuth(Authentication authentication,
                                                          @RequestBody UpdatePasswordRequest request) {
         String name = authentication.getName();

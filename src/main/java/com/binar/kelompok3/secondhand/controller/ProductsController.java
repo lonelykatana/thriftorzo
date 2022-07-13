@@ -96,7 +96,7 @@ public class ProductsController {
     }
 
     // >>>> ADD PRODUCT
-    @PostMapping("/add-product")
+    /*@PostMapping("/add-product")
     public ResponseEntity<ProductResponse> addProducts(@RequestParam MultipartFile[] imageFiles,
                                                        @RequestParam("userId") Integer userId,
                                                        @RequestParam("name") String name,
@@ -126,9 +126,9 @@ public class ProductsController {
         ProductResponse productResponse = new ProductResponse(product, product.getUserId());
 
         return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
-    }
+    }*/
 
-    @PostMapping("/add-product-test")
+    @PostMapping("/add-product")
     public ResponseEntity<ProductResponse> addProductsAuth(@RequestParam MultipartFile[] imageFiles,
                                                            @RequestParam("name") String name,
                                                            @RequestParam("price") Double price,
