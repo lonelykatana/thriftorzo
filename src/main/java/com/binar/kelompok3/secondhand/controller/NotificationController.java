@@ -2,6 +2,7 @@ package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.model.entity.Notification;
 import com.binar.kelompok3.secondhand.model.entity.Users;
+import com.binar.kelompok3.secondhand.model.request.notif.ReadNotifRequest;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.notif.NotificationPageResponse;
 import com.binar.kelompok3.secondhand.model.response.notif.NotificationResponse;
@@ -29,10 +30,10 @@ public class NotificationController {
     private INotificationService iNotificationService;
     private IUsersService usersService;
 
-    @PutMapping("/read/{id}")
-    public ResponseEntity<MessageResponse> readNotif(@PathVariable Integer id) {
-        iNotificationService.updateIsRead(id);
-        return ResponseEntity.ok(new MessageResponse("Sukses membaca notfi"));
+    @PutMapping("/read")
+    public ResponseEntity<MessageResponse> readNotif(@RequestBody ReadNotifRequest request) {
+        iNotificationService.updateIsRead(request.getId());
+        return ResponseEntity.ok(new MessageResponse("Sukses membaca notif"));
     }
 
 /*    @GetMapping("/get/{userId}")
