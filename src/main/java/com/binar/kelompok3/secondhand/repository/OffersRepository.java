@@ -38,4 +38,6 @@ public interface OffersRepository extends JpaRepository<Offers, Integer> {
     @Query(value = "update offers set status = 2 where product_id=?1 and id<>?2", nativeQuery = true)
     void setAllStatusToDeclined(String productId, Integer id);
 
+    @Query(value = "select * from offers where user_id=?1 and product_id=?2", nativeQuery = true)
+    Offers getTransaction(Integer userId, String productId);
 }

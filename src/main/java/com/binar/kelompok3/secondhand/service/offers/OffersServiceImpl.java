@@ -73,6 +73,14 @@ public class OffersServiceImpl implements IOffersService {
         return offersRepository.findOffersById(id);
     }
 
+    @Override
+    public Boolean getTransaction(Integer userId, String productId) {
+        Offers transaction = offersRepository.getTransaction(userId, productId);
+        if (transaction == null)
+            return false;
+        return !transaction.getStatus().equals(2) && !transaction.getStatus().equals(4);
+    }
+
     //update status pada tawaran
     @Override
     public void updateOffers(Integer id, Integer status) {

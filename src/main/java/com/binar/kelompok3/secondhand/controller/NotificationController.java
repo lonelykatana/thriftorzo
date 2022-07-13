@@ -4,6 +4,7 @@ import com.binar.kelompok3.secondhand.model.entity.Notification;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.request.notif.ReadNotifRequest;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
+import com.binar.kelompok3.secondhand.model.response.notif.NotificationUnreadCountResponse;
 import com.binar.kelompok3.secondhand.model.response.notif.NotificationPageResponse;
 import com.binar.kelompok3.secondhand.model.response.notif.NotificationResponse;
 import com.binar.kelompok3.secondhand.service.notification.INotificationService;
@@ -36,21 +37,15 @@ public class NotificationController {
         return ResponseEntity.ok(new MessageResponse("Sukses membaca notif"));
     }
 
-/*    @GetMapping("/get/{userId}")
-    public ResponseEntity<List<NotificationResponse>> getNotification(@PathVariable Integer userId) {
-        List<Notification> notification = iNotificationService.getNotification(userId);
-        List<NotificationResponse> notificationResponses =
-                notification.stream()
-                        .map(notification1 -> {
-                            if (notification1.getOfferId() == null) {
-                                return new NotificationResponse(notification1
-                                        , notification1.getProductId());
-                            } else return new NotificationResponse(notification1
-                                    , notification1.getProductId(), notification1.getOfferId());
-                        })
-                        .collect(Collectors.toList());
-        return new ResponseEntity<>(notificationResponses, HttpStatus.OK);
-    }*/
+    @GetMapping("/unread-count")
+    public ResponseEntity<NotificationUnreadCountResponse> countNotifications(Authentication authentication) {
+        Users user = usersService.findByEmail(authentication.getName());
+        Integer unread = iNotificationService.unreadNotifications(user.getId());
+
+        NotificationUnreadCountResponse response = new NotificationUnreadCountResponse(user, unread);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
     @GetMapping("/get")
     public ResponseEntity<NotificationPageResponse> getNotificationAuth(Authentication authentication,

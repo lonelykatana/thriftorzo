@@ -1,12 +1,15 @@
 package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.model.entity.Offers;
+import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.request.transaction.OfferRequest;
 import com.binar.kelompok3.secondhand.model.request.transaction.UpdateOfferRequest;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
+import com.binar.kelompok3.secondhand.model.response.notif.StatusTransactionResponse;
 import com.binar.kelompok3.secondhand.model.response.offers.TransactionResponse;
 import com.binar.kelompok3.secondhand.service.offers.IOffersService;
+import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import org.springframework.http.HttpStatus;
 import lombok.AllArgsConstructor;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class TransactionController {
 
     private IOffersService iOffersService;
+    private IProductsService productsService;
     private IUsersService iUsersService;
 
     /*@PostMapping("/buy-transaction/{userId}")
@@ -58,6 +62,18 @@ public class TransactionController {
         Offers offers = iOffersService.findOffersById(offerId);
         TransactionResponse transactionResponse = new TransactionResponse(offers);
         return new ResponseEntity<>(transactionResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-status-transaction")
+    public ResponseEntity<StatusTransactionResponse> statusTransaction(Authentication authentication,
+                                                                       @RequestParam(value = "productId") String productId) {
+        Users user = iUsersService.findByEmail(authentication.getName());
+        Boolean status = iOffersService.getTransaction(user.getId(), productId);
+
+        StatusTransactionResponse response = new StatusTransactionResponse(user, productId);
+        response.setStatus(status.equals(true));
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

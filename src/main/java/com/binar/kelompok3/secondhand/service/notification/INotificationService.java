@@ -15,4 +15,6 @@ public interface INotificationService {
     void updateIsRead(Integer id);
 
     List<Notification> getNotification(Integer userId);
+
+    Integer unreadNotifications(Integer userId);
 }

@@ -44,7 +44,7 @@ public class NotificationServiceImpl implements INotificationService {
     }
 
     @Override
-    public void updateIsRead(Integer id){
+    public void updateIsRead(Integer id) {
         Optional<Notification> notification = notificationRepository.findById(id);
         notification.ifPresent(notification1 -> {
             notification1.setIsRead(true);
@@ -54,6 +54,11 @@ public class NotificationServiceImpl implements INotificationService {
 
     @Override
     public List<Notification> getNotification(Integer userId) {
-        return notificationRepository.findNotif(userId);
+        return notificationRepository.findNotifications(userId);
+    }
+
+    @Override
+    public Integer unreadNotifications(Integer userId) {
+        return notificationRepository.unreadNotifications(userId);
     }
 }

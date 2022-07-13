@@ -20,6 +20,5 @@ public interface IOffersService {
 
     Offers findOffersById(Integer id);
 
-
-
+    Boolean getTransaction(Integer userId, String productId);
 }
