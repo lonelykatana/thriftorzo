@@ -128,17 +128,50 @@ public class ProductsController {
         return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
     }
 
+    @PostMapping("/add-product-test")
+    public ResponseEntity<ProductResponse> addProductsAuth(@RequestParam MultipartFile[] imageFiles,
+                                                           @RequestParam("name") String name,
+                                                           @RequestParam("price") Double price,
+                                                           @RequestParam(value = "status", required = false, defaultValue = "1") Integer status,
+                                                           @RequestParam("publish") Integer publish,
+                                                           @RequestParam("description") String description,
+                                                           @RequestParam("category") String category,
+                                                           Authentication authentication) {
+        List<String> urls = new ArrayList<>();
+        UUID uuid = UUID.randomUUID();
+        String productId = uuid.toString();
+        Arrays.stream(imageFiles)
+                .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
+
+        Users user = iUsersService.findByEmail(authentication.getName());
+
+        iProductsService.saveProducts(productId, name, price, status, publish, description, category, user.getId());
+
+        Products currentProduct = iProductsService.findProductsById(productId);
+        if (currentProduct == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            for (String url : urls) {
+                iImageProductService.saveImageProductToDb(url, currentProduct);
+            }
+        }
+
+        Products product = iProductsService.findProductsById(productId);
+        ProductResponse productResponse = new ProductResponse(product, product.getUserId());
+
+        return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
+    }
+
     // >>>> UPDATE PRODUCT
     @PutMapping("/update-product")
-    public ResponseEntity<ProductResponse> updateProducts(
-            @RequestParam(required = false) MultipartFile[] imageFiles,
-            @RequestParam("productId") String productId,
-            @RequestParam("name") String name,
-            @RequestParam("price") Double price,
-            @RequestParam("status") Integer status,
-            @RequestParam("publish") Integer publish,
-            @RequestParam("description") String description,
-            @RequestParam("category") String category) {
+    public ResponseEntity<ProductResponse> updateProducts(@RequestParam(required = false) MultipartFile[] imageFiles,
+                                                          @RequestParam("productId") String productId,
+                                                          @RequestParam("name") String name,
+                                                          @RequestParam("price") Double price,
+                                                          @RequestParam("status") Integer status,
+                                                          @RequestParam("publish") Integer publish,
+                                                          @RequestParam("description") String description,
+                                                          @RequestParam("category") String category) {
 
         List<String> urls = new ArrayList<>();
         if (imageFiles == null) {
