@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class UserResponse {
-    private Integer userId;
+    private Integer id;
     private String name;
     private String email;
     private String phone;
@@ -14,7 +14,7 @@ public class UserResponse {
     private String imgUrl;
 
     public UserResponse(Users users) {
-        this.userId = users.getId();
+        this.id = users.getId();
         this.name = users.getName();
         this.email = users.getEmail();
         this.phone = users.getPhone();
