@@ -3,6 +3,7 @@ package com.binar.kelompok3.secondhand.model.response.product;
 import com.binar.kelompok3.secondhand.model.entity.ImageProduct;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
+import com.binar.kelompok3.secondhand.model.response.user.UserResponse;
 import lombok.Data;
 
 import java.util.List;
@@ -45,6 +46,6 @@ public class ProductResponse {
     }
 
     private UserResponse userMapper(Users user) {
-        return new UserResponse(user.getId(), user.getName(), user.getCityName(), user.getImgUrl());
+        return new UserResponse(user);
     }
 }

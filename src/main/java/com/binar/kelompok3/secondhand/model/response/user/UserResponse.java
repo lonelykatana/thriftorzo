@@ -10,7 +10,7 @@ public class UserResponse {
     private String email;
     private String phone;
     private String address;
-    private String city;
+    private String cityName;
     private String imgUrl;
 
     public UserResponse(Users users) {
@@ -19,7 +19,7 @@ public class UserResponse {
         this.email = users.getEmail();
         this.phone = users.getPhone();
         this.address = users.getAddress();
-        this.city = users.getCityName();
+        this.cityName = users.getCityName();
         this.imgUrl = users.getImgUrl();
     }
 }
