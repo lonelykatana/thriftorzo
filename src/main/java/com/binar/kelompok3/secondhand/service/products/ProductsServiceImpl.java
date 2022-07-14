@@ -48,7 +48,7 @@ public class ProductsServiceImpl implements IProductsService {
 
         Products products1 = findProductsById(id);
         if (publish.equals(1)) {
-            iNotificationService.saveNotification("Berhasil diterbitkan", products1, userId);
+            iNotificationService.saveNotification("Berhasil diterbitkan", products1,1, userId);
         }
     }
 

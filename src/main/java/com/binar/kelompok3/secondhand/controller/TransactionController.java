@@ -1,7 +1,6 @@
 package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.model.entity.Offers;
-import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.request.transaction.OfferRequest;
 import com.binar.kelompok3.secondhand.model.request.transaction.UpdateOfferRequest;

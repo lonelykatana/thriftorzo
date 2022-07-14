@@ -23,6 +23,8 @@ public class Notification extends DateModel implements Serializable {
 
     private String info;
 
+    private Integer roles;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "offer_id", nullable = true)
     private Offers offerId;
@@ -32,7 +34,7 @@ public class Notification extends DateModel implements Serializable {
     private Products productId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",nullable = true)
+    @JoinColumn(name = "user_id", nullable = true)
     private Users userId;
 
     private Boolean isRead = false;

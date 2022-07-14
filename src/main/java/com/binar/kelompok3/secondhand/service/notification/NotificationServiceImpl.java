@@ -20,12 +20,13 @@ public class NotificationServiceImpl implements INotificationService {
     private IUsersService iUsersService;
 
     @Override
-    public void saveNotification(String title, String info, Offers offers,
+    public void saveNotification(String title, String info, Integer roles, Offers offers,
                                  Products productId, Integer userId) {
         Notification notification = new Notification();
         Users users = iUsersService.findUsersById(userId);
         notification.setTitle(title);
         notification.setInfo(info);
+        notification.setRoles(roles);
         notification.setProductId(productId);
         notification.setUserId(users);
         notification.setOfferId(offers);
@@ -33,11 +34,12 @@ public class NotificationServiceImpl implements INotificationService {
     }
 
     @Override
-    public void saveNotification(String title, Products products, Integer userId) {
+    public void saveNotification(String title, Products products, Integer roles, Integer userId) {
         Notification notification = new Notification();
         Users users = iUsersService.findUsersById(userId);
         notification.setTitle(title);
         notification.setProductId(products);
+        notification.setRoles(roles);
         notification.setUserId(users);
         notificationRepository.save(notification);
 

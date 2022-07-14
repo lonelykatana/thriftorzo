@@ -7,10 +7,9 @@ import com.binar.kelompok3.secondhand.model.entity.Products;
 import java.util.List;
 
 public interface INotificationService {
-    void saveNotification(String title, String info, Offers offers,
-                          Products productId, Integer userId);
+    void saveNotification(String title, String info, Integer roles, Offers offers, Products productId, Integer userId);
 
-    void saveNotification(String title, Products products, Integer userId);
+    void saveNotification(String title, Products products, Integer roles, Integer userId);
 
     void updateIsRead(Integer id);
 

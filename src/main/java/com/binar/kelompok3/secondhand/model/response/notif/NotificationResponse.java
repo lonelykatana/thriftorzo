@@ -18,6 +18,7 @@ public class NotificationResponse {
     private String title;
     private Double offerPrice;
     private String info;
+    private Integer roles;
     private Boolean isRead;
     private Date lastUpdated;
     private ProductResponse productResponse;
@@ -29,6 +30,7 @@ public class NotificationResponse {
         this.title = notification.getTitle();
         this.offerPrice = offers.getOfferPrice();
         this.info = notification.getInfo();
+        this.roles = notification.getRoles();
         this.isRead = notification.getIsRead();
         this.lastUpdated = notification.getUpdatedOn();
         this.productResponse = new ProductResponse(products, products.getUserId());
@@ -39,6 +41,7 @@ public class NotificationResponse {
         this.id = notification.getId();
         this.title = notification.getTitle();
         this.info = notification.getInfo();
+        this.roles = notification.getRoles();
         this.isRead = notification.getIsRead();
         this.lastUpdated = notification.getUpdatedOn();
         this.productResponse = new ProductResponse(products, products.getUserId());
