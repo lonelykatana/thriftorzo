@@ -1,5 +1,6 @@
 package com.binar.kelompok3.secondhand.service.products;
 
+import com.binar.kelompok3.secondhand.enumeration.ERole;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.binar.kelompok3.secondhand.utils.Constant.DATA_EMPTY;
+import static com.binar.kelompok3.secondhand.utils.Constant.*;
 
 
 @Service
@@ -48,10 +49,9 @@ public class ProductsServiceImpl implements IProductsService {
 
         Products products1 = findProductsById(id);
         if (publish.equals(1)) {
-            iNotificationService.saveNotification("Berhasil diterbitkan", products1, 1, userId);
+            iNotificationService.saveNotification(BERHASIL_DITERBITKAN, INFO_DITERBITKAN, products1, ERole.SELLER.getNumber(), userId);
         }
     }
-
 
     @Override
     public void updateProducts(String name, Double price, Integer status, Integer publish,

@@ -1,5 +1,6 @@
 package com.binar.kelompok3.secondhand.service.offers;
 
+import com.binar.kelompok3.secondhand.enumeration.ERole;
 import com.binar.kelompok3.secondhand.model.entity.Offers;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
@@ -10,6 +11,8 @@ import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.binar.kelompok3.secondhand.utils.Constant.*;
 
 @Service
 public class OffersServiceImpl implements IOffersService {
@@ -25,11 +28,6 @@ public class OffersServiceImpl implements IOffersService {
         this.iProductsService = iProductsService;
         this.iNotificationService = iNotificationService;
     }
-
-
-    private String isiTitle = "Tawaran Produk";
-    private Integer sellerRoles = 1;
-    private Integer buyerRoles = 2;
 
     @Override
     public List<Offers> getAllOffers() {
@@ -51,10 +49,8 @@ public class OffersServiceImpl implements IOffersService {
         Integer sellerId = products.getUserId().getId();
         Products products1 = iProductsService.findProductsById(productId);
         Offers offerId = findOffersById(offers.getId());
-        iNotificationService.saveNotification(isiTitle, "Penawaran telah dilanjutkan ke" +
-                " penjual", buyerRoles, offerId, products1, userId);
-        iNotificationService.saveNotification("Anda mendapat tawaran", "Pelanggan tertarik dengan Produk anda", sellerRoles, offerId, products1,
-                sellerId);
+        iNotificationService.saveNotification(TAWARAN_PRODUCT, SALURKAN_KE_PENJUAL, ERole.BUYER.getNumber(), offerId, products1, userId);
+        iNotificationService.saveNotification(MENDAPAT_TAWARAN, PELANGGAN_TERTARIK, ERole.SELLER.getNumber(), offerId, products1, sellerId);
     }
 
     @Override
@@ -89,19 +85,15 @@ public class OffersServiceImpl implements IOffersService {
         Offers offerId = findOffersById(id);
         if (status.equals(2)) {
             offersRepository.updateOffers(id, status);
-            iNotificationService.saveNotification(isiTitle, "Penawaran " +
-                    "anda ditolak penjual", buyerRoles, offerId, products, buyerId);
+            iNotificationService.saveNotification(TAWARAN_PRODUCT, TAWARAN_DITOLAK, ERole.BUYER.getNumber(), offerId, products, buyerId);
         } else if (status.equals(3)) {
             offersRepository.updateOffers(id, status);
-            iNotificationService.saveNotification(isiTitle, "Penawaran " +
-                            "anda diterima, penjual akan menhubungi anda via WhatsApp", buyerRoles, offerId, products,
-                    buyerId);
+            iNotificationService.saveNotification(TAWARAN_PRODUCT, TAWARAN_DITERIMA, ERole.BUYER.getNumber(), offerId, products, buyerId);
         } else if (status.equals(4)) {
             iProductsService.updateStatus(productId, 2);
             offersRepository.setAllStatusToDeclined(productId, id);
             offersRepository.updateOffers(id, status);
-            iNotificationService.saveNotification(isiTitle, "Penawaran " +
-                    "berhasil!", buyerRoles, offerId, products, buyerId);
+            iNotificationService.saveNotification(TAWARAN_PRODUCT, TAWARAN_BERHASIL, ERole.BUYER.getNumber(), offerId, products, buyerId);
         } else offersRepository.updateOffers(id, status);
 
     }
@@ -110,6 +102,4 @@ public class OffersServiceImpl implements IOffersService {
     public void deleteOffersById(Integer id) {
         offersRepository.deleteOffersById(id);
     }
-
-
 }

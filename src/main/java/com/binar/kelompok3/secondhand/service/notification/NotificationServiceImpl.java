@@ -34,10 +34,11 @@ public class NotificationServiceImpl implements INotificationService {
     }
 
     @Override
-    public void saveNotification(String title, Products products, Integer roles, Integer userId) {
+    public void saveNotification(String title, String info, Products products, Integer roles, Integer userId) {
         Notification notification = new Notification();
         Users users = iUsersService.findUsersById(userId);
         notification.setTitle(title);
+        notification.setInfo(info);
         notification.setProductId(products);
         notification.setRoles(roles);
         notification.setUserId(users);
