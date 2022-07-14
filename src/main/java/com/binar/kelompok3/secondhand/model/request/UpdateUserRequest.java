@@ -9,9 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class UpdateUserRequest {
-
     String name;
-
     String address;
     String phone;
     String cityName;

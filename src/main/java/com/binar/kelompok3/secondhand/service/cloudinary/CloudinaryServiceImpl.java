@@ -17,7 +17,6 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
 
     private Cloudinary cloudinary;
 
-
     @Override
     public String uploadFile(MultipartFile image) {
         try {

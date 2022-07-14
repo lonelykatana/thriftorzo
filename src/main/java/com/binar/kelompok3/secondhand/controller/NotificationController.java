@@ -2,7 +2,7 @@ package com.binar.kelompok3.secondhand.controller;
 
 import com.binar.kelompok3.secondhand.model.entity.Notification;
 import com.binar.kelompok3.secondhand.model.entity.Users;
-import com.binar.kelompok3.secondhand.model.request.notif.ReadNotifRequest;
+import com.binar.kelompok3.secondhand.model.request.notif.ReadNotificationRequest;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.notif.NotificationUnreadCountResponse;
 import com.binar.kelompok3.secondhand.model.response.notif.NotificationPageResponse;
@@ -32,7 +32,7 @@ public class NotificationController {
     private IUsersService usersService;
 
     @PutMapping("/read")
-    public ResponseEntity<MessageResponse> readNotif(@RequestBody ReadNotifRequest request) {
+    public ResponseEntity<MessageResponse> readNotif(@RequestBody ReadNotificationRequest request) {
         iNotificationService.updateIsRead(request.getId());
         return ResponseEntity.ok(new MessageResponse("Sukses membaca notif"));
     }

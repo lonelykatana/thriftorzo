@@ -54,7 +54,7 @@ public class Products extends DateModel implements Serializable {
             cascade = CascadeType.MERGE,
             orphanRemoval = true
     )
-    //@JsonIgnore
+
     @JsonManagedReference
     private List<ImageProduct> imageProducts = new ArrayList<>();
 

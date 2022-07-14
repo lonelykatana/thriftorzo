@@ -18,19 +18,13 @@ public interface IProductsService {
 
     Page<Products> getAllProductsPaginated(Pageable pageable);
 
-    Page<Products> getAllProductPublishPaginated(Pageable pageable); // ini
-
     Page<Products> getAllSoldProductsPaginated(Integer userId, Pageable pageable);
 
     Page<Products> getProductsByUserId(Integer userId, Pageable pageable);
 
-    Page<Products> searchProductByNamePaginated(String name, Pageable pageable); // ini
-
     Page<Products> getAllProductsDiminati(Integer userId, Pageable pageable);
 
     Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable);
-
-    Page<Products> filterProductByCategoryPaginated(String category, Pageable pageable); // ini
 
     void deleteProductsById(String id);
 

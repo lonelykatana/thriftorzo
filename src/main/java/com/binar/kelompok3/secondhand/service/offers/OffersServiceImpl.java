@@ -57,13 +57,10 @@ public class OffersServiceImpl implements IOffersService {
                 sellerId);
     }
 
-    //service untuk riwayat tawaran buyer
     @Override
     public List<Offers> getAllByUserId(Integer userId) {
         return offersRepository.findAllByUserId(userId);
     }
-
-    //service untuk riwayat tawaran penjual
 
     @Override
     public List<Offers> getHistorySeller(Integer userId) {
@@ -83,7 +80,6 @@ public class OffersServiceImpl implements IOffersService {
         return !transaction.getStatus().equals(2) && !transaction.getStatus().equals(4);
     }
 
-    //update status pada tawaran
     @Override
     public void updateOffers(Integer id, Integer status) {
 

@@ -7,7 +7,6 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 public class UpdatePasswordRequest {
-
     @NotBlank
     String password;
 }

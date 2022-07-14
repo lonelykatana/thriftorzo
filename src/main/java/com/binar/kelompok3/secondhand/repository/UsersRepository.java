@@ -31,8 +31,4 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
     Boolean existsByEmail(String email);
 
     Users findByEmail(String email);
-
-    @Query(value ="select * from(select users.*,image.image_url from users left join image on users.id = image.user_id)as foo where id=?1" ,nativeQuery = true)
-    Users getUsersAndImgUrl(Integer id);
-
 }

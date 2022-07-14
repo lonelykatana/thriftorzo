@@ -9,7 +9,4 @@ public interface ICloudinaryService {
     String uploadFile(MultipartFile image);
 
     File convertMultiPartToFile(MultipartFile file) throws IOException;
-
-
-
 }

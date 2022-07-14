@@ -15,13 +15,7 @@ import java.util.List;
 @Transactional
 public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
-    @Query(value = "select * from products", nativeQuery = true)
-    List<Products> getAllProducts();
-
     Page<Products> findAllByOrderByCreatedOnDesc(Pageable pageable);
-
-    @Query(value = "select * from products where publish=true", nativeQuery = true)
-    Page<Products> getAllProductReadyPaginated(Pageable pageable);
 
     @Query(value = "select * from products where status=2 and user_id=?1", nativeQuery = true)
     Page<Products> getAllProductSoldPaginated(Integer userId, Pageable pageable);
@@ -29,16 +23,11 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
     @Query(value = "select * from products where user_id=?1", nativeQuery = true)
     List<Products> getProductsByUserId(Integer userId);
 
-    List<Products> findProductsByNameContainingIgnoreCase(String name, Pageable pageable); // ini
-
-    List<Products> findProductsByCategoryContainingIgnoreCase(String category, Pageable pageable); // ini
-
     void deleteProductsById(String id);
 
     @Modifying
     @Query(value = "update products set name=?1, price=?2, status=?3, publish=?4, description=?5, category=?6 where id=?7", nativeQuery = true)
-    Integer updateProducts(String name, Double price, Integer status, Integer publish,
-                           String description, String category, String id);
+    Integer updateProducts(String name, Double price, Integer status, Integer publish, String description, String category, String id);
 
     Products findProductsById(String id);
 
@@ -50,6 +39,4 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
     Page<Products> getProductsDiminati(Integer id, Pageable pageable);
 
     Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCaseAndStatusAndPublish(String name, String category, Integer status, Integer publish, Pageable pageable);
-
-
 }

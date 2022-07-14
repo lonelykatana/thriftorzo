@@ -36,9 +36,6 @@ public class ProductsController {
     public ResponseEntity<ProductResponse> getProductById(@PathVariable("productId") String productId) {
         Products product = iProductsService.findProductsById(productId);
         ProductResponse productResponse = new ProductResponse(product, product.getUserId());
-        if (product == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
 
@@ -94,39 +91,6 @@ public class ProductsController {
             return new ResponseEntity(new MessageResponse("Data Kosong!"), HttpStatus.NO_CONTENT);
         }
     }
-
-    // >>>> ADD PRODUCT
-    /*@PostMapping("/add-product")
-    public ResponseEntity<ProductResponse> addProducts(@RequestParam MultipartFile[] imageFiles,
-                                                       @RequestParam("userId") Integer userId,
-                                                       @RequestParam("name") String name,
-                                                       @RequestParam("price") Double price,
-                                                       @RequestParam(value = "status", required = false, defaultValue = "1") Integer status,
-                                                       @RequestParam("publish") Integer publish,
-                                                       @RequestParam("description") String description,
-                                                       @RequestParam("category") String category) {
-        List<String> urls = new ArrayList<>();
-        UUID uuid = UUID.randomUUID();
-        String productId = uuid.toString();
-        Arrays.stream(imageFiles)
-                .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
-
-        iProductsService.saveProducts(productId, name, price, status, publish, description, category, userId);
-
-        Products currentProduct = iProductsService.findProductsById(productId);
-        if (currentProduct == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            for (String url : urls) {
-                iImageProductService.saveImageProductToDb(url, currentProduct);
-            }
-        }
-
-        Products product = iProductsService.findProductsById(productId);
-        ProductResponse productResponse = new ProductResponse(product, product.getUserId());
-
-        return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
-    }*/
 
     @PostMapping("/add-product")
     public ResponseEntity<ProductResponse> addProductsAuth(@RequestParam MultipartFile[] imageFiles,
@@ -221,6 +185,4 @@ public class ProductsController {
 
         return new ResponseEntity<>(jsonResponse, HttpStatus.ACCEPTED);
     }
-
-
 }

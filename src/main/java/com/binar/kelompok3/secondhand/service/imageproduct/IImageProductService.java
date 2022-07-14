@@ -20,6 +20,4 @@ public interface IImageProductService {
     ImageProduct findImageProductByUrl(String url);
 
     void saveImageProductToDb(String url, Products currentProduct);
-
-
 }

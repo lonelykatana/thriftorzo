@@ -23,16 +23,6 @@ public class HistoryController {
     private IOffersService iOffersService;
     private IUsersService iUsersService;
 
-    /*@GetMapping("/buyer-history/{userId}")
-    public ResponseEntity<List<TransactionResponse>> getBuyerHistory(@PathVariable Integer userId) {
-        List<Offers> offers = iOffersService.getAllByUserId(userId);
-        List<TransactionResponse> offerResponses = offers.stream()
-                .map(TransactionResponse::new)
-                .collect(Collectors.toList());
-
-        return new ResponseEntity<>(offerResponses, HttpStatus.OK);
-    }*/
-
     @GetMapping("/buyer-history")
     public ResponseEntity<List<TransactionResponse>> getBuyerHistoryAuth(Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());
@@ -43,16 +33,6 @@ public class HistoryController {
 
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
-
-    /*@GetMapping("/seller-history/{userId}")
-    public ResponseEntity<List<TransactionResponse>> getHistorySeller(@PathVariable Integer userId) {
-        List<Offers> offers = iOffersService.getHistorySeller(userId);
-        List<TransactionResponse> offerResponses = offers.stream()
-                .map(TransactionResponse::new)
-                .collect(Collectors.toList());
-
-        return new ResponseEntity<>(offerResponses, HttpStatus.OK);
-    }*/
 
     @GetMapping("/seller-history")
     public ResponseEntity<List<TransactionResponse>> getHistorySellerAuth(Authentication authentication) {

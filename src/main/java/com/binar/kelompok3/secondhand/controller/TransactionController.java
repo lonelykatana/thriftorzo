@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import static com.binar.kelompok3.secondhand.utils.Constant.TRANSACTION_UPDATED;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/transaction")
@@ -25,14 +27,6 @@ public class TransactionController {
     private IOffersService iOffersService;
     private IProductsService productsService;
     private IUsersService iUsersService;
-
-    /*@PostMapping("/buy-transaction/{userId}")
-    public ResponseEntity<OfferRequest> addOffers(@PathVariable(value = "userId") Integer userId,
-                                                  @RequestBody OfferRequest offerRequest) {
-        iOffersService.saveOffers(userId, offerRequest.getProductId(),
-                offerRequest.getOfferPrice(), offerRequest.getStatus());
-        return new ResponseEntity<>(offerRequest, HttpStatus.OK);
-    }*/
 
     @PostMapping("/buy-transaction")
     public ResponseEntity<OfferRequest> addOffersAuth(Authentication authentication,
@@ -46,15 +40,15 @@ public class TransactionController {
     @PutMapping("/update-transaction")
     public ResponseEntity<MessageResponse> updateOffers(@RequestBody UpdateOfferRequest request) {
         iOffersService.updateOffers(request.getOfferId(), request.getStatus());
-        return ResponseEntity.ok(new MessageResponse("Sukses mengupdate tawaran"));
+        return ResponseEntity.ok(new MessageResponse(TRANSACTION_UPDATED));
     }
 
-    @DeleteMapping("/delete-transaction")
+/*    @DeleteMapping("/delete-transaction")
     public ResponseEntity<MessageResponse> deleteOffers(@RequestParam Integer offerId) {
         iOffersService.deleteOffersById(offerId);
         return ResponseEntity.ok(
                 new MessageResponse("Sukses menghapus tawaran" + iOffersService.findOffersById(offerId)));
-    }
+    }*/
 
     @GetMapping("/get-transaction")
     public ResponseEntity<TransactionResponse> getOffer(@RequestParam Integer offerId) {
@@ -74,5 +68,4 @@ public class TransactionController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

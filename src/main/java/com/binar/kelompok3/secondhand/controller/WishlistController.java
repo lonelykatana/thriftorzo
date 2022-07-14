@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.binar.kelompok3.secondhand.utils.Constant.DATA_EMPTY;
+
 
 @RestController
 @RequestMapping("/wishlist")
@@ -32,25 +34,6 @@ public class WishlistController {
     private IWishlistService iWishlistService;
     private IUsersService iUsersService;
     private IProductsService iProductsService;
-
-   /* @GetMapping("/get-all-by/{userId}")
-    public ResponseEntity<MessageResponse> getAllWishList(@PathVariable("userId") Integer userId,
-                                                          @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-                                                          @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
-        List<Wishlist> body = iWishlistService.readWishList(userId);
-        List<Products> products = new ArrayList<>();
-        for (Wishlist wishlist : body) {
-            Products product = wishlist.getProductId();
-            products.add(product);
-        }
-        Page<Products> productResponsePage = new PageImpl<>(products);
-        try {
-            return iProductsService.getMessageResponse(page, size, productResponsePage);
-
-        } catch (Exception e) {
-            return new ResponseEntity(new MessageResponse("Data Kosong!"), HttpStatus.NOT_FOUND);
-        }
-    }*/
 
     @GetMapping("/get-user-wishlist")
     public ResponseEntity<MessageResponse> getAllWishListAuth(Authentication authentication,
@@ -68,20 +51,9 @@ public class WishlistController {
             return iProductsService.getMessageResponse(page, size, productResponsePage);
 
         } catch (Exception e) {
-            return new ResponseEntity(new MessageResponse("Data Kosong!"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new MessageResponse(DATA_EMPTY), HttpStatus.NOT_FOUND);
         }
     }
-
-    /*@GetMapping("/get-status-wishlist")
-    public ResponseEntity<WishlistStatusResponse> getAWishlist(@RequestParam("productId") String productId,
-                                                               @RequestParam("userId") Integer userId) {
-        List<Wishlist> wishlist = iWishlistService.getAWishlist(productId, userId);
-
-        Boolean hasil = !wishlist.isEmpty();
-
-        WishlistStatusResponse wishlistStatusResponse = new WishlistStatusResponse(productId, userId, hasil);
-        return new ResponseEntity<>(wishlistStatusResponse, HttpStatus.OK);
-    }*/
 
     @GetMapping("/get-status-wishlist")
     public ResponseEntity<WishlistStatusResponse> getAWishlistAuth(@RequestParam("productId") String productId,
@@ -96,17 +68,6 @@ public class WishlistController {
         return new ResponseEntity<>(wishlistStatusResponse, HttpStatus.OK);
     }
 
-
-    /*@PostMapping("/add-wishlist")
-    public ResponseEntity<WishlistResponse> addWishList(@RequestBody WishlistRequest request) {
-        Users users = iUsersService.findUsersById(request.getUserId());
-        Products products = iProductsService.findProductsById(request.getProductId());
-        Wishlist wishlist = new Wishlist(users, products);
-        iWishlistService.createWishList(wishlist);
-        WishlistResponse wishlistResponse = new WishlistResponse(request.getProductId(), request.getUserId(), "Add '" + products.getName() + "' to " + users.getName() + "'s Wishlist.");
-        return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
-    }*/
-
     @PostMapping("/add-wishlist")
     public ResponseEntity<WishlistResponse> addWishListAuth(@RequestBody WishlistAuthRequest request,
                                                             Authentication authentication) {
@@ -119,15 +80,6 @@ public class WishlistController {
         WishlistResponse wishlistResponse = new WishlistResponse(request.getProductId(), userId, "Add '" + products.getName() + "' to " + users.getName() + "'s Wishlist.");
         return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
     }
-
-    /*@DeleteMapping("/delete-wishlist")
-    public ResponseEntity<WishlistResponse> deleteWishlist(@RequestParam("productId") String productId,
-                                                           @RequestParam("userId") Integer userId) {
-        Products products = iProductsService.findProductsById(productId);
-        iWishlistService.deleteWishlistByProductIdAndUserId(productId, userId);
-        WishlistResponse wishlistResponse = new WishlistResponse(productId, userId, "Deleted '" + products.getName() + "' to " + userId + "'s Wishlist.");
-        return new ResponseEntity<>(wishlistResponse, HttpStatus.ACCEPTED);
-    }*/
 
     @DeleteMapping("/delete-wishlist")
     public ResponseEntity<WishlistResponse> deleteWishlistAuth(@RequestParam("productId") String productId,
