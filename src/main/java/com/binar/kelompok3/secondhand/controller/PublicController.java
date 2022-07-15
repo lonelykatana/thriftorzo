@@ -9,6 +9,8 @@ import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +57,9 @@ public class PublicController {
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
             @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
         try {
-            Page<Products> products = iProductsService.findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(name, category, PageRequest.of(page, size/*, Sort.by(Sort.Direction.DESC, "created_on")*/));
+
+            Pageable pageable = PageRequest.of(page, size, Sort.by("createdOn").descending());
+            Page<Products> products = iProductsService.findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(name, category, pageable);
             return iProductsService.getMessageResponse(page, size, products);
         } catch (Exception e) {
             return new ResponseEntity(new MessageResponse(DATA_EMPTY), HttpStatus.NO_CONTENT);
