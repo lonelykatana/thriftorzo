@@ -56,6 +56,16 @@ public class NotificationServiceImpl implements INotificationService {
     }
 
     @Override
+    public void markAllAsRead(Integer userId) {
+        List<Notification> notificationList = notificationRepository.getAllNotificationsWhereIsReadFalse(userId);
+
+        for (Notification notification : notificationList) {
+            notification.setIsRead(true);
+            notificationRepository.save(notification);
+        }
+    }
+
+    @Override
     public List<Notification> getNotification(Integer userId) {
         return notificationRepository.findNotifications(userId);
     }

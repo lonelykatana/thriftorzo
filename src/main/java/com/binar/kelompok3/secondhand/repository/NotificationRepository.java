@@ -16,6 +16,9 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
     @Query(value = "select * from notification where user_id=?1 order by created_on DESC", nativeQuery = true)
     List<Notification> findNotifications(Integer userId);
 
-    @Query(value = "select count(1) from notification where user_id=?1 and is_read=false ", nativeQuery = true)
+    @Query(value = "select count(1) from notification where user_id=?1 and is_read=false", nativeQuery = true)
     Integer unreadNotifications(Integer userId);
+
+    @Query(value = "select * from notification where user_id=?1 and is_read=false", nativeQuery = true)
+    List<Notification> getAllNotificationsWhereIsReadFalse(Integer userId);
 }

@@ -3,6 +3,7 @@ package com.binar.kelompok3.secondhand.controller;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.request.UpdatePasswordRequest;
 import com.binar.kelompok3.secondhand.model.request.UpdateUserRequest;
+import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.user.UserResponse;
 import com.binar.kelompok3.secondhand.service.cloudinary.ICloudinaryService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +26,8 @@ public class UsersController {
 
     private IUsersService iUsersService;
     private ICloudinaryService iCloudinaryService;
+    private PasswordEncoder passwordEncoder;
+
 
     @GetMapping("/get-all-users")
     public ResponseEntity<List<Users>> getAllUsers() {
@@ -48,12 +52,21 @@ public class UsersController {
     }
 
     @PutMapping("/change-password")
-    public ResponseEntity<HttpStatus> updatePasswordAuth(Authentication authentication,
-                                                         @RequestBody UpdatePasswordRequest request) {
+    public ResponseEntity<MessageResponse> updatePasswordAuth(Authentication authentication,
+                                                              @RequestBody UpdatePasswordRequest request) {
         String name = authentication.getName();
         Users user = iUsersService.findByEmail(name);
-        iUsersService.updatePassword(user.getId(), request.getPassword());
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            return new ResponseEntity<>(new MessageResponse("Wrong Password."), HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            return new ResponseEntity<>(new MessageResponse("Password Confirmation Mismatched."), HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        iUsersService.updatePassword(user.getId(), request.getNewPassword());
+        return new ResponseEntity<>(new MessageResponse("Password Changed Successfully."), HttpStatus.OK);
     }
 
     @PostMapping("/upload-image")
