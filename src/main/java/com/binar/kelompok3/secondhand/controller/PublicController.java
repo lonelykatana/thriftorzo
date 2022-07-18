@@ -41,12 +41,9 @@ public class PublicController {
     public ResponseEntity<MessageResponse> getAllProductsPaginated(
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
             @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
-        try {
-            Page<Products> products = iProductsService.getAllProductsPaginated(PageRequest.of(page, size));
-            return iProductsService.getMessageResponse(page, size, products);
-        } catch (Exception e) {
-            return new ResponseEntity(new MessageResponse(DATA_EMPTY), HttpStatus.NO_CONTENT);
-        }
+
+        Page<Products> products = iProductsService.getAllProductsPaginated(PageRequest.of(page, size));
+        return iProductsService.getMessageResponse(page, size, products);
     }
 
     // unsorted by created_on

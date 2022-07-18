@@ -71,11 +71,6 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    public Page<Products> getAllProductsDiminati(Integer userId, Pageable pageable) {
-        return productsRepository.getProductsDiminati(userId, pageable);
-    }
-
-    @Override
     public Page<Products> getProductsByUserId(Integer userId, Pageable pageable) {
         List<Products> usersList = productsRepository.getProductsByUserId(userId);
         return new PageImpl<>(usersList);
@@ -104,7 +99,8 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    public ResponseEntity<MessageResponse> getMessageResponse(Integer page, Integer size,
+    public ResponseEntity<MessageResponse> getMessageResponse(Integer page,
+                                                              Integer size,
                                                               Page<Products> products) {
         List<ProductResponse> productResponses = products.stream()
                 .map(product -> new ProductResponse(product, product.getUserId()))

@@ -10,7 +10,6 @@ import com.binar.kelompok3.secondhand.model.response.notif.NotificationResponse;
 import com.binar.kelompok3.secondhand.service.notification.INotificationService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
-import org.aspectj.bridge.Message;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +34,7 @@ public class NotificationController {
     @PutMapping("/read")
     public ResponseEntity<MessageResponse> readNotif(@RequestBody ReadNotificationRequest request) {
         iNotificationService.updateIsRead(request.getId());
-        return ResponseEntity.ok(new MessageResponse("Sukses membaca notif"));
+        return ResponseEntity.ok(new MessageResponse("Notification Read."));
     }
 
     @PutMapping("/mark-all-read")

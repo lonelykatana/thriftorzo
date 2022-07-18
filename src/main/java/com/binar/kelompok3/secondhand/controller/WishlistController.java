@@ -4,7 +4,6 @@ import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.model.entity.Wishlist;
 import com.binar.kelompok3.secondhand.model.request.wishlist.WishlistAuthRequest;
-import com.binar.kelompok3.secondhand.model.request.wishlist.WishlistRequest;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistResponse;
 import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistStatusResponse;
@@ -21,9 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.binar.kelompok3.secondhand.utils.Constant.DATA_EMPTY;
-
 
 @RestController
 @RequestMapping("/wishlist")
@@ -47,12 +43,7 @@ public class WishlistController {
             products.add(product);
         }
         Page<Products> productResponsePage = new PageImpl<>(products);
-        try {
-            return iProductsService.getMessageResponse(page, size, productResponsePage);
-
-        } catch (Exception e) {
-            return new ResponseEntity(new MessageResponse(DATA_EMPTY), HttpStatus.NOT_FOUND);
-        }
+        return iProductsService.getMessageResponse(page, size, productResponsePage);
     }
 
     @GetMapping("/get-status-wishlist")

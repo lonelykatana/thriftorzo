@@ -27,7 +27,7 @@ public class ProductResponse {
 
 
     public ProductResponse(Products products, Users user) {
-        this.userResponse = userMapper(user);
+        this.userResponse = new UserResponse(user);
         this.id = products.getId();
         this.name = products.getName();
         this.price = products.getPrice();
@@ -39,13 +39,5 @@ public class ProductResponse {
                 .stream()
                 .map(ImageProduct::getUrl)
                 .collect(Collectors.toList());
-    }
-
-
-    public ProductResponse(String name, Double price, String url) {
-    }
-
-    private UserResponse userMapper(Users user) {
-        return new UserResponse(user);
     }
 }

@@ -43,12 +43,11 @@ public class TransactionController {
         return ResponseEntity.ok(new MessageResponse(TRANSACTION_UPDATED));
     }
 
-/*    @DeleteMapping("/delete-transaction")
+    @DeleteMapping("/delete-transaction")
     public ResponseEntity<MessageResponse> deleteOffers(@RequestParam Integer offerId) {
         iOffersService.deleteOffersById(offerId);
-        return ResponseEntity.ok(
-                new MessageResponse("Sukses menghapus tawaran" + iOffersService.findOffersById(offerId)));
-    }*/
+        return ResponseEntity.ok(new MessageResponse("Successfully Deleted: " + iOffersService.findOffersById(offerId)));
+    }
 
     @GetMapping("/get-transaction")
     public ResponseEntity<TransactionResponse> getOffer(@RequestParam Integer offerId) {

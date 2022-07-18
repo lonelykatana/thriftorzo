@@ -33,6 +33,4 @@ public class WishlistServiceImpl implements IWishlistService {
     public void deleteWishlistByProductIdAndUserId(String productId, Integer userId) {
         wishlistRepository.deleteWishlistByProductIdAndUserId(productId, userId);
     }
-
-
 }

@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.binar.kelompok3.secondhand.utils.Constant.DATA_EMPTY;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/product")
@@ -64,31 +66,19 @@ public class ProductsController {
         return iProductsService.getMessageResponse(page, size, products);
     }
 
-    @GetMapping("/get-interested-products")
-    public ResponseEntity<MessageResponse> getDiminati(Authentication authentication,
-                                                       @RequestParam(value = "page", defaultValue =
-                                                               "0", required = false) Integer page,
-                                                       @RequestParam(value = "size", defaultValue =
-                                                               "10", required = false) Integer size) {
-        Users users = iUsersService.findByEmail(authentication.getName());
-        Page<Products> products = iProductsService.getAllProductsDiminati(users.getId(),
-                PageRequest.of(page, size));
-        return getResponse(page, products);
-    }
+    private ResponseEntity<MessageResponse> getResponse(@RequestParam(value = "page", defaultValue = "0", required = false) int page, Page<Products> products) {
 
-    static ResponseEntity<MessageResponse> getResponse(
-            @RequestParam(value = "page", defaultValue = "0",
-                    required = false) int page, Page<Products> products) {
         List<ProductResponse> productResponses = products.stream()
                 .map(product -> new ProductResponse(product, product.getUserId()))
                 .collect(Collectors.toList());
+
         if (products.hasContent()) {
             ProductResponsePage productResponsePage = new ProductResponsePage(products.getTotalPages(),
                     products.getTotalElements(), page, products.isFirst(), products.isLast(),
                     products.getSize(), productResponses);
             return new ResponseEntity(productResponsePage, HttpStatus.OK);
         } else {
-            return new ResponseEntity(new MessageResponse("Data Kosong!"), HttpStatus.NO_CONTENT);
+            return new ResponseEntity(new MessageResponse(DATA_EMPTY), HttpStatus.NO_CONTENT);
         }
     }
 
@@ -139,8 +129,7 @@ public class ProductsController {
 
         List<String> urls = new ArrayList<>();
         if (imageFiles == null) {
-            iProductsService.updateProducts(name, price, status, publish,
-                    description, category, productId);
+            iProductsService.updateProducts(name, price, status, publish, description, category, productId);
         } else {
             Arrays.stream(imageFiles)
                     .forEach(imageFile -> urls.add(iImageProductService.uploadFileProduct(imageFile)));
@@ -153,8 +142,7 @@ public class ProductsController {
                     iImageProductService.saveImageProductToDb(url, currentProduct);
                 }
             }
-            iProductsService.updateProducts(name, price, status, publish,
-                    description, category, productId);
+            iProductsService.updateProducts(name, price, status, publish, description, category, productId);
 
         }
         Products updatedProduct = iProductsService.findProductsById(productId);

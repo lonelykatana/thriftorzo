@@ -32,23 +32,27 @@ public class UsersController {
     @GetMapping("/get-all-users")
     public ResponseEntity<List<Users>> getAllUsers() {
         List<Users> users = iUsersService.getAllUsers();
+        if (users.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/get-user")
     public ResponseEntity<UserResponse> getUserByToken(Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());
+
+        if (user == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         UserResponse userResponse = new UserResponse(user);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @PutMapping("/update-data")
-    public ResponseEntity<HttpStatus> updateUsersAuth(Authentication authentication,
-                                                      @Valid @RequestBody UpdateUserRequest request) {
+    public ResponseEntity<MessageResponse> updateUsersAuth(Authentication authentication,
+                                                           @Valid @RequestBody UpdateUserRequest request) {
         Users user = iUsersService.findByEmail(authentication.getName());
         iUsersService.updateUsers(user.getId(), request.getName(), request.getAddress(), request.getPhone(),
                 request.getCityName(), request.getImgUrl());
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok(new MessageResponse("User '" + user.getEmail() + "' Updated!"));
     }
 
     @PutMapping("/change-password")

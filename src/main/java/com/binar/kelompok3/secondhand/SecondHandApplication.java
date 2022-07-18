@@ -1,6 +1,5 @@
 package com.binar.kelompok3.secondhand;
 
-import com.binar.kelompok3.secondhand.utils.AuthEntryPointJwt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

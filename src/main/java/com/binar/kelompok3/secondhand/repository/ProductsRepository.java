@@ -31,12 +31,5 @@ public interface ProductsRepository extends JpaRepository<Products, Integer> {
 
     Products findProductsById(String id);
 
-    @Query(value = "select DISTINCT ON (products.id) products.* from products inner join offers on" +
-            " offers" +
-            ".product_id \n" +
-            "where products.user_id=?1 order by updated_on DESC",
-            nativeQuery = true)
-    Page<Products> getProductsDiminati(Integer id, Pageable pageable);
-
     Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCaseAndStatusAndPublish(String name, String category, Integer status, Integer publish, Pageable pageable);
 }

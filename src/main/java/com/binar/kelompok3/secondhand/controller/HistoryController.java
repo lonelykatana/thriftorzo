@@ -31,6 +31,8 @@ public class HistoryController {
                 .map(TransactionResponse::new)
                 .collect(Collectors.toList());
 
+        if (offerResponses.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
 
@@ -41,6 +43,8 @@ public class HistoryController {
         List<TransactionResponse> offerResponses = offers.stream()
                 .map(TransactionResponse::new)
                 .collect(Collectors.toList());
+
+        if (offerResponses.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         return new ResponseEntity<>(offerResponses, HttpStatus.OK);
     }
