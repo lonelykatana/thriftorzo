@@ -44,12 +44,6 @@ public class NotificationController {
         return ResponseEntity.ok(new MessageResponse("All Notifications Read."));
     }
 
-    @PutMapping("/mark-all-read-test")
-    public ResponseEntity<MessageResponse> markAllAsReadId(@RequestParam Integer userid) {
-        iNotificationService.markAllAsRead(userid);
-        return ResponseEntity.ok(new MessageResponse("All Notifications Read."));
-    }
-
 
     @GetMapping("/unread-count")
     public ResponseEntity<NotificationUnreadCountResponse> countNotifications(Authentication authentication) {
