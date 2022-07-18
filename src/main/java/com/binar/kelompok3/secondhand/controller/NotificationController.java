@@ -32,7 +32,7 @@ public class NotificationController {
     private IUsersService usersService;
 
     @PutMapping("/read")
-    public ResponseEntity<MessageResponse> readNotif(@RequestBody ReadNotificationRequest request) {
+    public ResponseEntity<MessageResponse> readNotification(@RequestBody ReadNotificationRequest request) {
         iNotificationService.updateIsRead(request.getId());
         return ResponseEntity.ok(new MessageResponse("Notification Read."));
     }

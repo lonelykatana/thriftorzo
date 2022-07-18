@@ -1,4 +1,4 @@
-package com.binar.kelompok3.secondhand.model.response.offers;
+package com.binar.kelompok3.secondhand.model.response.history;
 
 import com.binar.kelompok3.secondhand.model.entity.Offers;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;

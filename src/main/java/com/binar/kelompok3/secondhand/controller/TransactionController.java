@@ -6,7 +6,7 @@ import com.binar.kelompok3.secondhand.model.request.transaction.OfferRequest;
 import com.binar.kelompok3.secondhand.model.request.transaction.UpdateOfferRequest;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.notif.StatusTransactionResponse;
-import com.binar.kelompok3.secondhand.model.response.offers.TransactionResponse;
+import com.binar.kelompok3.secondhand.model.response.history.TransactionResponse;
 import com.binar.kelompok3.secondhand.service.offers.IOffersService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
