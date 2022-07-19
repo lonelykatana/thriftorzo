@@ -10,6 +10,8 @@ import com.binar.kelompok3.secondhand.model.response.wishlist.WishlistStatusResp
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import com.binar.kelompok3.secondhand.service.wishlist.IWishlistService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,9 +23,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/wishlist")
-@AllArgsConstructor
+@Api(value = "/wishlist", tags = "Wishlist")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class WishlistController {
 
@@ -31,7 +34,8 @@ public class WishlistController {
     private IUsersService iUsersService;
     private IProductsService iProductsService;
 
-    @GetMapping("/get-user-wishlist")
+    @ApiOperation(value = "Get all wishlist by user.")
+    @GetMapping("/get")
     public ResponseEntity<MessageResponse> getAllWishListAuth(Authentication authentication,
                                                               @RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                                               @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
@@ -46,7 +50,8 @@ public class WishlistController {
         return iProductsService.getMessageResponse(page, size, productResponsePage);
     }
 
-    @GetMapping("/get-status-wishlist")
+    @ApiOperation(value = "Get status wishlist product by user.")
+    @GetMapping("/status")
     public ResponseEntity<WishlistStatusResponse> getAWishlistAuth(@RequestParam("productId") String productId,
                                                                    Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());
@@ -59,7 +64,8 @@ public class WishlistController {
         return new ResponseEntity<>(wishlistStatusResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/add-wishlist")
+    @ApiOperation(value = "Add product product to user wishlist.")
+    @PostMapping("/add")
     public ResponseEntity<WishlistResponse> addWishListAuth(@RequestBody WishlistAuthRequest request,
                                                             Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());
@@ -72,7 +78,8 @@ public class WishlistController {
         return new ResponseEntity<>(wishlistResponse, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete-wishlist")
+    @ApiOperation(value = "Delete product from user wishlist.")
+    @DeleteMapping("/delete")
     public ResponseEntity<WishlistResponse> deleteWishlistAuth(@RequestParam("productId") String productId,
                                                                Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());

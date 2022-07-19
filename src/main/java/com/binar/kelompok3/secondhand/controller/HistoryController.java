@@ -6,6 +6,8 @@ import com.binar.kelompok3.secondhand.model.response.history.HistoryPageResponse
 import com.binar.kelompok3.secondhand.model.response.history.TransactionResponse;
 import com.binar.kelompok3.secondhand.service.offers.IOffersService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,13 +24,15 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/history")
+@Api(value = "/history", tags = "History")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class HistoryController {
 
     private IOffersService iOffersService;
     private IUsersService iUsersService;
 
-    @GetMapping("/buyer-history")
+    @ApiOperation(value = "History for buyer.")
+    @GetMapping("/buyer")
     public ResponseEntity<HistoryPageResponse> getBuyerHistoryAuth(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
                                                                    @RequestParam(value = "size", defaultValue = "10", required = false) Integer size,
                                                                    Authentication authentication) {
@@ -44,7 +48,8 @@ public class HistoryController {
         return new ResponseEntity<>(notificationPageResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/seller-history")
+    @ApiOperation(value = "History for seller.")
+    @GetMapping("/seller")
     public ResponseEntity<HistoryPageResponse> getHistorySellerAuth(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
                                                                     @RequestParam(value = "size", defaultValue = "10", required = false) Integer size,
                                                                     Authentication authentication) {

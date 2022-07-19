@@ -11,7 +11,9 @@ import com.binar.kelompok3.secondhand.model.request.auth.SigninRequest;
 import com.binar.kelompok3.secondhand.model.request.auth.SignupRequest;
 import com.binar.kelompok3.secondhand.repository.RolesRepository;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,31 +26,25 @@ import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@AllArgsConstructor
 @RestController
 @RequestMapping("/auth")
+@Api(value = "/auth", tags = "Authentication")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthController {
 
     // For user authentication
-    @Autowired
-    AuthenticationManager authenticationManager;
-
+    private AuthenticationManager authenticationManager;
     // Encoding incoming password
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
+    private PasswordEncoder passwordEncoder;
     // Generate Token
-    @Autowired
-    JwtUtils jwtUtils;
-
-    @Autowired
-    UsersRepository usersRepository;
-
-    @Autowired
-    RolesRepository rolesRepository;
+    private JwtUtils jwtUtils;
+    // Repository
+    private UsersRepository usersRepository;
+    private RolesRepository rolesRepository;
 
 
+    @ApiOperation(value = "User Sign-in.")
     @PostMapping("/signin")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody SigninRequest request) {
 
@@ -65,6 +61,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt, /*type: bearear,*/ userDetails.getId(), userDetails.getEmail()));
     }
 
+    @ApiOperation(value = "Register User.")
     @PostMapping("/signup")
     public ResponseEntity<MessageResponse> userRegister(@Valid @RequestBody SignupRequest request) {
 

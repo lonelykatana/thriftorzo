@@ -7,6 +7,8 @@ import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.user.UserResponse;
 import com.binar.kelompok3.secondhand.service.cloudinary.ICloudinaryService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user")
+@Api(value = "/user", tags = "User")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsersController {
 
@@ -28,15 +30,8 @@ public class UsersController {
     private ICloudinaryService iCloudinaryService;
     private PasswordEncoder passwordEncoder;
 
-
-    @GetMapping("/get-all-users")
-    public ResponseEntity<List<Users>> getAllUsers() {
-        List<Users> users = iUsersService.getAllUsers();
-        if (users.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
-
-    @GetMapping("/get-user")
+    @ApiOperation(value = "Get a user.")
+    @GetMapping("/get")
     public ResponseEntity<UserResponse> getUserByToken(Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());
 
@@ -46,6 +41,7 @@ public class UsersController {
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Update user data.")
     @PutMapping("/update-data")
     public ResponseEntity<MessageResponse> updateUsersAuth(Authentication authentication,
                                                            @Valid @RequestBody UpdateUserRequest request) {
@@ -55,7 +51,8 @@ public class UsersController {
         return ResponseEntity.ok(new MessageResponse("User '" + user.getEmail() + "' Updated!"));
     }
 
-    @PutMapping("/change-password")
+    @ApiOperation(value = "Change user password.")
+    @PutMapping("/password")
     public ResponseEntity<MessageResponse> updatePasswordAuth(Authentication authentication,
                                                               @RequestBody UpdatePasswordRequest request) {
         String name = authentication.getName();
@@ -73,10 +70,10 @@ public class UsersController {
         return new ResponseEntity<>(new MessageResponse("Password Changed Successfully."), HttpStatus.OK);
     }
 
-    @PostMapping("/upload-image")
+    @ApiOperation(value = "Upload user profile image.")
+    @PostMapping("/avatar")
     public ResponseEntity<String> uploadImage(@RequestParam("imageFile") MultipartFile imageFile) {
         String url = iCloudinaryService.uploadFile(imageFile);
         return new ResponseEntity<>(url, HttpStatus.CREATED);
-
     }
 }

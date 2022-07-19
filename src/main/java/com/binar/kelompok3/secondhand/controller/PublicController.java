@@ -6,6 +6,8 @@ import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,7 @@ import static com.binar.kelompok3.secondhand.utils.Constant.DATA_EMPTY;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/public")
+@Api(value = "/public", tags = "Public")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PublicController {
 
@@ -27,7 +30,8 @@ public class PublicController {
     private IImageProductService iImageProductService;
     private IUsersService iUsersService;
 
-    @GetMapping("/get-product/{productId}")
+    @ApiOperation(value = "Get a product by productId.")
+    @GetMapping("/product/{productId}")
     public ResponseEntity<ProductResponse> findProductById(@PathVariable("productId") String id) {
         Products products = iProductsService.findProductsById(id);
         ProductResponse response = new ProductResponse(products, products.getUserId());
@@ -37,17 +41,8 @@ public class PublicController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/get-all-products")
-    public ResponseEntity<MessageResponse> getAllProductsPaginated(
-            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-            @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
-
-        Page<Products> products = iProductsService.getAllProductsPaginated(PageRequest.of(page, size));
-        return iProductsService.getMessageResponse(page, size, products);
-    }
-
-    // unsorted by created_on
-    @GetMapping("/get-all-product-search-filter-paginated")
+    @ApiOperation(value = "Get all products with search and filter.")
+    @GetMapping("/all")
     public ResponseEntity<MessageResponse> allAPI(
             @RequestParam(value = "productName", defaultValue = "", required = false) String name,
             @RequestParam(value = "category", defaultValue = "", required = false) String category,

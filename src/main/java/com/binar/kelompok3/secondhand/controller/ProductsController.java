@@ -9,6 +9,8 @@ import com.binar.kelompok3.secondhand.model.response.product.ProductResponsePage
 import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +28,7 @@ import static com.binar.kelompok3.secondhand.utils.Constant.DATA_EMPTY;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/product")
+@Api(value = "/product", tags = "Product")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProductsController {
 
@@ -33,15 +36,8 @@ public class ProductsController {
     private IUsersService iUsersService;
     private IImageProductService iImageProductService;
 
-    // >>>> GET PRODUCTS
-    @GetMapping("/get/{productId}")
-    public ResponseEntity<ProductResponse> getProductById(@PathVariable("productId") String productId) {
-        Products product = iProductsService.findProductsById(productId);
-        ProductResponse productResponse = new ProductResponse(product, product.getUserId());
-        return new ResponseEntity<>(productResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/get-sold-products")
+    @ApiOperation(value = "Get all sold products by User.")
+    @GetMapping("/sold")
     public ResponseEntity<MessageResponse> getSoldProducts(Authentication authentication,
                                                            @RequestParam(value = "page", defaultValue = "0",
                                                                    required = false) int page,
@@ -54,7 +50,8 @@ public class ProductsController {
         return iProductsService.getMessageResponse(page, size, products);
     }
 
-    @GetMapping("/get-products-by-userid")
+    @ApiOperation(value = "Get products available by User.")
+    @GetMapping("/products")
     public ResponseEntity<MessageResponse> getAllProductById(Authentication authentication,
                                                              @RequestParam(value = "page", defaultValue = "0",
                                                                      required = false) int page,
@@ -82,7 +79,8 @@ public class ProductsController {
         }
     }
 
-    @PostMapping("/add-product")
+    @ApiOperation(value = "Add a product.")
+    @PostMapping("/add")
     public ResponseEntity<ProductResponse> addProductsAuth(@RequestParam MultipartFile[] imageFiles,
                                                            @RequestParam("name") String name,
                                                            @RequestParam("price") Double price,
@@ -116,8 +114,8 @@ public class ProductsController {
         return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
     }
 
-    // >>>> UPDATE PRODUCT
-    @PutMapping("/update-product")
+    @ApiOperation(value = "Update a product by productId.")
+    @PutMapping("/update")
     public ResponseEntity<ProductResponse> updateProducts(@RequestParam(required = false) MultipartFile[] imageFiles,
                                                           @RequestParam("productId") String productId,
                                                           @RequestParam("name") String name,
@@ -151,13 +149,14 @@ public class ProductsController {
         return new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
 
-    // >>>> DELETE PRODUCT
-    @DeleteMapping("/delete-product")
+    @ApiOperation(value = "Delete product by productId.")
+    @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteProducts(@RequestParam("productId") String id) {
         iProductsService.deleteProductsById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @ApiOperation(value = "Delete image for product.")
     @DeleteMapping("/delete-image")
     public ResponseEntity<LinkedHashMap<String, Object>> deleteImage(@RequestParam String url,
                                                                      @RequestParam String productId) {

@@ -9,6 +9,8 @@ import com.binar.kelompok3.secondhand.model.response.notif.NotificationPageRespo
 import com.binar.kelompok3.secondhand.model.response.notif.NotificationResponse;
 import com.binar.kelompok3.secondhand.service.notification.INotificationService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,27 +27,30 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/notification")
+@Api(value = "/notification", tags = "Notification")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class NotificationController {
 
     private INotificationService iNotificationService;
     private IUsersService usersService;
 
+    @ApiOperation(value = "Read a notification.")
     @PutMapping("/read")
     public ResponseEntity<MessageResponse> readNotification(@RequestBody ReadNotificationRequest request) {
         iNotificationService.updateIsRead(request.getId());
         return ResponseEntity.ok(new MessageResponse("Notification Read."));
     }
 
-    @PutMapping("/mark-all-read")
+    @ApiOperation(value = "Read all unread notifications for once.")
+    @PutMapping("/all-read")
     public ResponseEntity<MessageResponse> markAllAsRead(Authentication authentication) {
         Users user = usersService.findByEmail(authentication.getName());
         iNotificationService.markAllAsRead(user.getId());
         return ResponseEntity.ok(new MessageResponse("All Notifications Read."));
     }
 
-
-    @GetMapping("/unread-count")
+    @ApiOperation(value = "Counting unread notifications.")
+    @GetMapping("/unread")
     public ResponseEntity<NotificationUnreadCountResponse> countNotifications(Authentication authentication) {
         Users user = usersService.findByEmail(authentication.getName());
         Integer unread = iNotificationService.unreadNotifications(user.getId());
@@ -54,7 +59,7 @@ public class NotificationController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
+    @ApiOperation(value = "Get a notification.")
     @GetMapping("/get")
     public ResponseEntity<NotificationPageResponse> getNotificationAuth(Authentication authentication,
                                                                         @RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
