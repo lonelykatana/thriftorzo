@@ -13,6 +13,7 @@ public class Constant {
     public static final String TAWARAN_DITOLAK = "Penawaran anda Ditolak penjual";
     public static final String TAWARAN_DITERIMA = "Penawaran anda Diterima, penjual akan menhubungi anda via WhatsApp";
     public static final String TAWARAN_BERHASIL = "Penawaran anda Berhasil!";
+    public static final String TAWARAN_TERJUAL = "Produk yang anda tawar telah terjual!";
 
     public static final String SALURKAN_KE_PENJUAL = "Penawaran telah dilanjutkan ke penjual";
     public static final String PELANGGAN_TERTARIK = "Pelanggan tertarik dengan Produk anda";

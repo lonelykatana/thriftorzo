@@ -40,4 +40,7 @@ public interface OffersRepository extends JpaRepository<Offers, Integer> {
 
     @Query(value = "select * from offers where user_id=?1 and product_id=?2", nativeQuery = true)
     Offers getTransaction(Integer userId, String productId);
+
+    @Query(value = "select user_id from offers where product_id=?1", nativeQuery = true)
+    List<Integer> getOffersUserId(String productId);
 }
