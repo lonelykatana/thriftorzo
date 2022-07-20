@@ -11,6 +11,8 @@ import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.binar.kelompok3.secondhand.utils.Constant.*;
 
@@ -94,6 +96,17 @@ public class OffersServiceImpl implements IOffersService {
             offersRepository.setAllStatusToDeclined(productId, id);
             offersRepository.updateOffers(id, status);
             iNotificationService.saveNotification(TAWARAN_PRODUCT, TAWARAN_BERHASIL, ERole.BUYER.getNumber(), offerId, products, buyerId);
+            List<Offers> userIdandOffers = offersRepository.getOffersUserId(productId);
+
+            List<Offers> userIdFilter = userIdandOffers.stream().filter(value ->
+                    !Objects.equals(value.getUserId().getId(), buyerId)).collect(Collectors.toList());
+            for (Offers offer : userIdFilter) {
+                iNotificationService.saveNotification(TAWARAN_PRODUCT, TAWARAN_TERJUAL,
+                        ERole.BUYER.getNumber(), offer, products,
+                        offer.getUserId().getId());
+
+            }
+
         } else offersRepository.updateOffers(id, status);
 
     }
@@ -102,4 +115,5 @@ public class OffersServiceImpl implements IOffersService {
     public void deleteOffersById(Integer id) {
         offersRepository.deleteOffersById(id);
     }
+
 }
