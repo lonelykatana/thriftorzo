@@ -31,6 +31,9 @@ public class ProductsServiceImpl implements IProductsService {
     private IUsersService iUsersService;
     private INotificationService iNotificationService;
 
+    public ProductsServiceImpl() {
+    }
+
     @Override
     public void saveProducts(String id, String name, Double price, Integer status, Integer publish,
                              String description,

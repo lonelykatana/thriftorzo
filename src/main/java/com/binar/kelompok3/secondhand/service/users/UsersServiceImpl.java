@@ -17,6 +17,8 @@ public class UsersServiceImpl implements IUsersService {
     private ProductsRepository productsRepository;
     private PasswordEncoder passwordEncoder;
 
+    public UsersServiceImpl(){}
+
 
     //digunakan untuk menu Lengkapi Info Akun
     @Override
