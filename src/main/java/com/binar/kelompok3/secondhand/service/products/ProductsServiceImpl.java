@@ -49,7 +49,8 @@ public class ProductsServiceImpl implements IProductsService {
 
         Products products1 = findProductsById(id);
         if (publish.equals(1)) {
-            iNotificationService.saveNotification(BERHASIL_DITERBITKAN, INFO_DITERBITKAN, products1, ERole.SELLER.getNumber(), userId);
+            iNotificationService.saveNotification(BERHASIL_DITERBITKAN, INFO_DITERBITKAN,
+                    products1, ERole.BUYER.getNumber(), userId);
         }
     }
 
@@ -57,7 +58,13 @@ public class ProductsServiceImpl implements IProductsService {
     public void updateProducts(String name, Double price, Integer status, Integer publish,
                                String description,
                                String category, String id) {
+        Products products1 = findProductsById(id);
+        if (products1.getPublish().equals(0)){
+            iNotificationService.saveNotification(BERHASIL_DITERBITKAN, INFO_DITERBITKAN,
+                    products1, ERole.BUYER.getNumber());
+        }
         productsRepository.updateProducts(name, price, status, publish, description, category, id);
+
     }
 
     @Override
