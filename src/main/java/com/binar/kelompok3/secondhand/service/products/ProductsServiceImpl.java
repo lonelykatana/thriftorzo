@@ -49,7 +49,8 @@ public class ProductsServiceImpl implements IProductsService {
 
         Products products1 = findProductsById(id);
         if (publish.equals(1)) {
-            iNotificationService.saveNotification(BERHASIL_DITERBITKAN, INFO_DITERBITKAN, products1, ERole.SELLER.getNumber(), userId);
+            iNotificationService.saveNotification(BERHASIL_DITERBITKAN, INFO_DITERBITKAN,
+                    products1, ERole.BUYER.getNumber(), userId);
         }
     }
 
