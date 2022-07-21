@@ -8,6 +8,8 @@ import com.binar.kelompok3.secondhand.repository.OffersRepository;
 import com.binar.kelompok3.secondhand.service.notification.INotificationService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,11 +58,13 @@ public class OffersServiceImpl implements IOffersService {
     }
 
     @Override
+    @Cacheable
     public List<Offers> getAllByUserId(Integer userId) {
         return offersRepository.findAllByUserId(userId);
     }
 
     @Override
+    @Cacheable
     public List<Offers> getHistorySeller(Integer userId) {
         return offersRepository.getHistorySeller(userId);
     }
@@ -71,6 +75,7 @@ public class OffersServiceImpl implements IOffersService {
     }
 
     @Override
+    @Cacheable
     public Boolean getTransaction(Integer userId, String productId) {
         Offers transaction = offersRepository.getTransaction(userId, productId);
         if (transaction == null)
@@ -79,6 +84,7 @@ public class OffersServiceImpl implements IOffersService {
     }
 
     @Override
+    @CachePut
     public void updateOffers(Integer id, Integer status) {
 
         String productId = findOffersById(id).getProductId().getId();
