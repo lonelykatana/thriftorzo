@@ -18,4 +18,6 @@ public interface INotificationService {
     List<Notification> getNotification(Integer userId);
 
     Integer unreadNotifications(Integer userId);
+
+    void saveNotification(String title, String info, Products products, Integer roles);
 }
