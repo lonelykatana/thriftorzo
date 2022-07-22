@@ -74,14 +74,4 @@ public class NotificationServiceImpl implements INotificationService {
     public Integer unreadNotifications(Integer userId) {
         return notificationRepository.unreadNotifications(userId);
     }
-
-    @Override
-    public void saveNotification(String title, String info, Products products, Integer roles) {
-        Notification notification = new Notification();
-        notification.setTitle(title);
-        notification.setInfo(info);
-        notification.setProductId(products);
-        notification.setRoles(roles);
-        notificationRepository.save(notification);
-    }
 }
