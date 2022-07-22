@@ -3,6 +3,7 @@ package com.binar.kelompok3.secondhand.service.wishlist;
 import com.binar.kelompok3.secondhand.model.entity.Wishlist;
 import com.binar.kelompok3.secondhand.repository.WishlistRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class WishlistServiceImpl implements IWishlistService {
 
 
     @Override
+    @Cacheable
     public List<Wishlist> getAWishlist(String productId, Integer userId) {
         return wishlistRepository.getAWishlistByProductIdAndUserId(productId, userId);
     }

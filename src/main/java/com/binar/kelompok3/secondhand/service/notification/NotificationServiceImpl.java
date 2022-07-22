@@ -7,6 +7,7 @@ import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.repository.NotificationRepository;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,6 +67,7 @@ public class NotificationServiceImpl implements INotificationService {
     }
 
     @Override
+    @Cacheable
     public List<Notification> getNotification(Integer userId) {
         return notificationRepository.findNotifications(userId);
     }
@@ -73,5 +75,15 @@ public class NotificationServiceImpl implements INotificationService {
     @Override
     public Integer unreadNotifications(Integer userId) {
         return notificationRepository.unreadNotifications(userId);
+    }
+
+    @Override
+    public void saveNotification(String title, String info, Products products, Integer roles) {
+        Notification notification = new Notification();
+        notification.setTitle(title);
+        notification.setInfo(info);
+        notification.setProductId(products);
+        notification.setRoles(roles);
+        notificationRepository.save(notification);
     }
 }
