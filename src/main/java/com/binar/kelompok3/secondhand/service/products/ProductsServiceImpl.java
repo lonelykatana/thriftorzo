@@ -59,9 +59,9 @@ public class ProductsServiceImpl implements IProductsService {
                                String description,
                                String category, String id) {
         Products products1 = findProductsById(id);
-        if (products1.getPublish().equals(0)){
+        if (products1.getPublish().equals(0)) {
             iNotificationService.saveNotification(BERHASIL_DITERBITKAN, INFO_DITERBITKAN,
-                    products1, ERole.BUYER.getNumber());
+                    products1, ERole.BUYER.getNumber(), products1.getUserId().getId());
         }
         productsRepository.updateProducts(name, price, status, publish, description, category, id);
 
