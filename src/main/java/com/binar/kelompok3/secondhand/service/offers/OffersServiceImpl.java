@@ -31,6 +31,9 @@ public class OffersServiceImpl implements IOffersService {
         this.iNotificationService = iNotificationService;
     }
 
+    public OffersServiceImpl() {
+    }
+
     @Override
     public List<Offers> getAllOffers() {
         return offersRepository.getAllOffers();

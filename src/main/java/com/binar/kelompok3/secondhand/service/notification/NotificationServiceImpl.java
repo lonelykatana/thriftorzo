@@ -19,6 +19,9 @@ public class NotificationServiceImpl implements INotificationService {
     private NotificationRepository notificationRepository;
     private IUsersService iUsersService;
 
+    public NotificationServiceImpl() {
+    }
+
     @Override
     public void saveNotification(String title, String info, Integer roles, Offers offers,
                                  Products productId, Integer userId) {

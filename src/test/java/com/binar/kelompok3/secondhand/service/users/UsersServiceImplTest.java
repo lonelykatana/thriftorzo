@@ -2,7 +2,6 @@ package com.binar.kelompok3.secondhand.service.users;
 
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,11 +26,6 @@ class UsersServiceImplTest {
 
     @InjectMocks
     private IUsersService usersService = new UsersServiceImpl();
-
-    @BeforeEach
-    public void init() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     @DisplayName("Assert getAllUsers return all users")
