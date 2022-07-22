@@ -10,8 +10,6 @@ import com.binar.kelompok3.secondhand.repository.ProductsRepository;
 import com.binar.kelompok3.secondhand.service.notification.INotificationService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -57,7 +55,6 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    @CachePut
     public void updateProducts(String name, Double price, Integer status, Integer publish,
                                String description,
                                String category, String id) {
@@ -71,26 +68,22 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    @Cacheable
     public Page<Products> getAllProductsPaginated(Pageable pageable) {
         return productsRepository.findAllByOrderByCreatedOnDesc(pageable);
     }
 
     @Override
-    @Cacheable
     public Page<Products> getAllSoldProductsPaginated(Integer userId, Pageable pageable) {
         return productsRepository.getAllProductSoldPaginated(userId, pageable);
     }
 
     @Override
-    @Cacheable
     public Page<Products> getProductsByUserId(Integer userId, Pageable pageable) {
         List<Products> usersList = productsRepository.getProductsByUserId(userId);
         return new PageImpl<>(usersList);
     }
 
     @Override
-    @Cacheable
     public Page<Products> findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(String name, String category, Pageable pageable) {
         return productsRepository.findProductsByNameContainingIgnoreCaseAndCategoryContainingIgnoreCaseAndStatusAndPublish(name, category, 1, 1, pageable);
     }
@@ -113,7 +106,6 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    @Cacheable
     public ResponseEntity<MessageResponse> getMessageResponse(Integer page,
                                                               Integer size,
                                                               Page<Products> products) {

@@ -4,7 +4,6 @@ import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.repository.ProductsRepository;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,6 @@ public class UsersServiceImpl implements IUsersService {
 
     //digunakan untuk menu Lengkapi Info Akun
     @Override
-    @CachePut
     public void updateUsers(Integer id, String name, String address, String phone, String cityName, String imgUrl) {
         usersRepository.updateUsers(id, name, address, phone, cityName, imgUrl);
     }
