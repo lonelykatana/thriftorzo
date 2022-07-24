@@ -3,14 +3,12 @@ package com.binar.kelompok3.secondhand.service.users;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.repository.UsersRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ class UsersServiceImplTest {
     private UsersRepository usersRepository;
 
     @InjectMocks
-    private IUsersService usersService = new UsersServiceImpl();
+    private UsersServiceImpl usersService;
 
     @Test
     @DisplayName("Assert getAllUsers return all users")
@@ -74,4 +72,5 @@ class UsersServiceImplTest {
         assertEquals("password1", mocked.getPassword());
 
     }
+
 }

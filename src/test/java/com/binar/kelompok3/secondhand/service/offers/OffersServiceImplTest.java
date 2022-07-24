@@ -3,17 +3,14 @@ package com.binar.kelompok3.secondhand.service.offers;
 import com.binar.kelompok3.secondhand.model.entity.Offers;
 import com.binar.kelompok3.secondhand.model.entity.Users;
 import com.binar.kelompok3.secondhand.repository.OffersRepository;
-import org.apache.catalina.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -25,7 +22,7 @@ class OffersServiceImplTest {
     private OffersRepository repository;
 
     @InjectMocks
-    private IOffersService service = new OffersServiceImpl();
+    private OffersServiceImpl service;
 
     @Test
     void getAllOffers() {

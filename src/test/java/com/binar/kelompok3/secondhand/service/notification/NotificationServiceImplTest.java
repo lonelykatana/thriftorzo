@@ -21,7 +21,7 @@ class NotificationServiceImplTest {
     private NotificationRepository repository;
 
     @InjectMocks
-    private INotificationService service = new NotificationServiceImpl();
+    private NotificationServiceImpl service;
 
     @Test
     void getNotification() {
