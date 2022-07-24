@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 
 @SpringBootApplication
-@EnableJpaAuditing
+//@EnableJpaAuditing
 public class SecondHandApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(SecondHandApplication.class);
