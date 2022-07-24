@@ -9,6 +9,7 @@ import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -38,15 +39,9 @@ public class HistoryController {
                                                                    Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());
         List<Offers> offers = iOffersService.getAllByUserId(user.getId());
-        List<TransactionResponse> historyResponse = offers.stream()
-                .map(TransactionResponse::new)
-                .collect(Collectors.toList());
-
-        if (offers.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-        HistoryPageResponse notificationPageResponse = convertToPaginated(historyResponse, page, size);
-        return new ResponseEntity<>(notificationPageResponse, HttpStatus.OK);
+        return getHistoryPageResponseResponseEntity(page, size, offers);
     }
+
 
     @ApiOperation(value = "History for seller.")
     @GetMapping("/seller")
@@ -55,14 +50,7 @@ public class HistoryController {
                                                                     Authentication authentication) {
         Users user = iUsersService.findByEmail(authentication.getName());
         List<Offers> offers = iOffersService.getHistorySeller(user.getId());
-        List<TransactionResponse> historyResponse = offers.stream()
-                .map(TransactionResponse::new)
-                .collect(Collectors.toList());
-
-        if (offers.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-        HistoryPageResponse notificationPageResponse = convertToPaginated(historyResponse, page, size);
-        return new ResponseEntity<>(notificationPageResponse, HttpStatus.OK);
+        return getHistoryPageResponseResponseEntity(page, size, offers);
     }
 
     private HistoryPageResponse convertToPaginated(List<TransactionResponse> historyResponse, int page, int size) {
@@ -72,5 +60,17 @@ public class HistoryController {
         int end = Math.min((start + paging.getPageSize()), responseSize);
         Page<TransactionResponse> paged = new PageImpl<>(historyResponse.subList(start, end), paging, responseSize);
         return new HistoryPageResponse(paged, page);
+    }
+
+    @NotNull
+    private ResponseEntity<HistoryPageResponse> getHistoryPageResponseResponseEntity(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page, @RequestParam(value = "size", defaultValue = "10", required = false) Integer size, List<Offers> offers) {
+        List<TransactionResponse> historyResponse = offers.stream()
+                .map(TransactionResponse::new)
+                .collect(Collectors.toList());
+
+        if (offers.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        HistoryPageResponse notificationPageResponse = convertToPaginated(historyResponse, page, size);
+        return new ResponseEntity<>(notificationPageResponse, HttpStatus.OK);
     }
 }

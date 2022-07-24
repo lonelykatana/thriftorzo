@@ -3,7 +3,7 @@ package com.binar.kelompok3.secondhand.configuration;
 import com.binar.kelompok3.secondhand.service.UserDetailsServiceImpl;
 import com.binar.kelompok3.secondhand.utils.AuthEntryPointJwt;
 import com.binar.kelompok3.secondhand.utils.AuthTokenFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,14 +19,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean

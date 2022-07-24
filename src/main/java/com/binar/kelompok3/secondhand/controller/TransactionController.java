@@ -8,7 +8,6 @@ import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.notif.StatusTransactionResponse;
 import com.binar.kelompok3.secondhand.model.response.history.TransactionResponse;
 import com.binar.kelompok3.secondhand.service.offers.IOffersService;
-import com.binar.kelompok3.secondhand.service.products.IProductsService;
 import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +27,6 @@ import static com.binar.kelompok3.secondhand.utils.Constant.TRANSACTION_UPDATED;
 public class TransactionController {
 
     private IOffersService iOffersService;
-    private IProductsService productsService;
     private IUsersService iUsersService;
 
     @ApiOperation(value = "Buy a product.")
