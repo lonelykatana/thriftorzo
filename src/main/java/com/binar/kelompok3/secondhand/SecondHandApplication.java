@@ -13,7 +13,6 @@ public class SecondHandApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SecondHandApplication.class, args);
-        final Logger logger = LoggerFactory.getLogger(SecondHandApplication.class);
         logger.info("Hello World!");
     }
 }
