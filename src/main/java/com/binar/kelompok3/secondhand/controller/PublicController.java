@@ -3,9 +3,7 @@ package com.binar.kelompok3.secondhand.controller;
 import com.binar.kelompok3.secondhand.model.entity.Products;
 import com.binar.kelompok3.secondhand.model.response.MessageResponse;
 import com.binar.kelompok3.secondhand.model.response.product.ProductResponse;
-import com.binar.kelompok3.secondhand.service.imageproduct.IImageProductService;
 import com.binar.kelompok3.secondhand.service.products.IProductsService;
-import com.binar.kelompok3.secondhand.service.users.IUsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -27,8 +25,6 @@ import static com.binar.kelompok3.secondhand.utils.Constant.DATA_EMPTY;
 public class PublicController {
 
     private IProductsService iProductsService;
-    private IImageProductService iImageProductService;
-    private IUsersService iUsersService;
 
     @ApiOperation(value = "Get a product by productId.")
     @GetMapping("/product/{productId}")
